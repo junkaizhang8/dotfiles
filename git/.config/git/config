@@ -1,0 +1,23 @@
+[user]
+	name = Jun Kai Zhang
+	email = junkaizhang8@gmail.com
+[pull]
+	rebase = false
+[core]
+	editor = code --wait
+	autocrlf = input
+  pager = delta
+[diff]
+	tool = vscode
+  colorMoved = default
+[difftool "vscode"]
+	cmd = "code --wait --diff $LOCAL $REMOTE"
+[alias]
+  unstage = unstage HEAD --
+  lg = log --oneline
+  st = status -s
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  side-by-side = true

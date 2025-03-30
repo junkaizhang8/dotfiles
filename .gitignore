@@ -1,0 +1,8 @@
+# zsh
+/zsh/.config/zsh/.zsh_sessions
+/zsh/.config/zsh/.zcompdump*
+
+# vim
+/vim/.config/vim/vim/
+/vim/.config/vim/.netrwhist
+/vim/.config/vim/viminfo
