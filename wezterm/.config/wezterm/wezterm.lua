@@ -97,6 +97,11 @@ config.keys = {
 		mods = "SHIFT|CTRL|SUPER",
 		action = wezterm.action.SendKey({ key = "l", mods = "CTRL" }),
 	},
+  {
+		key = "Space",
+		mods = "SHIFT|CTRL|SUPER",
+		action = wezterm.action.SendKey({ key = "Space", mods = "CTRL" }),
+	},
 }
 
 config.window_background_opacity = 0.75
