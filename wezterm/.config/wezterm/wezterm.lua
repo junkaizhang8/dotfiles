@@ -64,43 +64,8 @@ config.keys = {
 	},
 	{
 		key = "raw:41",
-		mods = "SHIFT|CTRL|SUPER",
+		mods = "CTRL",
 		action = wezterm.action.SendKey({ key = "q", mods = "CTRL" }),
-	},
-	{
-		key = "n",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "n", mods = "CTRL" }),
-	},
-	{
-		key = "p",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "p", mods = "CTRL" }),
-	},
-	{
-		key = "h",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "h", mods = "CTRL" }),
-	},
-	{
-		key = "j",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "j", mods = "CTRL" }),
-	},
-	{
-		key = "k",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "k", mods = "CTRL" }),
-	},
-	{
-		key = "l",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "l", mods = "CTRL" }),
-	},
-  {
-		key = "Space",
-		mods = "SHIFT|CTRL|SUPER",
-		action = wezterm.action.SendKey({ key = "Space", mods = "CTRL" }),
 	},
 }
 

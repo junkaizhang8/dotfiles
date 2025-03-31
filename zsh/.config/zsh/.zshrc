@@ -216,6 +216,7 @@ bindkey '^[[B' history-search-forward
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^ ' autosuggest-accept
+bindkey '^z' fzf-cd-widget
 
 # ==============================================================================
 # ALIASES
@@ -229,12 +230,15 @@ alias npm='pnpm'
 alias npx='pnpx'
 alias c='clear'
 alias ls='eza --color=always --icons=always'
+alias l='ls'
 alias ll='ls -l --git --no-user'
 alias la='ls -a'
 alias lla='ls -la --git --no-user'
 alias ldot='ls -d .*/'
 alias llt='ls -l --sort=time --git --no-user'
 alias lltr='ls -lr --sort=time --git --no-user'
+alias llat='ls -la --sort=time --git --no-user'
+alias llatr='ls -lra --sort=time --git --no-user'
 alias lsd='[[ -n *(N/) ]] && ls -d */ || echo "No directories found"'
 alias lsda='[[ -n *(N/) ]] && ls -da -- */ .*/ || echo "No directories found"'
 alias lsf='ls -f'
