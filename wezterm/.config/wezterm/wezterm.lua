@@ -69,8 +69,15 @@ config.keys = {
 	},
 }
 
+config.mouse_bindings = {
+	{
+		event = { Down = { streak = 1, button = "Middle" } },
+		action = "Nop",
+		mods = "NONE",
+	},
+}
+
 config.window_background_opacity = 0.75
 config.macos_window_background_blur = 10
 
 return config
-

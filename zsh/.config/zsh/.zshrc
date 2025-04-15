@@ -216,6 +216,9 @@ bindkey '^[[B' history-search-forward
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^ ' autosuggest-accept
+
+# Rebind fzf-cd-widget to Ctrl+Z
+bindkey -r '\ec'
 bindkey '^z' fzf-cd-widget
 
 # ==============================================================================
@@ -251,8 +254,8 @@ alias cwd='echo -n $PWD | pbcopy'
 alias dsp='docker system prune -f'
 alias regex='v -MR "$HOME/cheatsheets/regex.txt"'
 alias bs='browser-sync start --server --no-online --files="**/*"'
-alias lzg='lazygit'
-alias lzd='lazydocker'
+alias lg='lazygit'
+alias ld='lazydocker'
 alias fetch='fastfetch'
 
 # ==============================================================================
