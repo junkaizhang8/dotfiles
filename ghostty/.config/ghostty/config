@@ -1,0 +1,60 @@
+font-family = "MesloLGS Nerd Font Mono"
+font-size = 19
+
+window-height = 50
+window-width = 200
+
+maximize = true
+
+mouse-hide-while-typing = true
+
+background-opacity = 0.75
+background-blur = 10
+
+window-padding-x = 12
+window-padding-y = 12
+
+background = #011423
+foreground = #CBE0F0
+
+selection-background = #033259
+selection-foreground = #CBE0F0
+
+shell-integration-features = no-cursor
+
+cursor-style = block
+cursor-style-blink = false
+cursor-color = #47FF9C
+
+# ANSI
+palette = 0=#214969
+palette = 1=#E52E2E
+palette = 2=#44FFB1
+palette = 3=#FFE073
+palette = 4=#0FC5ED
+palette = 5=#A277FF
+palette = 6=#24EAF7
+palette = 7=#24EAF7
+
+# Brights
+palette = 8=#214969
+palette = 9=#E52E2E
+palette = 10=#44FFB1
+palette = 11=#FFE073
+palette = 12=#0FC5ED
+palette = 13=#A277FF
+palette = 14=#24EAF7
+palette = 15=#24EAF7
+
+window-vsync = true
+
+confirm-close-surface = false
+quit-after-last-window-closed = true
+
+macos-titlebar-style = hidden
+macos-window-shadow = false
+
+resize-overlay = never
+
+# Launch tmux if installed
+command = zsh --login -c "if command -v tmux &> /dev/null; then tmux new-session -A -s main || tmux; else zsh; fi"
