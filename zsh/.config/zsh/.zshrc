@@ -245,8 +245,9 @@ bindkey -r '^[a'
 # ==============================================================================
 
 alias reload='exec zsh'
-alias zshrc='code "$ZDOTDIR/.zshrc"'
-alias zshenv='code "$HOME/.zshenv"'
+alias zshrc='nvim "$ZDOTDIR/.zshrc"'
+alias zshenv='nvim "$HOME/.zshenv"'
+alias snip='nvim "$XDG_CONFIG_HOME/nvim/snippets"'
 alias utsc='cd "$HOME/utsc-schoolwork"'
 alias npm='pnpm'
 alias npx='pnpx'

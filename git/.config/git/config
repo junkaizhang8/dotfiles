@@ -4,16 +4,21 @@
 [pull]
 	rebase = false
 [core]
-	editor = code --wait
+	editor = nvim
 	autocrlf = input
   pager = delta
 [diff]
-	tool = vscode
+	tool = nvimdiff
   colorMoved = default
-[difftool "vscode"]
-	cmd = "code --wait --diff $LOCAL $REMOTE"
+[difftool "nvimdiff"]
+  cmd = nvim -d "$LOCAL" "$REMOTE"
+[merge]
+  tool = nvimdiff
+[mergetool "nvimdiff"]
+  cmd = nvim -d "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+  trustExitCode = false
 [alias]
-  unstage = unstage HEAD --
+  unstage = reset HEAD --
   lg = log --oneline
   st = status -s
 [interactive]
