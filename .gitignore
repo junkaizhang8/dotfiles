@@ -6,3 +6,6 @@
 /vim/.config/vim/vim/
 /vim/.config/vim/.netrwhist
 /vim/.config/vim/viminfo
+
+# Karabiner Elements
+/karabiner/.config/karabiner/automatic_backups
