@@ -28,7 +28,7 @@ config.colors = {
 	selection_bg = "#033259",
 	selection_fg = "#CBE0F0",
 	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#A277FF", "#24EAF7", "#24EAF7" },
-	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#A277FF", "#24EAF7", "#24EAF7" },
+	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#A277FF", "#24EAF7", "#24EAF7" },
 }
 
 config.keys = {
@@ -56,16 +56,6 @@ config.keys = {
 		key = "RightArrow",
 		mods = "OPT",
 		action = wezterm.action.SendKey({ key = "f", mods = "ALT" }),
-	},
-	{
-		key = "q",
-		mods = "CTRL",
-		action = wezterm.action.DisableDefaultAssignment,
-	},
-	{
-		key = "raw:41",
-		mods = "CTRL",
-		action = wezterm.action.SendKey({ key = "q", mods = "CTRL" }),
 	},
 }
 

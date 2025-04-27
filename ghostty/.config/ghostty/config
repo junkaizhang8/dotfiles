@@ -12,7 +12,7 @@ background-opacity = 0.75
 background-blur = 10
 
 window-padding-x = 12
-window-padding-y = 12
+window-padding-y = 8
 
 background = #011423
 foreground = #CBE0F0
@@ -53,6 +53,7 @@ quit-after-last-window-closed = true
 
 macos-titlebar-style = hidden
 macos-window-shadow = false
+macos-option-as-alt = true
 
 resize-overlay = never
 

@@ -85,7 +85,7 @@ cyan="#2CF9ED"
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --icons=always --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 show_file_or_dir_preview_zstyle='if [ -d $realpath ]; then eza --tree --icons=always --color=always $realpath | head -200; else bat -n --color=always --line-range :500 $realpath; fi'
 
-export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},border:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan} --layout reverse --border --bind tab:accept"
+export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},border:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan} --reverse --border --bind tab:accept"
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -129,6 +129,27 @@ zstyle ':fzf-tab:complete:*' fzf-flags --height 60% --bind tab:accept
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --icons=always --color=always $realpath | head -200'
 zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'dig $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --tree --icons=always --color=always $realpath | head -200'
+
+# ==============================================================================
+# SESH
+# ==============================================================================
+
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    zle reset-prompt > /dev/null 2>&1 || true
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+
+zle     -N             sesh-sessions
+bindkey -M emacs '\es' sesh-sessions
+bindkey -M vicmd '\es' sesh-sessions
+bindkey -M viins '\es' sesh-sessions
 
 # ==============================================================================
 # PATH
@@ -217,9 +238,7 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^ ' autosuggest-accept
 
-# Rebind fzf-cd-widget to Ctrl+Z
-bindkey -r '\ec'
-bindkey '^z' fzf-cd-widget
+bindkey -r '^[a'
 
 # ==============================================================================
 # ALIASES
@@ -257,6 +276,7 @@ alias bs='browser-sync start --server --no-online --files="**/*"'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias fetch='fastfetch'
+alias td='tmux detach'
 
 # ==============================================================================
 # FUNCTIONS
