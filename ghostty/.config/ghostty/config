@@ -9,7 +9,7 @@ maximize = true
 mouse-hide-while-typing = true
 
 background-opacity = 0.75
-background-blur = 10
+background-blur = 40
 
 window-padding-x = 12
 window-padding-y = 8

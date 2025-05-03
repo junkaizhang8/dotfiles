@@ -13,6 +13,7 @@ fi
 export ZIM_HOME="$XDG_DATA_HOME/zim"
 
 # zsh-autosuggestions
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6d7175"
 export HISTSIZE=10000
 export SAVEHIST=$HISTSIZE
 export HISTDUP=erase
@@ -245,9 +246,9 @@ bindkey -r '^[a'
 # ==============================================================================
 
 alias reload='exec zsh'
-alias zshrc='nvim "$ZDOTDIR/.zshrc"'
-alias zshenv='nvim "$HOME/.zshenv"'
-alias snip='nvim "$XDG_CONFIG_HOME/nvim/snippets"'
+alias zshrc='v "$ZDOTDIR/.zshrc"'
+alias zshenv='v "$HOME/.zshenv"'
+alias snip='v "$XDG_CONFIG_HOME/nvim/snippets"'
 alias utsc='cd "$HOME/utsc-schoolwork"'
 alias npm='pnpm'
 alias npx='pnpx'
@@ -272,7 +273,7 @@ alias vi='nvim'
 alias v='nvim'
 alias cwd='echo -n $PWD | pbcopy'
 alias dsp='docker system prune -f'
-alias regex='v -MR "$HOME/cheatsheets/regex.txt"'
+alias regex='v "$HOME/Cheatsheets/regex"'
 alias bs='browser-sync start --server --no-online --files="**/*"'
 alias lg='lazygit'
 alias ld='lazydocker'
