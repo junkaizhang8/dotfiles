@@ -6,8 +6,8 @@ return {
       doc = {
         inline = false,
         float = true,
-        max_width = 60,
-        max_height = 30,
+        max_width = 80,
+        max_height = 40,
       },
     }
     opts.picker = {
