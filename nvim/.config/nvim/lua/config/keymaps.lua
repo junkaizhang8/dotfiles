@@ -42,10 +42,10 @@ keymap.set("n", "<leader>p", '"0p', { desc = "Paste Last Yanked Text After the C
 keymap.set("n", "<leader>P", '"0P', { desc = "Paste Last Yanked Text Before the Cursor" })
 
 -- Windows
-keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
-keymap.set("n", "<leader>\\", "<C-W>v", { desc = "Split Window Right", remap = true })
+keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below", remap = true })
+keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
 
-keymap.set("n", "<C-w><left>", "<C-w><", { desc = "Increase Window Height" })
-keymap.set("n", "<C-w><right>", "<C-w>>", { desc = "Decrease Window Height" })
-keymap.set("n", "<C-w><up>", "<C-w>+", { desc = "Decrease Window Width" })
-keymap.set("n", "<C-w><down>", "<C-w>-", { desc = "Increase Window Width" })
+keymap.set("n", "<C-w><left>", "<C-w><", { desc = "Decrease Window Width" })
+keymap.set("n", "<C-w><right>", "<C-w>>", { desc = "Increase Window Width" })
+keymap.set("n", "<C-w><up>", "<C-w>+", { desc = "Increase Window Height" })
+keymap.set("n", "<C-w><down>", "<C-w>-", { desc = "Decrease Window Height" })
