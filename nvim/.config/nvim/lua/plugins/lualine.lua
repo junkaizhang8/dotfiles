@@ -46,8 +46,12 @@ return {
       },
     }
 
-    -- Remove the clock
-    opts.sections.lualine_z = {}
+    opts.sections.lualine_y = {
+      { "progress", padding = { left = 1, right = 1 } },
+    }
+    opts.sections.lualine_z = {
+      { "location", padding = { left = 1, right = 1 } },
+    }
     opts.options.theme = custom_theme
   end,
 
