@@ -1,6 +1,9 @@
+; This is a my Git configuration file template.
+; Fill in [user] section with your own name and email.
+
 [user]
-	name = Jun Kai Zhang
-	email = junkaizhang8@gmail.com
+  name = <name>
+  email = <email>
 [pull]
 	rebase = false
 [core]
