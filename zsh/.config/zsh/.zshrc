@@ -214,7 +214,8 @@ fi; done;
 echo "${paths[*]}"')"
 export PATH="${XDG_DATA_HOME}/pyenv/shims:${PATH}"
 export PYENV_SHELL=zsh
-source '/opt/homebrew/Cellar/pyenv/2.5.3/completions/pyenv.zsh'
+local pyenv_version=$(pyenv --version | awk '{print $2}')
+source "/opt/homebrew/Cellar/pyenv/${pyenv_version}/completions/pyenv.zsh"
 pyenv() {
   local command=${1:-}
   [ "$#" -gt 0 ] && shift
