@@ -1,3 +1,21 @@
+---@class ColorScheme
+---@field none string
+---@field bg string
+---@field bg_dark string
+---@field bg_float string
+---@field bg_highlight string
+---@field bg_popup string
+---@field bg_search string
+---@field bg_sidebar string
+---@field bg_statusline string
+---@field bg_visual string
+---@field border string
+---@field fg string
+---@field fg_dark string
+---@field fg_float string
+---@field fg_gutter string
+---@field fg_sidebar string
+
 local transparent = true -- globally scoped to allow toggling
 
 local function apply_tokyonight()
@@ -18,6 +36,9 @@ local function apply_tokyonight()
       sidebars = transparent and "transparent" or "dark",
       floats = transparent and "transparent" or "dark",
     },
+
+    -- We add an annotation to prevent the LSP from throwing a bunch of warnings
+    ---@param colors ColorScheme
     on_colors = function(colors)
       colors.bg = bg
       colors.bg_dark = transparent and colors.none or bg_dark
@@ -48,9 +69,10 @@ end
 
 return {
   "folke/tokyonight.nvim",
-  priority = 1000,
   config = function()
     apply_tokyonight()
-    vim.keymap.set("n", "<leader>ut", toggle_transparency, { desc = "Toggle transparency" })
   end,
+  keys = {
+    { "<leader>ut", toggle_transparency, desc = "Toggle transparency" },
+  },
 }
