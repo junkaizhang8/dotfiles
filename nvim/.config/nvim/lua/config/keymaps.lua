@@ -27,9 +27,6 @@ end
 -- Delete character without yanking
 keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
 
--- Substitute character without yankking
-keymap.set("n", "s", '"_s', { desc = "Substitute Character Without Yanking" })
-
 -- Increment/decrement numbers
 keymap.set("n", "+", "<C-a>", { desc = "Increment Number" }) -- increment
 keymap.set("n", "-", "<C-x>", { desc = "Decrement Number" }) -- decrement
