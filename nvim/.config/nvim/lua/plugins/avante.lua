@@ -6,19 +6,23 @@ return {
     -- add any opts here
     -- for example
     provider = "copilot",
-    copilot = {
-      model = "claude-3.7-sonnet",
-    },
-    behaviour = {
-      auto_suggestions = false,
-    },
-    openai = {
-      endpoint = "https://api.githubcopilot.com",
-      model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-      timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-      temperature = 0,
-      max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-      --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+    providers = {
+      copilot = {
+        model = "claude-3.7-sonnet",
+      },
+      behaviour = {
+        auto_suggestions = false,
+      },
+      openai = {
+        endpoint = "https://api.githubcopilot.com",
+        model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
+        timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+        extra_request_body = {
+          temperature = 0,
+          max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+          reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+        },
+      },
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -61,5 +65,8 @@ return {
       },
       ft = { "markdown", "Avante" },
     },
+  },
+  keys = {
+    { "<leader>ax", "<cmd>AvanteClear<cr>", desc = "avante: clear" },
   },
 }
