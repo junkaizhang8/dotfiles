@@ -1,0 +1,4 @@
+{
+  // Disable line length warnings
+  "MD013": false,
+}
