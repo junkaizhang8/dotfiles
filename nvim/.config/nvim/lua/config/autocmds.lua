@@ -13,8 +13,18 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste",
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter" }, {
   callback = function()
+    local dashboard_filetypes = {
+      alpha = true,
+      dashboard = true,
+      snacks_dashboard = true,
+    }
+
+    local function is_dashboard()
+      return dashboard_filetypes[vim.bo.filetype] == true
+    end
+
     local function get_lualine_colors()
       local lualine = require("lualine")
       local theme = lualine.get_config().options.theme
@@ -31,16 +41,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
       vim.api.nvim_set_hl(0, "StatusLine", { bg = colors.bg, fg = colors.fg })
     end
 
-    local ft = vim.bo.filetype
-
-    if ft ~= "alpha" and ft ~= "dashboard" and ft ~= "snacks_dashboard" then
-      -- Restore lualine
-      vim.o.laststatus = 3
-      -- Call this to fix weird coloring artifacts in the status line
-      set_statusline_highlight()
-    else
-      -- Hide lualine when entering dashboard
-      vim.o.laststatus = 0
+    local function update_lualine_statusline()
+      if is_dashboard() then
+        -- Hide lualine when entering dashboard
+        vim.o.laststatus = 0
+      else
+        -- Restore lualine
+        vim.o.laststatus = 3
+        -- Call this to fix weird coloring artifacts in the status line
+        set_statusline_highlight()
+      end
     end
+
+    vim.schedule(update_lualine_statusline)
   end,
 })
