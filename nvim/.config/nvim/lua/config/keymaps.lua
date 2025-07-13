@@ -38,7 +38,7 @@ keymap.set("n", "-", "<C-x>", { desc = "Decrement Number" }) -- decrement
 keymap.set("n", "<C-a>", "ggVG", { desc = "Select All" })
 
 -- Copy text from system clipboard to yank register
-keymap.set("n", "<leader>yy", "<cmd>let @0 = @+<cr>", { desc = "Copy Text from System Clipboard to Yank Register" })
+keymap.set("n", "<leader>Y", "<cmd>let @0 = @+<cr>", { desc = "Copy Text from System Clipboard to Yank Register" })
 
 -- Paste last yanked text
 keymap.set("n", "<leader>p", '"0p', { desc = "Paste Last Yanked Text After the Cursor" })
