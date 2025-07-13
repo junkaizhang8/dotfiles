@@ -1,0 +1,19 @@
+gui:
+  theme:
+    activeBorderColor:
+      - "#FF9E65"
+      - bold
+    inactiveBorderColor:
+      - "#27A1B9"
+    selectedLineBgColor:
+      - "#275378"
+  # Display icons if you have Nerd Fonts
+  nerdFontsVersion: "3"
+
+git:
+  paging:
+    colorArg: always
+    # For this to work, first install `brew install git-delta`
+    # https://github.com/dandavison/delta
+    # https://github.com/jesseduffield/lazygit/issues/155#issuecomment-2260986940
+    pager: delta --dark --paging=never --syntax-theme base16-256 -s --wrap-max-lines=10
