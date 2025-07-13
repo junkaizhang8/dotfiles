@@ -1,7 +1,7 @@
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 19
 
-window-height = 50
+window-height = 200
 window-width = 200
 
 maximize = true
@@ -45,6 +45,26 @@ palette = 12=#0FC5ED
 palette = 13=#A277FF
 palette = 14=#24EAF7
 palette = 15=#24EAF7
+
+# TODO:
+# For cool trails, use cursor_blaze_no_trail and cursor_smear
+# Must wait for Ghostty version 1.2
+
+# Shaders
+# custom-shader = shaders/bloom.glsl
+# custom-shader = shaders/cursor_blaze_no_trail.glsl
+# custom-shader = shaders/cursor_blaze_tapered.glsl
+# custom-shader = shaders/cursor_blaze.glsl
+# custom-shader = shaders/cursor_frozen.glsl
+# custom-shader = shaders/cursor_smear_fade.glsl
+# custom-shader = shaders/cursor_smear.glsl
+# custom-shader = shaders/debug_cursor_animated.glsl
+# custom-shader = shaders/debug_cursor_static.glsl
+# custom-shader = shaders/manga_slash.glsl
+# custom-shader = shaders/ghostty_wrapper.glsl
+
+# Keybindings
+keybind = cmd+r=reload_config
 
 window-vsync = true
 
