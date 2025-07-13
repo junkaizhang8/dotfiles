@@ -46,6 +46,19 @@ return {
       },
     }
 
+    local statusline = require("arrow.statusline")
+
+    -- Arrows bookmark index
+    table.insert(opts.sections.lualine_x, 3, {
+      function()
+        return ("[" .. statusline.text_for_statusline_with_icons() .. "]") or ""
+      end,
+      cond = function()
+        return statusline.is_on_arrow_file() ~= nil
+      end,
+      color = { fg = "#FF9E65" },
+    })
+
     opts.sections.lualine_y = {
       { "progress", padding = { left = 1, right = 1 } },
     }
