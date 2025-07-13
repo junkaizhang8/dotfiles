@@ -54,27 +54,4 @@ return {
     }
     opts.options.theme = custom_theme
   end,
-
-  config = function(_, opts)
-    require("lualine").setup(opts)
-
-    local function get_lualine_colors()
-      local lualine = require("lualine")
-      local theme = lualine.get_config().options.theme
-
-      if type(theme) == "string" then
-        theme = require("lualine.themes." .. theme)
-      end
-
-      return theme.normal.c
-    end
-
-    local function set_statusline_highlight()
-      local colors = get_lualine_colors()
-      vim.api.nvim_set_hl(0, "StatusLine", { bg = colors.bg, fg = colors.fg })
-    end
-
-    -- Call this to fix weird coloring artifacts in the status line
-    set_statusline_highlight()
-  end,
 }
