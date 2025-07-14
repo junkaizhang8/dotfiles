@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+for file in "$@"; do
+  [ -f "$file" ] && : > "$@"
+done

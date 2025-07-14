@@ -1,0 +1,184 @@
+#!/bin/zsh
+
+mode=
+all=false
+force=false
+list_count=10
+remove_count=1
+save_file=
+
+usage() {
+  echo "Usage: zh <command> [options]"
+  echo
+  echo "Command:"
+  echo "  h|help                                         Show this help message."
+  echo "  l|list [-n <num>|-a] [regex1 ...]              List autosuggestion history entries matching any given regex."
+  echo "                                                 Defaults to listing the last 10 matching entries."
+  echo "  r|remove [-n <num>|-a] [-f] [regex1 ...]       Remove autosuggestion history entries matching any given regex."
+  echo "                                                 Defaults to removing the last matching entry."
+  echo '  s|save [filename]                              Save the current history to a backup file located at $HISTDIR.'
+  echo '                                                 Defaults to saving at $HISTFILE_BACKUP.'
+  echo
+  echo "Options:"
+  echo "  -n <num>                  List the last <num> matching entries."
+  echo "  -a                        List all matching entries."
+  echo "  -f                        Force removal without a prompt."
+  exit 1
+}
+
+list_history() {
+  [ "$all" = true ] && list_count=$(wc -l < "$HISTFILE")
+  if [ -n "$regex" ]; then
+    grep --color=always -E "$regex" "$HISTFILE" | tail -n "$list_count" | tac | nl | tac
+  else
+    tail -n "$list_count" "$HISTFILE" | tac | nl | tac
+  fi
+}
+
+remove_history() {
+  [ "$all" = true ] && remove_count=$(wc -l < "$HISTFILE")
+  if [ -n "$regex" ]; then
+    matched_lines=$(cat "$HISTFILE" | nl | grep --color=always -E "$regex" | tail -n "$((remove_count + 1))")
+    [ -z "$matched_lines" ] && { echo "No autosuggestions found matching the given regex."; exit 1; }
+
+    matched_count=$(echo "$matched_lines" | ghead -n -1 | wc -l | tr -d ' ')
+    matched_line_numbers=$(echo "$matched_lines" | awk '{print $1}' | tr '\n' ' ' | sed 's/ /d;/g')
+
+    if [ "$matched_count" -eq 0 ]; then
+      echo "No autosuggestions found matching the given regex."
+      exit 1
+    elif [ "$matched_count" -eq 1 ]; then
+      prompt="Remove the above autosuggestion?"
+    else
+      prompt="Remove the above $matched_count autosuggestions?"
+    fi
+
+    if [ "$force" = true ]; then
+      cat "$HISTFILE" > "$HISTFILE_BACKUP"
+      sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" > "$HISTFILE"
+    else
+      echo "$matched_lines" | ghead -n -1
+      if yn "$prompt"; then
+        cat "$HISTFILE" > "$HISTFILE_BACKUP"
+        sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" > "$HISTFILE"
+      else
+        exit 1
+      fi
+    fi
+  else
+    matched_lines=$(cat "$HISTFILE" | nl | tail -n "$((remove_count + 1))" | ghead -n -1)
+    [ -z "$matched_lines" ] && { echo "No autosuggestions found matching the given regex."; exit 1; }
+
+    matched_count=$(echo "$matched_lines" | wc -l | tr -d ' ')
+    if [ "$matched_count" -eq 0 ]; then
+      echo "No autosuggestions found."
+      exit 1
+    elif [ "$matched_count" -eq 1 ]; then
+      prompt="Remove the above autosuggestion?"
+    else
+      prompt="Remove the above $matched_count autosuggestions?"
+    fi
+
+    if [ "$force" = true ]; then
+      cat "$HISTFILE" > "$HISTFILE_BACKUP"
+      ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" > "$HISTFILE"
+    else
+      echo "$matched_lines"
+      if yn "$prompt"; then
+        cat "$HISTFILE" > "$HISTFILE_BACKUP"
+        ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" > "$HISTFILE"
+      else
+        exit 1
+      fi
+    fi
+  fi
+}
+
+save_history() {
+  [ -z "$save_file" ] && { echo '$ZHISTFILE_BACKUP not found.'; exit 1; }
+  if [ -f "$save_file" ]; then
+    if yn "File $save_file already exists. Overwrite?"; then
+      cat "$HISTFILE" > "$save_file"
+      echo "History saved to $save_file"
+    else
+      exit 1
+    fi
+  else
+    cat "$HISTFILE" > "$save_file"
+    echo "History saved to $save_file"
+  fi
+}
+
+[ $# -eq 0 ] && usage
+
+case "$1" in
+  h|help)
+    usage
+    ;;
+  r|remove)
+    mode="remove"
+    ;;
+  l|list)
+    mode="list"
+    ;;
+  s|save)
+    mode="save"
+    shift
+    if [ -n "$1" ]; then
+      save_file="$HISTDIR/$1"
+    else
+      save_file="$HISTFILE_BACKUP"
+    fi
+    ;;
+  *)
+    echo "Unexpected command: $1"
+    exit 1
+    ;;
+esac
+
+[ $# -gt 0 ] && shift
+
+while [ "$1" ]; do
+  if [[ "$1" =~ ^- ]]; then
+    case "$1" in
+      -n)
+        shift
+        if [ -n "$1" ]; then
+          if [[ "$1" =~ ^[0-9]+$ ]] && [ "$1" -gt 0 ]; then
+            [ "$mode" = "list" ] && list_count="$1" || remove_count="$1"
+            shift
+          else
+            echo "Invalid argument: $1"
+            exit 1
+          fi
+        else
+          echo "Option -n requires an argument."
+          exit 1
+        fi
+        ;;
+      -a)
+        all=true
+        shift
+        ;;
+      -f)
+        force=true
+        shift
+        ;;
+      *)
+        echo "Unexpected option: $1"
+        exit 1
+        ;;
+    esac
+  else
+    [ -n "$regex" ] && regex="$regex|$1" || regex="$1"
+    shift
+  fi
+done
+
+if [ "$mode" = "list" ]; then
+  list_history
+elif [ "$mode" = "remove" ]; then
+  remove_history
+elif [ "$mode" = "save" ]; then
+  save_history
+fi

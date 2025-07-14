@@ -10,3 +10,6 @@
 
 # Karabiner Elements
 /karabiner/.config/karabiner/automatic_backups
+
+# Scripts
+/scripts/Scripts/local/

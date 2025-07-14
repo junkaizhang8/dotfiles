@@ -164,6 +164,13 @@ if [ -d "$SCRIPTS" ]; then
   esac
 fi
 
+if [ -d "$SCRIPTS/local" ]; then
+  case ":$PATH:" in
+    *":$SCRIPTS/local:"*) ;;
+    *) export PATH="$SCRIPTS/local:$PATH" ;;
+  esac
+fi
+
 # pyenv
 if [ -d "$PYENV_ROOT" ]; then
   case ":$PATH:" in
