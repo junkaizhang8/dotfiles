@@ -31,5 +31,6 @@ return {
         },
       },
     },
+    keymap = { preset = "default" },
   },
 }
