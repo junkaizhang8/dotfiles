@@ -8,7 +8,14 @@ Ensure you have `git` and GNU `stow` installed on your system.
 
 ```
 git clone https://github.com/junkaizhang8/dotfiles.git ~/.dotfiles
-~/.dotfiles/install.sh
+cd ~/.dotfiles
+./install.sh
+```
+
+To see which directories will be symlinked without modifying your file system, run:
+
+```
+./install.sh --dry-run
 ```
 
 ## Scripts
