@@ -1,0 +1,4 @@
+# Directories to ignore creating a symlink for
+.git/
+dictionaries/
+
