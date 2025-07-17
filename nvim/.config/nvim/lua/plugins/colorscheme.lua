@@ -64,7 +64,7 @@ end
 local function toggle_transparency()
   transparent = not transparent
   apply_tokyonight()
-  vim.notify("Transparency: " .. (transparent and "ON" or "OFF"), vim.log.levels.INFO)
+  vim.notify("Transparency: " .. (transparent and "ON" or "OFF"), vim.log.levels.INFO, { title = "Transparency" })
 end
 
 return {
@@ -73,6 +73,6 @@ return {
     apply_tokyonight()
   end,
   keys = {
-    { "<leader>ut", toggle_transparency, desc = "Toggle transparency" },
+    { "<leader>ut", toggle_transparency, desc = "Toggle Transparency" },
   },
 }
