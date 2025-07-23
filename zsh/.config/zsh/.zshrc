@@ -43,9 +43,13 @@ export BAT_THEME=tokyonight_night
 export EDITOR="nvim"
 
 # ==============================================================================
-# ZIM
+# CONFIGURATIONS
 # ==============================================================================
 
+# fzf
+[ -f "${XDG_CONFIG_HOME}/fzf/fzf.zsh" ] && source "${XDG_CONFIG_HOME}/fzf/fzf.zsh"
+
+# zim
 # Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
   source /opt/homebrew/Cellar/zimfw/1.17.1/share/zimfw.zsh init
@@ -53,12 +57,8 @@ fi
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
-# ==============================================================================
-# CONFIGURATIONS
-# ==============================================================================
-
+# Powerlevel10k
 [ -f "${ZDOTDIR}/.p10k.zsh" ] && source "${ZDOTDIR}/.p10k.zsh"
-[ -f "${XDG_CONFIG_HOME}/fzf/fzf.zsh" ] && source "${XDG_CONFIG_HOME}/fzf/fzf.zsh"
 
 # ==============================================================================
 # ZSH AUTOSUGGESTIONS
