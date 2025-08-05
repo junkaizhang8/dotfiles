@@ -5,15 +5,19 @@ IGNORE_FILE="$CWD/.stow-ignore"
 
 dry_run=0
 
-function usage() {
-  echo "Usage: $0 [-n|--dry-run]"
+usage() {
+  echo "Usage: $0 [-h|--help] [-n|--dry-run]"
   echo "Options:"
+  echo "  -h, --help      Show this help message"
   echo "  -n, --dry-run   Perform a dry run without modifying your file system"
   exit 1
 }
 
 for arg in "$@"; do
   case $arg in
+  -h | --help)
+    usage
+    ;;
   -n | --dry-run)
     dry_run=1
     ;;
@@ -45,7 +49,7 @@ if [[ -f "$IGNORE_FILE" ]]; then
 fi
 
 # Check if a directory should be ignored
-function should_ignore() {
+should_ignore() {
   local dir_name="$1"
   for ignore in "${IGNORE_LIST[@]}"; do
     if [[ "$dir_name" == "$ignore" ]]; then
