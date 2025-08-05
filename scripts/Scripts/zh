@@ -18,6 +18,7 @@ usage() {
   echo "                                                 Defaults to removing the last matching entry."
   echo '  s|save [filename]                              Save the current history to a backup file located at $HISTDIR.'
   echo '                                                 Defaults to saving at $HISTFILE_BACKUP.'
+  echo "  e|edit                                         Edit the autosuggestion history file using the editor defined in \$EDITOR."
   echo
   echo "Options:"
   echo "  -n <num>                  List the last <num> matching entries."
@@ -109,6 +110,21 @@ save_history() {
   fi
 }
 
+edit_history() {
+  if [ -z "$EDITOR" ]; then
+    echo "EDITOR environment variable is not set."
+    exit 1
+  fi
+  [ ! -f "$HISTFILE" ] && { echo "History file $HISTFILE does not exist."; exit 1; }
+  
+  # If the editor is nvim, open the file at the last line
+  if [ "$EDITOR" = nvim ]; then
+    "$EDITOR" + "$HISTFILE"
+  else
+  "$EDITOR" "$HISTFILE"
+  fi
+}
+
 [ $# -eq 0 ] && usage
 
 case "$1" in
@@ -129,6 +145,9 @@ case "$1" in
     else
       save_file="$HISTFILE_BACKUP"
     fi
+    ;;
+  e|edit)
+    mode="edit"
     ;;
   *)
     echo "Unexpected command: $1"
@@ -181,4 +200,6 @@ elif [ "$mode" = "remove" ]; then
   remove_history
 elif [ "$mode" = "save" ]; then
   save_history
+elif [ "$mode" = "edit" ]; then
+  edit_history
 fi
