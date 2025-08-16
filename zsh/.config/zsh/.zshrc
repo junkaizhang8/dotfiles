@@ -39,8 +39,11 @@ export FNM_PATH="$XDG_DATA_HOME/fnm"
 # bat
 export BAT_THEME=tokyonight_night
 
-# yazi
+# Default editor
 export EDITOR="nvim"
+
+# Man pager
+export MANPAGER="nvim +Man!"
 
 # ==============================================================================
 # CONFIGURATIONS
