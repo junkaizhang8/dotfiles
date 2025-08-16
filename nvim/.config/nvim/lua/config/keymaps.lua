@@ -32,7 +32,7 @@ keymap.set("n", "+", "<C-a>", { desc = "Increment Number" }) -- increment
 keymap.set("n", "-", "<C-x>", { desc = "Decrement Number" }) -- decrement
 
 -- Select all
-keymap.set("n", "<C-a>", "ggVG", { desc = "Select All" })
+keymap.set({ "n", "v" }, "<C-a>", "ggVG", { desc = "Select All" })
 
 -- Copy text from system clipboard to yank register
 keymap.set("n", "<leader>Y", "<cmd>let @0 = @+<cr>", { desc = "Copy Text from System Clipboard to Yank Register" })

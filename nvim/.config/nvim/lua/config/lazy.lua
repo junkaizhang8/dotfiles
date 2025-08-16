@@ -50,4 +50,8 @@ require("lazy").setup({
       },
     },
   },
+  ui = {
+    -- Add a border to the Lazy window
+    border = "rounded",
+  },
 })
