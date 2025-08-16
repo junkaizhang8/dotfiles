@@ -1,13 +1,13 @@
 [core]
-	editor = nvim
-	autocrlf = input
+  editor = nvim
+  autocrlf = input
   pager = delta
 [init]
   defaultBranch = main
 [pull]
-	rebase = false
+  rebase = false
 [diff]
-	tool = nvimdiff
+  tool = nvimdiff
   colorMoved = default
 [difftool "nvimdiff"]
   cmd = nvim -d "$LOCAL" "$REMOTE"
