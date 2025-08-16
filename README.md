@@ -1,8 +1,10 @@
 # Jun Kai Zhang's Dotfiles
 
+This repository contains my personal configuration files for various applications.
+
 ## Requirements
 
-Ensure you have `git` and GNU `stow` installed on your system.
+Ensure you have git and [GNU Stow](https://www.gnu.org/software/stow/) installed on your system.
 
 ## Installation
 
