@@ -256,14 +256,12 @@ bindkey -r '^[a'
 # ALIASES
 # ==============================================================================
 
-alias reload='exec zsh'
-alias zshrc='v "$ZDOTDIR/.zshrc"'
-alias zshenv='v "$HOME/.zshenv"'
-alias snip='v "$XDG_CONFIG_HOME/nvim/snippets"'
-alias utsc='cd "$HOME/utsc-schoolwork"'
-alias npm='pnpm'
-alias npx='pnpx'
-alias c='clear'
+# Aliases: git
+alias gl='git log --all --graph --pretty=format:"%C(magenta)%h %C(white) %an %C(yellow) %ar%C(auto) %D%n%s%n"'
+alias gls='git log --oneline --pretty=format:"%C(magenta)%h%C(auto) %s"'
+alias gs='git status -s'
+
+# Aliases: ls
 alias ls='eza --color=always --icons=always'
 alias l='ls'
 alias ll='ls -l --git --no-user'
@@ -279,6 +277,15 @@ alias lsda='[[ -n *(N/) ]] && ls -da -- */ .*/ || echo "No directories found"'
 alias lsf='ls -f'
 alias lsfa='ls -fa'
 alias tree='ls --tree'
+
+# Aliases: misc
+alias reload='exec zsh'
+alias zshrc='v "$ZDOTDIR/.zshrc"'
+alias zshenv='v "$HOME/.zshenv"'
+alias snip='v "$XDG_CONFIG_HOME/nvim/snippets"'
+alias npm='pnpm'
+alias npx='pnpx'
+alias c='clear'
 alias cat='bat'
 alias vi='nvim'
 alias v='nvim'

@@ -1,3 +1,7 @@
+# git
+/git/.config/git/user.config
+
+
 # zsh
 /zsh/.config/zsh/.zcompcache/
 /zsh/.config/zsh/.zsh_sessions

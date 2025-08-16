@@ -1,15 +1,11 @@
-; This is a my Git configuration file template.
-; Fill in [user] section with your own name and email.
-
-[user]
-  name = <name>
-  email = <email>
-[pull]
-	rebase = false
 [core]
 	editor = nvim
 	autocrlf = input
   pager = delta
+[init]
+  defaultBranch = main
+[pull]
+	rebase = false
 [diff]
 	tool = nvimdiff
   colorMoved = default
@@ -20,7 +16,14 @@
 [mergetool "nvimdiff"]
   cmd = nvim -d "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
   trustExitCode = false
+[color "branch"]
+  current  = magenta
+  local    = default
+  remote   = yellow
+  upstream = green
+  plain    = blue
 [alias]
+  log = log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an %C(yellow) %ar%C(auto) %D%n%s%n'
   unstage = reset HEAD --
   lg = log --oneline
   st = status -s
@@ -29,3 +32,5 @@
 [delta]
   navigate = true
   side-by-side = true
+[include]
+  path = ~/.config/git/user.config
