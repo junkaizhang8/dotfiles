@@ -1,5 +1,0 @@
-#!/bin/zsh
-
-session=$(tmux ls | sed 's/:.*//g' | fzf)
-
-[ -n "$session" ] && tmux a -t "$session"
