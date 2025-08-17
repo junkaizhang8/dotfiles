@@ -38,10 +38,7 @@
   plain    = blue
 
 [alias]
-  log = log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an %C(yellow) %ar%C(auto) %D%n%s%n'
   unstage = reset HEAD --
-  lg = log --oneline
-  st = status -s
 
 [include]
   path = ~/.config/git/user.config
