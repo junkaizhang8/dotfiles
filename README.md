@@ -1,4 +1,4 @@
-# Jun Kai Zhang's Dotfiles
+# Dotfiles
 
 This repository contains my personal configuration files for various applications.
 
