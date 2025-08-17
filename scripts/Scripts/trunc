@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+usage() {
+  echo "Usage: trunc file1 [file2 ...]"
+  exit 1
+}
+
+[ "$#" -lt 1 ] && usage
+
 for file in "$@"; do
   [ -f "$file" ] && : > "$@"
 done

@@ -116,7 +116,7 @@ edit_history() {
     exit 1
   fi
   [ ! -f "$HISTFILE" ] && { echo "History file $HISTFILE does not exist."; exit 1; }
-  
+
   # If the editor is nvim, open the file at the last line
   if [ "$EDITOR" = nvim ]; then
     "$EDITOR" + "$HISTFILE"
