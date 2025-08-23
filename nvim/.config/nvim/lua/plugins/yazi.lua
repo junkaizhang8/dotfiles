@@ -9,19 +9,19 @@ return {
     { "<leader>y", "", desc = "+yazi", mode = { "n", "v" } },
     {
       "<leader>yy",
-      "<cmd>Yazi<cr>",
+      "<CMD>Yazi<CR>",
       desc = "Open yazi at the current file",
       mode = { "n", "v" },
     },
     {
       -- Open in the current working directory
       "<leader>yw",
-      "<cmd>Yazi cwd<cr>",
+      "<CMD>Yazi cwd<CR>",
       desc = "Open the file manager in nvim's working directory",
     },
     {
       "<leader>yt",
-      "<cmd>Yazi toggle<cr>",
+      "<CMD>Yazi toggle<CR>",
       desc = "Resume the last yazi session",
     },
   },

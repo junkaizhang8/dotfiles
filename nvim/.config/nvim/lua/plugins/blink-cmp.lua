@@ -31,6 +31,7 @@ return {
         },
       },
     },
+    cmdline = { enabled = true },
     keymap = { preset = "default" },
   },
 }
