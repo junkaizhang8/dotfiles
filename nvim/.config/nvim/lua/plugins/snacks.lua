@@ -1,5 +1,10 @@
 return {
   "folke/snacks.nvim",
+  keys = {
+    -- Disable Snacks explorer
+    { "<leader>e", false },
+    { "<leader>E", false },
+  },
   opts = function(_, opts)
     opts.scroll = {
       enabled = true,
