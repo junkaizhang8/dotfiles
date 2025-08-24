@@ -27,13 +27,6 @@ end
 -- Delete character without yanking
 keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
 
--- Increment/decrement numbers
-keymap.set("n", "+", "<C-a>", { desc = "Increment Number" }) -- increment
-keymap.set("n", "-", "<C-x>", { desc = "Decrement Number" }) -- decrement
-
--- Select all
-keymap.set({ "n", "v" }, "<C-a>", "ggVG", { desc = "Select All" })
-
 -- Copy text from system clipboard to yank register
 keymap.set("n", "<leader>Y", "<cmd>let @0 = @+<cr>", { desc = "Copy Text from System Clipboard to Yank Register" })
 
