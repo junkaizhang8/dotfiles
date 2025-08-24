@@ -66,6 +66,8 @@ return {
         go_in_plus = "<CR>",
         go_out_plus = "<Tab>",
         synchronize = "s",
+        reset = ",",
+        reveal_cwd = ".",
       },
       content = {
         -- Ignore .DS_Store files
