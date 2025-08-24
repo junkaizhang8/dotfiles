@@ -13,6 +13,8 @@ return {
             [","] = "prev", -- set to `left` to always go left
           }
         end,
+        -- Disable dimming when using char mode
+        highlight = { backdrop = false },
       },
     },
   },
