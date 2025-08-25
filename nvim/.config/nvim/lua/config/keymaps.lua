@@ -2,9 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local keymap = vim.keymap
-local opts = { noremap = true, silent = true }
 
--- Disable certain defaults
+-- Disable certain defaults (assumed to be normal mode)
 local disabledKeys = {
   "<leader>|",
 }
@@ -14,13 +13,13 @@ for _, key in ipairs(disabledKeys) do
 end
 
 -- Disable Meta-a which is the prefix key for tmux
-keymap.set({ "i", "n", "v" }, "<M-a>", "<Nop>", opts)
+keymap.set({ "i", "n", "v" }, "<M-a>", "<Nop>", { noremap = true, silent = true })
 
 -- Disable middle click
 for _, mode in ipairs({ "n", "i" }) do
   for i = 1, 4 do
     local click = (i == 1) and "<MiddleMouse>" or ("<" .. i .. "-MiddleMouse>")
-    keymap.set(mode, click, "<Nop>", { silent = true })
+    keymap.set(mode, click, "<Nop>", { noremap = true, silent = true })
   end
 end
 
