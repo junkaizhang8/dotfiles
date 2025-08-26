@@ -47,7 +47,7 @@ return {
 
           -- Noop if the buffer isn't valid
           if path and vim.uv.fs_stat(path) then
-            require("mini.files").open(bufname, false)
+            require("mini.files").open(bufname, true)
           end
         end,
         desc = "File Explorer",
