@@ -1,3 +1,6 @@
+# Misc
+.DS_Store
+
 # git
 /git/.config/git/user.config
 
