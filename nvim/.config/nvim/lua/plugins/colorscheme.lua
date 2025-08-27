@@ -16,7 +16,8 @@
 ---@field fg_gutter string
 ---@field fg_sidebar string
 
-local transparent = true -- globally scoped to allow toggling
+-- Globally scoped to allow toggling
+local transparent = true
 
 local function apply_tokyonight()
   local bg = "#011628"
@@ -61,18 +62,22 @@ local function apply_tokyonight()
   vim.cmd("colorscheme tokyonight")
 end
 
-local function toggle_transparency()
-  transparent = not transparent
-  apply_tokyonight()
-  vim.notify("Transparency: " .. (transparent and "ON" or "OFF"), vim.log.levels.INFO, { title = "Transparency" })
-end
+local Snacks = require("snacks")
+
+Snacks.toggle({
+  name = "Transparency",
+  get = function()
+    return transparent
+  end,
+  set = function(state)
+    transparent = state
+    apply_tokyonight()
+  end,
+}):map("<leader>ut")
 
 return {
   "folke/tokyonight.nvim",
   config = function()
     apply_tokyonight()
   end,
-  keys = {
-    { "<leader>ut", toggle_transparency, desc = "Toggle Transparency" },
-  },
 }
