@@ -36,7 +36,7 @@ end
 
 return {
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     lazy = "VeryLazy",
     keys = {
       {
