@@ -6,22 +6,20 @@
 [init]
   defaultBranch = main
 
+[push]
+  autoSetupRemote = true
+
 [pull]
-  rebase = false
+  rebase = true
+
+[fetch]
+  prune = true
 
 [diff]
-  tool = nvimdiff
   colorMoved = default
 
-[difftool "nvimdiff"]
-  cmd = nvim -d "$LOCAL" "$REMOTE"
-
 [merge]
-  tool = nvimdiff
-
-[mergetool "nvimdiff"]
-  cmd = nvim -d "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
-  trustExitCode = false
+  conflictStyle = zdiff3
 
 [interactive]
   diffFilter = delta --color-only
