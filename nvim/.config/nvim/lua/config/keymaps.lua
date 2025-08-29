@@ -26,13 +26,6 @@ end
 -- Delete character without yanking
 keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
 
--- Copy text from system clipboard to yank register
-keymap.set("n", "<leader>Y", "<cmd>let @0 = @+<cr>", { desc = "Copy Text from System Clipboard to Yank Register" })
-
--- Paste last yanked text
-keymap.set("n", "<leader>p", '"0p', { desc = "Paste Last Yanked Text After the Cursor" })
-keymap.set("n", "<leader>P", '"0P', { desc = "Paste Last Yanked Text Before the Cursor" })
-
 -- Windows
 keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below", remap = true })
 keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
