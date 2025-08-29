@@ -6,7 +6,6 @@ return {
   },
   keys = {
     -- 👇 in this section, choose your own keymappings!
-    { "<leader>y", "", desc = "+yazi", mode = { "n", "v" } },
     {
       "<leader>yy",
       "<CMD>Yazi<CR>",
@@ -32,6 +31,13 @@ return {
       show_help = "<f1>",
     },
   },
+  config = function(_, opts)
+    local wk = require("which-key")
+
+    wk.add({
+      { "<leader>y", group = "+yazi", icon = "󰇥", mode = { "n", "v" } },
+    })
+  end,
   -- 👇 if you use `open_for_directories=true`, this is recommended
   init = function()
     -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
