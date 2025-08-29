@@ -1,9 +1,26 @@
 return {
   "folke/snacks.nvim",
   keys = {
-    -- Disable Snacks explorer
+    -- Disable some default keymaps
     { "<leader>e", false },
     { "<leader>E", false },
+    { "<leader>gd", false },
+    { "<leader>gf", false },
+    -- New keymaps
+    {
+      "<leader>gD",
+      function()
+        Snacks.picker.git_diff()
+      end,
+      desc = "Git Diff (hunks)",
+    },
+    {
+      "<leader>gF",
+      function()
+        Snacks.picker.git_log_file()
+      end,
+      desc = "Git Current File History",
+    },
   },
   opts = function(_, opts)
     opts.scroll = {
