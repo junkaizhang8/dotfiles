@@ -3,13 +3,14 @@
 -- Add any additional keymaps here
 local keymap = vim.keymap
 
--- Disable certain defaults (assumed to be normal mode)
+-- Disable global keymaps
 local disabledKeys = {
-  "<leader>|",
+  { "n", "<leader>|" },
 }
 
-for _, key in ipairs(disabledKeys) do
-  keymap.del("n", key)
+for _, mapping in ipairs(disabledKeys) do
+  local modes, key = mapping[1], mapping[2]
+  vim.keymap.del(modes, key)
 end
 
 -- Disable Meta-a which is the prefix key for tmux
