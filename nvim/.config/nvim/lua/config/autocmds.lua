@@ -15,6 +15,12 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 
 vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter" }, {
   callback = function()
+    local lualine = require("lualine")
+
+    if not lualine then
+      return
+    end
+
     local dashboard_filetypes = {
       alpha = true,
       dashboard = true,
@@ -26,7 +32,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter"
     end
 
     local function get_lualine_colors()
-      local lualine = require("lualine")
       local theme = lualine.get_config().options.theme
 
       if type(theme) == "string" then
@@ -42,7 +47,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter"
     end
 
     local function hide_statusline_highlight()
-      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "none" })
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE", fg = "NONE" })
     end
 
     local function update_lualine_statusline()
