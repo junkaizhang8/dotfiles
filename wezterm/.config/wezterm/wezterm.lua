@@ -67,7 +67,7 @@ config.mouse_bindings = {
 	},
 }
 
-config.window_background_opacity = 0.75
-config.macos_window_background_blur = 40
+config.window_background_opacity = 0.85
+config.macos_window_background_blur = 30
 
 return config
