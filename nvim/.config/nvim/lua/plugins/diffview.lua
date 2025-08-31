@@ -1,10 +1,20 @@
+local function setup_keymaps(bufnr)
+  local wk = require("which-key")
+
+  wk.add({
+    { "<leader>G", group = "+diffview", icon = "", mode = "n", buffer = bufnr },
+  })
+
+  vim.keymap.set("n", "<leader>e", "<Cmd>DiffviewToggleFiles<CR>", { desc = "Toggle file panel", buffer = bufnr })
+end
+
 return {
   "sindrets/diffview.nvim",
   cmd = { "DiffviewOpen", "DiffviewFileHistory" },
   keys = {
-    { "<leader>gf", "<CMD>DiffviewFileHistory<CR>", desc = "File History (Diffivew)" },
-    { "<leader>gd", "<CMD>DiffviewOpen<CR>", desc = "Open Diffview" },
-    { "<leader>gc", "<CMD>DiffviewClose<CR>", desc = "Close Diffview" },
+    { "<leader>gf", "<Cmd>DiffviewFileHistory<CR>", desc = "File History (Diffivew)" },
+    { "<leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "Open Diffview" },
+    { "<leader>gc", "<Cmd>DiffviewClose<CR>", desc = "Close Diffview" },
   },
   opts = function(_, opts)
     local actions = require("diffview.actions")
@@ -19,11 +29,7 @@ return {
     }
     opts.hooks = {
       diff_buf_read = function(bufnr)
-        local wk = require("which-key")
-
-        wk.add({
-          { "<leader>G", group = "+diffview", icon = "", mode = "n", buffer = bufnr },
-        })
+        setup_keymaps(bufnr)
       end,
     }
     -- stylua: ignore start
@@ -32,8 +38,8 @@ return {
       -- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/lua/plugins/diffview.lua
       disable_defaults = true,
       view = {
-          { "n", "<tab>",      actions.select_next_entry,             { desc = "Open the diff for the next file" } },
-          { "n", "<s-tab>",    actions.select_prev_entry,             { desc = "Open the diff for the previous file" } },
+          { "n", "<Tab>",      actions.select_next_entry,             { desc = "Open the diff for the next file" } },
+          { "n", "<S-Tab>",    actions.select_prev_entry,             { desc = "Open the diff for the previous file" } },
           { "n", "[x",         actions.prev_conflict,                 { desc = "Merge-tool: jump to the previous conflict" } },
           { "n", "]x",         actions.next_conflict,                 { desc = "Merge-tool: jump to the next conflict" } },
           { "n", "gf",         actions.goto_file_tab,                 { desc = "Open the file in a new tabpage" } },
@@ -56,7 +62,7 @@ return {
       file_panel = {
           { "n", "j",          actions.next_entry,                    { desc = "Bring the cursor to the next file entry" } },
           { "n", "k",          actions.prev_entry,                    { desc = "Bring the cursor to the previous file entry" } },
-          { "n", "<cr>",       actions.select_entry,                  { desc = "Open the diff for the selected entry" } },
+          { "n", "<CR>",       actions.select_entry,                  { desc = "Open the diff for the selected entry" } },
           { "n", "s",          actions.toggle_stage_entry,            { desc = "Stage / unstage the selected entry" } },
           { "n", "S",          actions.stage_all,                     { desc = "Stage all entries" } },
           { "n", "U",          actions.unstage_all,                   { desc = "Unstage all entries" } },
@@ -66,10 +72,10 @@ return {
           { "n", "za",         actions.toggle_fold,                   { desc = "Toggle fold" } },
           { "n", "zR",         actions.open_all_folds,                { desc = "Expand all folds" } },
           { "n", "zM",         actions.close_all_folds,               { desc = "Collapse all folds" } },
-          { "n", "<c-b>",      actions.scroll_view(-0.25),            { desc = "Scroll the view up" } },
-          { "n", "<c-f>",      actions.scroll_view(0.25),             { desc = "Scroll the view down" } },
-          { "n", "<tab>",      actions.select_next_entry,             { desc = "Open the diff for the next file" } },
-          { "n", "<s-tab>",    actions.select_prev_entry,             { desc = "Open the diff for the previous file" } },
+          { "n", "<C-b>",      actions.scroll_view(-0.25),            { desc = "Scroll the view up" } },
+          { "n", "<C-f>",      actions.scroll_view(0.25),             { desc = "Scroll the view down" } },
+          { "n", "<Tab>",      actions.select_next_entry,             { desc = "Open the diff for the next file" } },
+          { "n", "<S-Tab>",    actions.select_prev_entry,             { desc = "Open the diff for the previous file" } },
           { "n", "i",          actions.listing_style,                 { desc = "Toggle between 'list' and 'tree' views" } },
           { "n", "[x",         actions.prev_conflict,                 { desc = "Go to the previous conflict" } },
           { "n", "]x",         actions.next_conflict,                 { desc = "Go to the next conflict" } },
@@ -91,16 +97,16 @@ return {
           { "n", "zM",        actions.close_all_folds,            { desc = "Collapse all folds" } },
           { "n", "j",         actions.next_entry,                 { desc = "Bring the cursor to the next file entry" } },
           { "n", "k",         actions.prev_entry,                 { desc = "Bring the cursor to the previous file entry" } },
-          { "n", "<cr>",      actions.select_entry,               { desc = "Open the diff for the selected entry" } },
-          { "n", "<c-b>",     actions.scroll_view(-0.25),         { desc = "Scroll the view up" } },
-          { "n", "<c-f>",     actions.scroll_view(0.25),          { desc = "Scroll the view down" } },
-          { "n", "<tab>",     actions.select_next_entry,          { desc = "Open the diff for the next file" } },
-          { "n", "<s-tab>",   actions.select_prev_entry,          { desc = "Open the diff for the previous file" } },
+          { "n", "<CR>",      actions.select_entry,               { desc = "Open the diff for the selected entry" } },
+          { "n", "<C-b>",     actions.scroll_view(-0.25),         { desc = "Scroll the view up" } },
+          { "n", "<C-f>",     actions.scroll_view(0.25),          { desc = "Scroll the view down" } },
+          { "n", "<Tab>",     actions.select_next_entry,          { desc = "Open the diff for the next file" } },
+          { "n", "<S-Tab>",   actions.select_prev_entry,          { desc = "Open the diff for the previous file" } },
           { "n", "gf",        actions.goto_file_tab,              { desc = "Open the file in a new tabpage" } },
           { "n", "?",         actions.help("file_history_panel"), { desc = "Open the help panel" } },
       },
       option_panel = {
-          { "n", "<tab>", actions.select_entry,         { desc = "Change the current option" } },
+          { "n", "<Tab>", actions.select_entry,         { desc = "Change the current option" } },
           { "n", "q",     actions.close,                { desc = "Close the panel" } },
           { "n", "?",     actions.help("option_panel"), { desc = "Open the help panel" } },
       },
@@ -109,5 +115,17 @@ return {
       },
     }
     -- stylua: ignore end
+  end,
+  config = function(_, opts)
+    require("diffview").setup(opts)
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "DiffviewFiles", "DiffviewFileHistory" },
+      callback = function(args)
+        local bufnr = args.buf
+
+        setup_keymaps(bufnr)
+      end,
+    })
   end,
 }
