@@ -52,7 +52,7 @@ return {
     -- Arrows bookmark index
     table.insert(opts.sections.lualine_x, {
       function()
-        return ("[" .. statusline.text_for_statusline_with_icons() .. "]") or ""
+        return statusline.text_for_statusline_with_icons() or ""
       end,
       cond = function()
         return statusline.is_on_arrow_file() ~= nil
