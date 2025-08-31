@@ -8,19 +8,19 @@ return {
     -- 👇 in this section, choose your own keymappings!
     {
       "<leader>yy",
-      "<CMD>Yazi<CR>",
+      "<Cmd>Yazi<CR>",
       desc = "Open yazi at the current file",
       mode = { "n", "v" },
     },
     {
       -- Open in the current working directory
       "<leader>yw",
-      "<CMD>Yazi cwd<CR>",
+      "<Cmd>Yazi cwd<CR>",
       desc = "Open the file manager in nvim's working directory",
     },
     {
       "<leader>yt",
-      "<CMD>Yazi toggle<CR>",
+      "<Cmd>Yazi toggle<CR>",
       desc = "Resume the last yazi session",
     },
   },
@@ -32,7 +32,13 @@ return {
     },
   },
   config = function(_, opts)
+    require("yazi").setup(opts)
+
     local wk = require("which-key")
+
+    if not wk then
+      return
+    end
 
     wk.add({
       { "<leader>y", group = "+yazi", icon = "󰇥", mode = { "n", "v" } },
