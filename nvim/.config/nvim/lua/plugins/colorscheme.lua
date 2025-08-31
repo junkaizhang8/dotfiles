@@ -69,17 +69,15 @@ return {
 
     local Snacks = require("snacks")
 
-    if Snacks then
-      Snacks.toggle({
-        name = "Transparency",
-        get = function()
-          return transparent
-        end,
-        set = function(state)
-          transparent = state
-          apply_tokyonight()
-        end,
-      }):map("<leader>ut")
-    end
+    Snacks.toggle({
+      name = "Transparency",
+      get = function()
+        return transparent
+      end,
+      set = function(state)
+        transparent = state
+        apply_tokyonight()
+      end,
+    }):map("<leader>ut")
   end,
 }
