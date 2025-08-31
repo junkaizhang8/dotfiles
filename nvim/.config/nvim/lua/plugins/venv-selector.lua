@@ -1,6 +1,6 @@
 return {
   "linux-cultist/venv-selector.nvim",
-  branch = "regexp", -- This is the regexp branch, use this for the new version
+  branch = "main", -- VenvSelect is using `main` as the updated branch again
   opts = function()
     return {
       search = {

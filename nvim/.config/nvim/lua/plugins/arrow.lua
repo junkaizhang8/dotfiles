@@ -1,6 +1,6 @@
 return {
   "otavioschwanck/arrow.nvim",
-  -- enabled = false,
+  event = "VeryLazy",
   dependencies = {
     { "nvim-tree/nvim-web-devicons" },
     -- or if using `mini.icons`

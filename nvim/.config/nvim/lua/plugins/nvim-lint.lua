@@ -1,4 +1,3 @@
-local HOME = os.getenv("HOME")
 return {
   "mfussenegger/nvim-lint",
   optional = true,

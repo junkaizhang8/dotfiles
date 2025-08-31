@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter-context",
+  event = { "BufReadPost", "BufNewFile" },
   opts = {
     -- Avoid showing a bunch of lines if we're deeply nested
     max_lines = 3,
