@@ -13,13 +13,9 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste",
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter", "ColorScheme" }, {
   callback = function()
     local lualine = require("lualine")
-
-    if not lualine then
-      return
-    end
 
     local dashboard_filetypes = {
       alpha = true,

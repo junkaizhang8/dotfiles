@@ -55,10 +55,6 @@ return {
 
     local wk = require("which-key")
 
-    if not wk then
-      return
-    end
-
     wk.add({
       { "<leader>a", group = "+avante/ai", icon = "", mode = { "n", "v" } },
     })

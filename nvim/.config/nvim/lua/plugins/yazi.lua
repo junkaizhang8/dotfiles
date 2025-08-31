@@ -36,10 +36,6 @@ return {
 
     local wk = require("which-key")
 
-    if not wk then
-      return
-    end
-
     wk.add({
       { "<leader>y", group = "+yazi", icon = "󰇥", mode = { "n", "v" } },
     })
