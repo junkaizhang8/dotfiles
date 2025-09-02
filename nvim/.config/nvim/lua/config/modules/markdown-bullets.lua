@@ -184,13 +184,13 @@ local function toggle_checkbox(start_line, end_line)
   end
 end
 
--- Command to toggle checkboxes in the selected range
-api.nvim_create_user_command("ToggleCheckbox", function(opts)
-  toggle_checkbox(opts.line1 - 1, opts.line2)
-end, { range = true, desc = "Toggle Checkbox" })
-
 function M.setup(opts)
   opts = merge_opts(opts)
+
+  -- Command to toggle checkboxes in the selected range
+  api.nvim_create_user_command("ToggleCheckbox", function(args)
+    toggle_checkbox(args.line1 - 1, args.line2)
+  end, { range = true, desc = "Toggle Checkbox" })
 
   api.nvim_create_autocmd("FileType", {
     pattern = { "markdown" },
