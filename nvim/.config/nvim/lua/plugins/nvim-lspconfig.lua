@@ -21,10 +21,11 @@ return {
       keys[#keys + 1] = mapping
     end
 
-    opts.diagnostics = {
+    -- Add border to diagnostic messages
+    opts.diagnostics = vim.tbl_deep_extend("force", opts.diagnostics or {}, {
       float = {
         border = "rounded",
       },
-    }
+    })
   end,
 }
