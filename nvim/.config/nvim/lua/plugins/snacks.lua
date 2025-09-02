@@ -76,6 +76,15 @@ return {
           hidden = true,
           exclude = { "node_modules", ".git" },
         },
+        notifications = {
+          win = {
+            preview = {
+              wo = {
+                wrap = true,
+              },
+            },
+          },
+        },
       },
     }
 
