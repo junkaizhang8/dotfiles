@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 usage() {
   echo "Usage: trunc file1 [file2 ...]"

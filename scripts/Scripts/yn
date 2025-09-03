@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 default=n
 prompt=
@@ -13,29 +13,35 @@ usage() {
 
 while [ "$1" ]; do
   case "$1" in
-    -h|--help)
-      usage
-      ;;
-    -y)
-      default=y
-      shift
-      ;;
-    -n)
-      default=n
-      shift
-      ;;
-    *)
-      prompt="$1"
-      shift
-      ;;
+  -h | --help)
+    usage
+    ;;
+  -y)
+    default=y
+    shift
+    ;;
+  -n)
+    default=n
+    shift
+    ;;
+  *)
+    prompt="$1"
+    shift
+    ;;
   esac
 done
 
-[ "$default" = y ] && prompt="$prompt [Y/n]: " || prompt="$prompt [y/N]: "
-read -q "?$prompt" answer
+if [ "$default" = y ]; then
+  prompt="$prompt [Y/n]: "
+else
+  prompt="$prompt [y/N]: "
+fi
+
+read -r -n 1 -p "$prompt" answer
 echo
+
 case "${answer:-$default}" in
-  [Yy]*) exit 0 ;;
-  [Nn]*) exit 1 ;;
-  *) exit 1 ;;
+[Yy]*) exit 0 ;;
+[Nn]*) exit 1 ;;
+*) exit 1 ;;
 esac
