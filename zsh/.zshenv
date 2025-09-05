@@ -30,4 +30,4 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
 # Rust
-. "$CARGO_HOME/env"
+source "$CARGO_HOME/env"
