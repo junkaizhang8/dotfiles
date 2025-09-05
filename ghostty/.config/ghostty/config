@@ -1,5 +1,5 @@
 font-family = "MesloLGS Nerd Font Mono"
-font-size = 16
+font-size = 14
 
 window-height = 200
 window-width = 200
@@ -12,7 +12,7 @@ background-opacity = 0.85
 background-blur = 30
 
 window-padding-x = 12
-window-padding-y = 8
+window-padding-y = 4
 
 background = #011423
 foreground = #CBE0F0
@@ -28,23 +28,23 @@ cursor-color = #47FF9C
 
 # ANSI
 palette = 0=#214969
-palette = 1=#E52E2E
+palette = 1=#DB4B4C
 palette = 2=#44FFB1
 palette = 3=#FFE073
 palette = 4=#0FC5ED
 palette = 5=#A277FF
 palette = 6=#24EAF7
-palette = 7=#24EAF7
+palette = 7=#E6EAF2
 
 # Brights
-palette = 8=#214969
-palette = 9=#E52E2E
-palette = 10=#44FFB1
-palette = 11=#FFE073
-palette = 12=#0FC5ED
-palette = 13=#A277FF
-palette = 14=#24EAF7
-palette = 15=#24EAF7
+palette = 8=#2D5B86
+palette = 9=#E5625E
+palette = 10=#5CFFCE
+palette = 11=#FFE78F
+palette = 12=#26C7F0
+palette = 13=#B38EFF
+palette = 14=#36F0FF
+palette = 15=#F0F4FF
 
 # TODO:
 # For cool trails, use cursor_blaze_no_trail and cursor_smear
