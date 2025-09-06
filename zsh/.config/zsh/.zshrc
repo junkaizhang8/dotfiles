@@ -257,7 +257,7 @@ bindkey -r '^[a'
 # ==============================================================================
 
 # Aliases: git
-alias gl='git log --all --graph --pretty=format:"%C(magenta)%h %C(white) %an %C(yellow) %ar%C(auto) %D%n%s%n"'
+alias gl='git log --all --graph --pretty=format:"%C(magenta)%h %C(cyan) %an %C(yellow) %ar%C(auto) %D%n%s%n"'
 alias gls='git log --oneline --pretty=format:"%C(magenta)%h%C(auto) %s"'
 alias gs='git status -s'
 
