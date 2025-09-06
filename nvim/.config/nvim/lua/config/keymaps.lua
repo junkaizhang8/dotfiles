@@ -27,6 +27,9 @@ end
 -- Delete character without yanking
 keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
 
+-- Clear line (preserves any white space at the start of the line)
+keymap.set("n", "X", "^D", { desc = "Clear Line" })
+
 -- Windows
 keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below", remap = true })
 keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
