@@ -48,14 +48,9 @@ return {
     behaviour = {
       auto_suggestions = false,
     },
+    selection = {
+      -- Disable visual mode keymap hints
+      hint_display = "none",
+    },
   },
-  config = function(_, opts)
-    require("avante").setup(opts)
-
-    local wk = require("which-key")
-
-    wk.add({
-      { "<leader>a", group = "+avante/ai", icon = "", mode = { "n", "v" } },
-    })
-  end,
 }

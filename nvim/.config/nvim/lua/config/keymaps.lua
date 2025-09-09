@@ -38,3 +38,9 @@ keymap.set("n", "<C-w><Left>", "<C-w><", { desc = "Decrease Window Width" })
 keymap.set("n", "<C-w><Right>", "<C-w>>", { desc = "Increase Window Width" })
 keymap.set("n", "<C-w><Up>", "<C-w>+", { desc = "Increase Window Height" })
 keymap.set("n", "<C-w><Down>", "<C-w>-", { desc = "Decrease Window Height" })
+
+local wk = require("which-key")
+
+wk.add({
+  { "<leader>a", group = "+ai", icon = "", mode = { "n", "v" } },
+})
