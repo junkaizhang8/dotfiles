@@ -28,7 +28,7 @@ usage() {
 }
 
 list_history() {
-  [ "$all" = true ] && list_count=$(wc -l < "$HISTFILE")
+  [ "$all" = true ] && list_count=$(wc -l <"$HISTFILE")
   if [ -n "$regex" ]; then
     grep --color=always -E "$regex" "$HISTFILE" | tail -n "$list_count" | tac | nl | tac
   else
@@ -37,10 +37,13 @@ list_history() {
 }
 
 remove_history() {
-  [ "$all" = true ] && remove_count=$(wc -l < "$HISTFILE")
+  [ "$all" = true ] && remove_count=$(wc -l <"$HISTFILE")
   if [ -n "$regex" ]; then
     matched_lines=$(cat "$HISTFILE" | nl | grep --color=always -E "$regex" | tail -n "$((remove_count + 1))")
-    [ -z "$matched_lines" ] && { echo "No autosuggestions found matching the given regex."; exit 1; }
+    [ -z "$matched_lines" ] && {
+      echo "No autosuggestions found matching the given regex."
+      exit 1
+    }
 
     matched_count=$(echo "$matched_lines" | ghead -n -1 | wc -l | tr -d ' ')
     matched_line_numbers=$(echo "$matched_lines" | awk '{print $1}' | tr '\n' ' ' | sed 's/ /d;/g')
@@ -55,20 +58,23 @@ remove_history() {
     fi
 
     if [ "$force" = true ]; then
-      cat "$HISTFILE" > "$HISTFILE_BACKUP"
-      sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" > "$HISTFILE"
+      cat "$HISTFILE" >"$HISTFILE_BACKUP"
+      sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" >"$HISTFILE"
     else
       echo "$matched_lines" | ghead -n -1
       if yn "$prompt"; then
-        cat "$HISTFILE" > "$HISTFILE_BACKUP"
-        sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" > "$HISTFILE"
+        cat "$HISTFILE" >"$HISTFILE_BACKUP"
+        sed -e "$matched_line_numbers" "$HISTFILE_BACKUP" >"$HISTFILE"
       else
         exit 1
       fi
     fi
   else
     matched_lines=$(cat "$HISTFILE" | nl | tail -n "$((remove_count + 1))" | ghead -n -1)
-    [ -z "$matched_lines" ] && { echo "No autosuggestions found matching the given regex."; exit 1; }
+    [ -z "$matched_lines" ] && {
+      echo "No autosuggestions found matching the given regex."
+      exit 1
+    }
 
     matched_count=$(echo "$matched_lines" | wc -l | tr -d ' ')
     if [ "$matched_count" -eq 0 ]; then
@@ -81,13 +87,13 @@ remove_history() {
     fi
 
     if [ "$force" = true ]; then
-      cat "$HISTFILE" > "$HISTFILE_BACKUP"
-      ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" > "$HISTFILE"
+      cat "$HISTFILE" >"$HISTFILE_BACKUP"
+      ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" >"$HISTFILE"
     else
       echo "$matched_lines"
       if yn "$prompt"; then
-        cat "$HISTFILE" > "$HISTFILE_BACKUP"
-        ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" > "$HISTFILE"
+        cat "$HISTFILE" >"$HISTFILE_BACKUP"
+        ghead -n -"$((remove_count + 1))" "$HISTFILE_BACKUP" >"$HISTFILE"
       else
         exit 1
       fi
@@ -96,16 +102,19 @@ remove_history() {
 }
 
 save_history() {
-  [ -z "$save_file" ] && { echo '$ZHISTFILE_BACKUP not found.'; exit 1; }
+  [ -z "$save_file" ] && {
+    echo '$ZHISTFILE_BACKUP not found.'
+    exit 1
+  }
   if [ -f "$save_file" ]; then
     if yn "File $save_file already exists. Overwrite?"; then
-      cat "$HISTFILE" > "$save_file"
+      cat "$HISTFILE" >"$save_file"
       echo "History saved to $save_file"
     else
       exit 1
     fi
   else
-    cat "$HISTFILE" > "$save_file"
+    cat "$HISTFILE" >"$save_file"
     echo "History saved to $save_file"
   fi
 }
@@ -115,44 +124,47 @@ edit_history() {
     echo "EDITOR environment variable is not set."
     exit 1
   fi
-  [ ! -f "$HISTFILE" ] && { echo "History file $HISTFILE does not exist."; exit 1; }
+  [ ! -f "$HISTFILE" ] && {
+    echo "History file $HISTFILE does not exist."
+    exit 1
+  }
 
   # If the editor is nvim, open the file at the last line
   if [ "$EDITOR" = nvim ]; then
     "$EDITOR" + "$HISTFILE"
   else
-  "$EDITOR" "$HISTFILE"
+    "$EDITOR" "$HISTFILE"
   fi
 }
 
 [ $# -eq 0 ] && usage
 
 case "$1" in
-  h|help)
-    usage
-    ;;
-  r|remove)
-    mode="remove"
-    ;;
-  l|list)
-    mode="list"
-    ;;
-  s|save)
-    mode="save"
-    shift
-    if [ -n "$1" ]; then
-      save_file="$HISTDIR/$1"
-    else
-      save_file="$HISTFILE_BACKUP"
-    fi
-    ;;
-  e|edit)
-    mode="edit"
-    ;;
-  *)
-    echo "Unexpected command: $1"
-    exit 1
-    ;;
+h | help)
+  usage
+  ;;
+r | remove)
+  mode="remove"
+  ;;
+l | list)
+  mode="list"
+  ;;
+s | save)
+  mode="save"
+  shift
+  if [ -n "$1" ]; then
+    save_file="$HISTDIR/$1"
+  else
+    save_file="$HISTFILE_BACKUP"
+  fi
+  ;;
+e | edit)
+  mode="edit"
+  ;;
+*)
+  echo "Unexpected command: $1"
+  exit 1
+  ;;
 esac
 
 [ $# -gt 0 ] && shift
@@ -160,33 +172,33 @@ esac
 while [ "$1" ]; do
   if [[ "$1" =~ ^- ]]; then
     case "$1" in
-      -n)
-        shift
-        if [ -n "$1" ]; then
-          if [[ "$1" =~ ^[0-9]+$ ]] && [ "$1" -gt 0 ]; then
-            [ "$mode" = "list" ] && list_count="$1" || remove_count="$1"
-            shift
-          else
-            echo "Invalid argument: $1"
-            exit 1
-          fi
+    -n)
+      shift
+      if [ -n "$1" ]; then
+        if [[ "$1" =~ ^[0-9]+$ ]] && [ "$1" -gt 0 ]; then
+          [ "$mode" = "list" ] && list_count="$1" || remove_count="$1"
+          shift
         else
-          echo "Option -n requires an argument."
+          echo "Invalid argument: $1"
           exit 1
         fi
-        ;;
-      -a)
-        all=true
-        shift
-        ;;
-      -f)
-        force=true
-        shift
-        ;;
-      *)
-        echo "Unexpected option: $1"
+      else
+        echo "Option -n requires an argument."
         exit 1
-        ;;
+      fi
+      ;;
+    -a)
+      all=true
+      shift
+      ;;
+    -f)
+      force=true
+      shift
+      ;;
+    *)
+      echo "Unexpected option: $1"
+      exit 1
+      ;;
     esac
   else
     [ -n "$regex" ] && regex="$regex|$1" || regex="$1"

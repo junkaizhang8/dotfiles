@@ -8,5 +8,5 @@ usage() {
 [ "$#" -lt 1 ] && usage
 
 for file in "$@"; do
-  [ -f "$file" ] && : > "$@"
+  [ -f "$file" ] && : >"$@"
 done
