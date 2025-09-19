@@ -9,6 +9,9 @@
 /zsh/.config/zsh/.zsh_sessions
 /zsh/.config/zsh/.zcompdump*
 
+# fish
+/fish/.config/fish/fish_variables
+
 # vim
 /vim/.config/vim/vim/
 /vim/.config/vim/.netrwhist

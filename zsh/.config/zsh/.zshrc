@@ -294,13 +294,12 @@ alias cat='bat'
 alias vi='nvim'
 alias v='nvim'
 alias cwd='echo -n $PWD | pbcopy'
-alias dsp='docker system prune -f'
+alias dsp='docker system prune'
 alias regex='v "$HOME/Cheatsheets/regex"'
 alias bs='browser-sync start --server --no-online --files="**/*"'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias fetch='fastfetch'
-alias td='tmux detach'
 
 # ==============================================================================
 # FUNCTIONS
