@@ -1,6 +1,5 @@
 return {
   "yetone/avante.nvim",
-  enabled = false,
   event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -28,7 +27,7 @@ return {
     provider = "copilot",
     providers = {
       copilot = {
-        model = "claude-3.7-sonnet",
+        model = "claude-sonnet-4",
         timeout = 30000,
         extra_request_body = {
           temperature = 0.75,
