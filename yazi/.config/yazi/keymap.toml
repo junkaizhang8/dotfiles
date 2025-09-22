@@ -507,3 +507,25 @@ keymap = [
 on = ["c", "m"]
 run = "plugin chmod"
 desc = "Chmod on selected files"
+
+[[mgr.prepend_keymap]]
+on = ["g", "z"]
+run = '''
+  shell '
+    for f in "$@"; do
+      case "$f" in
+        *.zip)
+          dir="$(basename "$f" .zip)"
+          target="$dir"
+          i=1
+          while [ -e "$target" ]; do
+            target="${dir}_$i"
+            i=$((i+1))
+          done
+          unzip "$f" -d "$target"
+          ;;
+      esac
+    done
+  ' --confirm
+'''
+desc = "Unzip the selected zip file(s)"
