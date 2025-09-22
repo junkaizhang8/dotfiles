@@ -300,6 +300,7 @@ alias bs='browser-sync start --server --no-online --files="**/*"'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias fetch='fastfetch'
+alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
 
 # ==============================================================================
 # FUNCTIONS
