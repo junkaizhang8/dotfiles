@@ -139,8 +139,15 @@ return {
           return false
         end
         -- Disable bugged notification that shows in markdown files when
-        -- you press <enter> when ghost text is showing
+        -- you press <CR> when blink.cmp ghost text is showing
         if msg:match("ghost_text/utils.lua:%d+: Invalid buffer id") then
+          return false
+        end
+        -- Disable other bugged notifications from blink.cmp
+        if msg:match("ghost_text/init.lua:%d+: Invalid 'col': out of range") then
+          return false
+        end
+        if msg:match("lib/text_edits.lua:%d+: attempt to get length of local") then
           return false
         end
         return true
