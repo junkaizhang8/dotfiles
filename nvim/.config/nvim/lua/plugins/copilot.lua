@@ -10,8 +10,6 @@ return {
       is_set_up = true
     end
 
-    local Snacks = require("snacks")
-
     Snacks.toggle({
       name = "Copilot Completion",
       get = function()
