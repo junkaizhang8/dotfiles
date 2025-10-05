@@ -27,7 +27,7 @@ local function apply_tokyonight()
   local bg_visual = "#275378"
   local fg = "#CBE0F0"
   local fg_dark = "#B4D0E9"
-  local fg_gutter = "#627E97"
+  local fg_gutter = "#3E5870"
   local border = "#547998"
 
   require("tokyonight").setup({
