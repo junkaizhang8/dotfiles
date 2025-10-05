@@ -6,7 +6,6 @@ return {
       dependencies = { "nvim-lua/plenary.nvim" },
     },
   },
-  event = { "InsertEnter", "CmdlineEnter" },
   opts = {
     completion = {
       menu = { border = "rounded" },
@@ -30,6 +29,13 @@ return {
           },
         },
       },
+    },
+    cmdline = {
+      completion = {
+        list = { selection = { preselect = true } },
+        ghost_text = { enabled = true },
+      },
+      keymap = { preset = "inherit" },
     },
     keymap = { preset = "default" },
   },
