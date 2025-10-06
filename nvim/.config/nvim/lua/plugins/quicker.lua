@@ -35,11 +35,4 @@ return {
       },
     },
   },
-  config = function(_, opts)
-    require("quicker").setup(opts)
-
-    local normal_fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
-
-    vim.api.nvim_set_hl(0, "QuickFixLineNr", { fg = normal_fg })
-  end,
 }

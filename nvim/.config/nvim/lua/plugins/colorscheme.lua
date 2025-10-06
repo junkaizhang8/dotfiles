@@ -1,22 +1,3 @@
----@class ColorScheme
----@field none string
----@field bg string
----@field bg_dark string
----@field bg_float string
----@field bg_highlight string
----@field bg_popup string
----@field bg_search string
----@field bg_sidebar string
----@field bg_statusline string
----@field bg_visual string
----@field border string
----@field fg string
----@field fg_dark string
----@field fg_float string
----@field fg_gutter string
----@field fg_sidebar string
-
--- Globally scoped to allow toggling
 local transparent = true
 
 local function apply_tokyonight()
@@ -34,12 +15,10 @@ local function apply_tokyonight()
     style = "night",
     transparent = transparent,
     styles = {
-      sidebars = transparent and "transparent" or "dark",
-      floats = transparent and "transparent" or "dark",
+      sidebars = "dark",
+      floats = "dark",
     },
 
-    -- We add an annotation to prevent the LSP from throwing a bunch of warnings
-    ---@param colors ColorScheme
     on_colors = function(colors)
       colors.bg = bg
       colors.bg_dark = bg_dark
@@ -56,6 +35,10 @@ local function apply_tokyonight()
       colors.fg_float = fg
       colors.fg_gutter = fg_gutter
       colors.fg_sidebar = fg_dark
+    end,
+
+    on_highlights = function(hl, c)
+      hl.QuickFixLineNr = { fg = c.fg }
     end,
   })
 
