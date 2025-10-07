@@ -283,6 +283,7 @@ alias lsfa='ls -fa'
 alias tree='ls --tree'
 
 # Aliases: misc
+alias :q='exit' # Bad habit from vim
 alias reload='exec zsh'
 alias zshrc='v "$ZDOTDIR/.zshrc"'
 alias zshenv='v "$HOME/.zshenv"'
