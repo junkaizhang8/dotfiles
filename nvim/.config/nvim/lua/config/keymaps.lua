@@ -54,8 +54,8 @@ keymap.set("n", "<C-M-l>", smart_splits.resize_right, { desc = "Resize Split Rig
 
 -- Moving between splits
 keymap.set("n", "<C-h>", smart_splits.move_cursor_left, { desc = "Move to Split Left" })
-keymap.set("n", "<C-k>", smart_splits.move_cursor_down, { desc = "Move to Split Down" })
-keymap.set("n", "<C-j>", smart_splits.move_cursor_up, { desc = "Move to Split Up" })
+keymap.set("n", "<C-j>", smart_splits.move_cursor_down, { desc = "Move to Split Down" })
+keymap.set("n", "<C-k>", smart_splits.move_cursor_up, { desc = "Move to Split Up" })
 keymap.set("n", "<C-l>", smart_splits.move_cursor_right, { desc = "Move to Split Right" })
 keymap.set(
   "n",
