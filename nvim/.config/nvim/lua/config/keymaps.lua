@@ -57,6 +57,12 @@ keymap.set("n", "<C-h>", smart_splits.move_cursor_left, { desc = "Move to Split 
 keymap.set("n", "<C-k>", smart_splits.move_cursor_down, { desc = "Move to Split Down" })
 keymap.set("n", "<C-j>", smart_splits.move_cursor_up, { desc = "Move to Split Up" })
 keymap.set("n", "<C-l>", smart_splits.move_cursor_right, { desc = "Move to Split Right" })
+keymap.set(
+  "n",
+  "<C-\\>",
+  require("config.modules.smart-previous-pane").move_cursor_previous,
+  { desc = "Move to Previous Split" }
+)
 
 -- Swapping buffers between windows
 keymap.set("n", "<leader><C-h>", smart_splits.swap_buf_left, { desc = "Swap Buffer Left" })

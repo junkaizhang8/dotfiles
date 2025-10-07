@@ -3,3 +3,4 @@ require("config.lazy")
 
 -- Modules
 require("config.modules.markdown-bullets").setup()
+require("config.modules.smart-previous-pane").setup()
