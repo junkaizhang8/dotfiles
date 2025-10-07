@@ -6,11 +6,15 @@ local keymap = vim.keymap
 -- Disable global keymaps
 local disabledKeys = {
   { "n", "<leader>|" },
+  { "n", "<C-h>" },
+  { "n", "<C-j>" },
+  { "n", "<C-k>" },
+  { "n", "<C-l>" },
 }
 
 for _, mapping in ipairs(disabledKeys) do
   local modes, key = mapping[1], mapping[2]
-  vim.keymap.del(modes, key)
+  keymap.del(modes, key)
 end
 
 -- Disable Meta-a which is the prefix key for tmux
@@ -30,14 +34,35 @@ keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
 -- Clear line (preserves any white space at the start of the line)
 keymap.set("n", "X", "^D", { desc = "Clear Line" })
 
+-- Go to the start of the line while in insert mode
+keymap.set({ "i", "c" }, "<C-h>", "<C-o>I", { desc = "Go to Start of Line" })
+
+-- Go to the end of the line while in insert mode
+keymap.set({ "i", "c" }, "<C-l>", "<C-o>A", { desc = "Go to End of Line" })
+
 -- Windows
 keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below", remap = true })
 keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
 
-keymap.set("n", "<C-w><Left>", "<C-w><", { desc = "Decrease Window Width" })
-keymap.set("n", "<C-w><Right>", "<C-w>>", { desc = "Increase Window Width" })
-keymap.set("n", "<C-w><Up>", "<C-w>+", { desc = "Increase Window Height" })
-keymap.set("n", "<C-w><Down>", "<C-w>-", { desc = "Decrease Window Height" })
+local smart_splits = require("smart-splits")
+
+-- Resizing splits
+keymap.set("n", "<C-M-h>", smart_splits.resize_left, { desc = "Resize Split Left" })
+keymap.set("n", "<C-M-j>", smart_splits.resize_down, { desc = "Resize Split Down" })
+keymap.set("n", "<C-M-k>", smart_splits.resize_up, { desc = "Resize Split Up" })
+keymap.set("n", "<C-M-l>", smart_splits.resize_right, { desc = "Resize Split Right" })
+
+-- Moving between splits
+keymap.set("n", "<C-h>", smart_splits.move_cursor_left, { desc = "Move to Split Left" })
+keymap.set("n", "<C-k>", smart_splits.move_cursor_down, { desc = "Move to Split Down" })
+keymap.set("n", "<C-j>", smart_splits.move_cursor_up, { desc = "Move to Split Up" })
+keymap.set("n", "<C-l>", smart_splits.move_cursor_right, { desc = "Move to Split Right" })
+
+-- Swapping buffers between windows
+keymap.set("n", "<leader><C-h>", smart_splits.swap_buf_left, { desc = "Swap Buffer Left" })
+keymap.set("n", "<leader><C-j>", smart_splits.swap_buf_down, { desc = "Swap Buffer Down" })
+keymap.set("n", "<leader><C-k>", smart_splits.swap_buf_up, { desc = "Swap Buffer Up" })
+keymap.set("n", "<leader><C-l>", smart_splits.swap_buf_right, { desc = "Swap Buffer Right" })
 
 local wk = require("which-key")
 
