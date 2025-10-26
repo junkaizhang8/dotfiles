@@ -5,8 +5,10 @@ return {
       mode = "search",
     },
     modes = {
-      -- Disable matching next/previous character using f, t, F, T
       char = {
+        -- Disable char mode for now as it breaks macros that use char motions
+        enabled = false,
+        -- Disable matching next/previous character using f, t, F, T
         char_actions = function()
           return {
             [";"] = "next", -- set to `right` to always go right
