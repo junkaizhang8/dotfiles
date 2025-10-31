@@ -120,6 +120,18 @@ return {
         relative = "editor",
         col = -1,
       },
+      news = {
+        width = 0.6,
+        height = 0.6,
+        border = "rounded",
+        wo = {
+          spell = false,
+          wrap = false,
+          signcolumn = "yes",
+          statuscolumn = " ",
+          conceallevel = 3,
+        },
+      },
     }
     opts.image = {
       enabled = true,
