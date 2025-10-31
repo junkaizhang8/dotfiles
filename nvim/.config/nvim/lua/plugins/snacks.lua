@@ -134,6 +134,10 @@ return {
       enabled = true,
       filter = function(notif)
         local msg = notif.msg
+        -- Filter out LSP definition notification when no definition found
+        if msg == "No information available" then
+          return false
+        end
         -- Filter out notification from img-clip when pasting
         if msg == "Content is not an image." then
           return false
