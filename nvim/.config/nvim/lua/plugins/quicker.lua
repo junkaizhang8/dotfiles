@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   keys = {
     {
-      "<leader>xf",
+      "<leader>xq",
       function()
         require("quicker").toggle()
       end,
