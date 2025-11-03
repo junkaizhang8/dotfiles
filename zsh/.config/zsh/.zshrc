@@ -299,7 +299,7 @@ alias dsp='docker system prune'
 alias regex='v "$HOME/Cheatsheets/regex"'
 alias bs='browser-sync start --server --no-online --files="**/*"'
 alias lg='lazygit'
-alias ld='lazydocker'
+alias lzd='lazydocker'
 alias fetch='fastfetch'
 alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
 
