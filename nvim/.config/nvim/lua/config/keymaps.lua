@@ -18,21 +18,22 @@ for _, mapping in ipairs(disabledKeys) do
 end
 
 -- Disable Meta-a which is the prefix key for tmux
-keymap.set({ "i", "n", "v" }, "<M-a>", "<Nop>", { noremap = true, silent = true })
+keymap.set({ "i", "n", "v" }, "<M-a>", "<Nop>", { silent = true })
 
 -- Disable middle click
 for _, mode in ipairs({ "n", "i" }) do
   for i = 1, 4 do
     local click = (i == 1) and "<MiddleMouse>" or ("<" .. i .. "-MiddleMouse>")
-    keymap.set(mode, click, "<Nop>", { noremap = true, silent = true })
+    keymap.set(mode, click, "<Nop>", { silent = true })
   end
 end
 
 -- Delete character without yanking
-keymap.set("n", "x", '"_x', { desc = "Delete Character Without Yanking" })
+keymap.set("n", "x", '"_x', { desc = "Delete Character Under Cursor Without Yanking" })
+keymap.set("n", "X", '"_X', { desc = "Delete Character Before Cursor Without Yanking" })
 
 -- Clear line (preserves any white space at the start of the line)
-keymap.set("n", "X", "^D", { desc = "Clear Line" })
+keymap.set("n", "dc", "^D", { desc = "Clear Line" })
 
 -- Go to the start of the line while in insert mode
 keymap.set({ "i", "c" }, "<C-h>", "<C-o>I", { desc = "Go to Start of Line" })

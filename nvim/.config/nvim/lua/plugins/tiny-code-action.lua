@@ -10,7 +10,6 @@ return {
       function()
         require("tiny-code-action").code_action({})
       end,
-      noremap = true,
       silent = true,
       desc = "Code Action (Tiny)",
     },
