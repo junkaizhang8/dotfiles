@@ -6,7 +6,7 @@ prompt=
 usage() {
   echo "Usage: yn [-y|-n] [prompt]"
   echo "  -y           Default yes"
-  echo "  -n           Default no"
+  echo "  -n           Default no (default)"
   echo "  prompt       The prompt to display"
   exit 1
 }
