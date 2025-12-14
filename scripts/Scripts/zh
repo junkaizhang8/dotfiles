@@ -24,7 +24,7 @@ usage() {
   echo "  -n <num>                  List the last <num> matching entries."
   echo "  -a                        List all matching entries."
   echo "  -f                        Force removal without a prompt."
-  exit 1
+  exit 0
 }
 
 list_history() {

@@ -2,7 +2,7 @@
 
 usage() {
   echo "Usage: trunc file1 [file2 ...]"
-  exit 1
+  exit 0
 }
 
 [ "$#" -lt 1 ] && usage
