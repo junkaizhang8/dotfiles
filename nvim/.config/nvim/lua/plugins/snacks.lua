@@ -180,7 +180,7 @@ return {
         },
         files = {
           hidden = true,
-          exclude = { "node_modules", ".git" },
+          exclude = { ".git", "node_modules", "__pycache__", ".DS_Store" },
         },
         recent = {
           hidden = true,
