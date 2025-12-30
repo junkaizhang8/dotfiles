@@ -27,5 +27,28 @@ return {
     presets = {
       lsp_doc_border = true,
     },
+    routes = {
+      {
+        filter = {
+          event = "msg_show",
+          kind = {
+            "shell_out",
+            "shell_err",
+          },
+        },
+        view = "notify",
+      },
+      {
+        filter = {
+          event = "msg_show",
+          any = {
+            { find = "%d+L, %d+B" },
+            { find = "; after #%d+" },
+            { find = "; before #%d+" },
+          },
+        },
+        view = "mini",
+      },
+    },
   },
 }
