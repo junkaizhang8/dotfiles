@@ -5,7 +5,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
-config.font_size = 16
+config.font_size = 14
 
 config.hide_tab_bar_if_only_one_tab = true
 
@@ -14,7 +14,7 @@ config.window_decorations = "RESIZE"
 config.window_close_confirmation = "NeverPrompt"
 
 config.initial_cols = 200
-config.initial_rows = 50
+config.initial_rows = 100
 
 config.max_fps = 120
 config.prefer_egl = true
