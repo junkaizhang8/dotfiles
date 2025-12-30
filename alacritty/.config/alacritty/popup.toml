@@ -1,0 +1,6 @@
+[general]
+import = ["~/.config/alacritty/alacritty.toml"]
+
+[window]
+startup_mode = "Windowed"
+decorations = "None"

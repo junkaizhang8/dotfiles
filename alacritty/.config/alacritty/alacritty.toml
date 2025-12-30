@@ -1,0 +1,60 @@
+[window]
+padding = { x = 12, y = 4 }
+dynamic_padding = false
+opacity = 0.85
+blur = true
+decorations = "None"
+startup_mode = "Maximized"
+
+[scrolling]
+history = 10000
+
+[font]
+normal = { family = "MesloLGS Nerd Font Mono", style = "Regular" }
+size = 14.0
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = true
+
+[selection]
+save_to_clipboard = true
+
+[terminal.shell]
+program = "/bin/zsh"
+args = ["--login"]
+
+[colors.primary]
+background = "#011423"
+foreground = "#CBE0F0"
+
+[colors.selection]
+text = "#CBE0F0"
+background = "#033259"
+
+[colors.cursor]
+cursor = "#47FF9C"
+text = "CellBackground"
+
+[colors.normal]
+black = "#214969"
+red = "#DB4B4C"
+green = "#44FFB1"
+yellow = "#FFE073"
+blue = "#0FC5ED"
+magenta = "#A277FF"
+cyan = "#24EAF7"
+white = "#E6EAF2"
+
+[colors.bright]
+black = "#2D5B86"
+red = "#E5625E"
+green = "#5CFFCE"
+yellow = "#FFE78F"
+blue = "#26C7F0"
+magenta = "#B38EFF"
+cyan = "#36F0FF"
+white = "#F0F4FF"
