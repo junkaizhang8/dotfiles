@@ -146,26 +146,33 @@ return {
       enabled = true,
       filter = function(notif)
         local msg = notif.msg
-        -- Filter out LSP definition notification when no definition found
-        if msg == "No information available" then
+
+        local ignore_exact = {
+          -- LSP notification when no definition found
+          ["No information available"] = true,
+          -- img-clip notification when pasting non-image content
+          ["Content is not an image."] = true,
+          -- LuaSnip notification when no active snippet
+          ["No active Snippet"] = true,
+        }
+
+        if ignore_exact[msg] then
           return false
         end
-        -- Filter out notification from img-clip when pasting
-        if msg == "Content is not an image." then
-          return false
+
+        local ignore_patterns = {
+          -- blink.cmp ghost text bugged notifications
+          "ghost_text/utils.lua:%d+: Invalid buffer id",
+          "ghost_text/init.lua:%d+: Invalid 'col': out of range",
+          "lib/text_edits.lua:%d+: attempt to get length of local",
+        }
+
+        for _, pattern in ipairs(ignore_patterns) do
+          if msg:match(pattern) then
+            return false
+          end
         end
-        -- Disable bugged notification that shows in markdown files when
-        -- you press <CR> when blink.cmp ghost text is showing
-        if msg:match("ghost_text/utils.lua:%d+: Invalid buffer id") then
-          return false
-        end
-        -- Disable other bugged notifications from blink.cmp
-        if msg:match("ghost_text/init.lua:%d+: Invalid 'col': out of range") then
-          return false
-        end
-        if msg:match("lib/text_edits.lua:%d+: attempt to get length of local") then
-          return false
-        end
+
         return true
       end,
     }
