@@ -322,3 +322,7 @@ y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+vf() {
+  fd -t f -0 | fzf -m --read0 --print0 --bind 'tab:toggle' | xargs -0 nvim
+}
