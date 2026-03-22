@@ -1,6 +1,6 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# confirmations, etc.) must go above this block; everything else may go below
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -25,7 +25,8 @@ export HISTFILE_BACKUP="$HISTDIR/.zsh_history.backup"
 export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=32:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43:fi=93'
 
 # Personal scripts
-export SCRIPTS="$HOME/scripts"
+export SCRIPTS="$HOME/scripts/bin"
+export SCRIPTS_LOCAL="$HOME/scripts/local/bin"
 
 # pyenv
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
@@ -46,19 +47,80 @@ export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
 
 # ==============================================================================
-# CONFIGURATIONS
+# PATH MANAGEMENT TOOLS
+# ==============================================================================
+
+# Ensure unique entries and prioritize custom tool paths
+typeset -U path
+
+# Helper to safely prepend directories to PATH
+path-add() {
+  for dir in "$@"; do
+    [[ -d "$dir" ]] && path=("$dir" $path)
+  done
+}
+
+# Diagnostic tool to show PATH entries with status indicators
+path-show() {
+  for dir in $path; do
+    if [[ "$dir" == *"/com.apple.security.cryptexd/"* ]]; then
+      printf "\e[34mℹ\e[0m %s (System/Cryptex)\n" "$dir"
+    elif [[ -d "$dir" ]]; then
+      printf "\e[32m✔\e[0m %s\n" "$dir"
+    else
+      printf "\e[31m✘\e[0m %s\n" "$dir"
+    fi
+  done
+}
+
+# ==============================================================================
+# PATH SETUP
+# ==============================================================================
+
+path-add \
+  "$FNM_PATH" \
+  "$PNPM_HOME" \
+  "$PYENV_ROOT/bin" \
+  "$PYENV_ROOT/shims" \
+  "$SCRIPTS" \
+  "$SCRIPTS_LOCAL" \
+  /opt/homebrew/bin
+
+# ==============================================================================
+# CONFIGURATIONS & SHELL INTEGRATIONS
 # ==============================================================================
 
 # zim
-# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
   source /opt/homebrew/Cellar/zimfw/1.17.1/share/zimfw.zsh init
 fi
-# Initialize modules.
+# Initialize modules
 source ${ZIM_HOME}/init.zsh
 
-# fzf
-[ -f "${XDG_CONFIG_HOME}/fzf/fzf.zsh" ] && source "${XDG_CONFIG_HOME}/fzf/fzf.zsh"
+# Shell tools
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(thefuck --alias)"
+eval "$(thefuck --alias fk)"
+
+# Pyenv completion
+if command -v pyenv >/dev/null; then
+  export PYENV_SHELL=zsh
+  # Automatically find completion file
+  local py_comp="/opt/homebrew/opt/pyenv/share/zsh/site-functions/_pyenv"
+  [[ -f "$py_comp" ]] && source "$py_comp"
+
+  # Simple pyenv function wrapper
+  pyenv() {
+    local command=${1:-}
+    [ "$#" -gt 0 ] && shift
+    case "$command" in
+      activate|deactivate|rehash|shell) eval "$(command pyenv "sh-$command" "$@")" ;;
+      *) command pyenv "$command" "$@" ;;
+    esac
+  }
+fi
 
 # Powerlevel10k
 [ -f "${ZDOTDIR}/.p10k.zsh" ] && source "${ZDOTDIR}/.p10k.zsh"
@@ -160,101 +222,18 @@ bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 
 # ==============================================================================
-# PATH
-# ==============================================================================
-
-# Personal scripts
-if [ -d "$SCRIPTS" ]; then
-  case ":$PATH:" in
-    *":$SCRIPTS:"*) ;;
-    *) export PATH="$SCRIPTS:$PATH" ;;
-  esac
-fi
-
-if [ -d "$SCRIPTS/local" ]; then
-  case ":$PATH:" in
-    *":$SCRIPTS/local:"*) ;;
-    *) export PATH="$SCRIPTS/local:$PATH" ;;
-  esac
-fi
-
-# pyenv
-if [ -d "$PYENV_ROOT" ]; then
-  case ":$PATH:" in
-    *":$PYENV_ROOT/bin:"*) ;;
-    *) export PATH="$PYENV_ROOT/bin:$PATH" ;;
-  esac
-fi
-
-# pnpm
-if [ -d "$PNPM_HOME" ]; then
-  case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-  esac
-fi
-
-# fnm
-if [ -d "$FNM_PATH" ]; then
-  case ":$PATH:" in
-    *":$FNM_PATH:"*) ;;
-    *) export PATH="$FNM_PATH:$PATH" ;;
-  esac
-fi
-
-# ==============================================================================
-# SHELL INTEGRATIONS
-# ==============================================================================
-
-eval "$(fzf --zsh)"
-eval "${$(zoxide init --cmd cd zsh):s#_files -/#_cd#}"
-# eval "$(zoxide init --cmd cd zsh)"
-eval "$(thefuck --alias)"
-eval "$(thefuck --alias fk)"
-
-# pyenv init --path (removed rehashing)
-PATH="$(bash --norc -ec 'IFS=:; paths=($PATH); 
-for i in ${!paths[@]}; do 
-if [[ ${paths[i]} == "''${XDG_DATA_HOME}/pyenv/shims''" ]]; then unset '\''paths[i]'\''; 
-fi; done; 
-echo "${paths[*]}"')"
-export PATH="${XDG_DATA_HOME}/pyenv/shims:${PATH}"
-
-# pyenv init - zsh (removed rehashing)
-PATH="$(bash --norc -ec 'IFS=:; paths=($PATH); 
-for i in ${!paths[@]}; do 
-if [[ ${paths[i]} == "''${XDG_DATA_HOME}/pyenv/shims''" ]]; then unset '\''paths[i]'\''; 
-fi; done; 
-echo "${paths[*]}"')"
-export PATH="${XDG_DATA_HOME}/pyenv/shims:${PATH}"
-export PYENV_SHELL=zsh
-local pyenv_version=$(pyenv --version | awk '{print $2}')
-source "/opt/homebrew/Cellar/pyenv/${pyenv_version}/completions/pyenv.zsh"
-pyenv() {
-  local command=${1:-}
-  [ "$#" -gt 0 ] && shift
-  case "$command" in
-  activate|deactivate|rehash|shell)
-    eval "$(pyenv "sh-$command" "$@")"
-    ;;
-  *)
-    command pyenv "$command" "$@"
-    ;;
-  esac
-}
-
-# ==============================================================================
 # KEY BINDINGS
 # ==============================================================================
 
 bindkey -e
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^y' autosuggest-accept
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
+bindkey '^Y' autosuggest-accept
+bindkey '^I' fzf-completion
 
-bindkey -r '^[a'
+bindkey -r '^[A'
 
 # ==============================================================================
 # ALIASES
