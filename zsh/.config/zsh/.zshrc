@@ -80,11 +80,10 @@ path-show() {
 path-add \
   "$FNM_PATH" \
   "$PNPM_HOME" \
-  "$PYENV_ROOT/bin" \
-  "$PYENV_ROOT/shims" \
   "$SCRIPTS" \
   "$SCRIPTS_LOCAL" \
-  /opt/homebrew/bin
+  /opt/homebrew/bin \
+  "$PYENV_ROOT/shims"
 
 # ==============================================================================
 # CONFIGURATIONS & SHELL INTEGRATIONS
@@ -104,13 +103,9 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
 
-# Pyenv completion
+# pyenv completion
 if command -v pyenv >/dev/null; then
   export PYENV_SHELL=zsh
-  # Automatically find completion file
-  local py_comp="/opt/homebrew/opt/pyenv/share/zsh/site-functions/_pyenv"
-  [[ -f "$py_comp" ]] && source "$py_comp"
-
   # Simple pyenv function wrapper
   pyenv() {
     local command=${1:-}
