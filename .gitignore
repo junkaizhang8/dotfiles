@@ -8,6 +8,8 @@
 /zsh/.config/zsh/.zcompcache/
 /zsh/.config/zsh/.zsh_sessions
 /zsh/.config/zsh/.zcompdump*
+/zsh/.config/zsh/.zshrc.local
+/zsh/.config/zsh/completions.local
 
 # fish
 /fish/.config/fish/fish_variables
