@@ -16,3 +16,6 @@ vim.g.copilot_enabled = true
 
 -- Don't open Quickfix for warnings in VimTeX
 vim.g.vimtex_quickfix_open_on_warning = 0
+
+-- Use ty for Python LSP
+vim.g.lazyvim_python_lsp = "ty"
