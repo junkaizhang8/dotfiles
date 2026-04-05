@@ -28,9 +28,6 @@ export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=32:bd=34;46:cd=34;43:su=30;41:sg=
 export SCRIPTS="$HOME/scripts/bin"
 export SCRIPTS_LOCAL="$HOME/scripts/local/bin"
 
-# pyenv
-export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
-
 # pnpm
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 
@@ -77,13 +74,15 @@ path-show() {
 # PATH SETUP
 # ==============================================================================
 
+
+# . "$HOME/.local/share/../bin/env"
 path-add \
   "$FNM_PATH" \
   "$PNPM_HOME" \
+  /opt/homebrew/bin \
   "$SCRIPTS" \
   "$SCRIPTS_LOCAL" \
-  /opt/homebrew/bin \
-  "$PYENV_ROOT/shims"
+  "$HOME/.local/bin"
 
 # ==============================================================================
 # CUSTOM COMPLETIONS
@@ -112,20 +111,6 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
-
-# pyenv completion
-if command -v pyenv >/dev/null; then
-  export PYENV_SHELL=zsh
-  # Simple pyenv function wrapper
-  pyenv() {
-    local command=${1:-}
-    [ "$#" -gt 0 ] && shift
-    case "$command" in
-      activate|deactivate|rehash|shell) eval "$(command pyenv "sh-$command" "$@")" ;;
-      *) command pyenv "$command" "$@" ;;
-    esac
-  }
-fi
 
 # Powerlevel10k
 [ -f "${ZDOTDIR}/.p10k.zsh" ] && source "${ZDOTDIR}/.p10k.zsh"
@@ -272,6 +257,7 @@ alias reload='exec zsh'
 alias zshrc='v "$ZDOTDIR/.zshrc"'
 alias zshenv='v "$HOME/.zshenv"'
 alias snip='v "$XDG_CONFIG_HOME/nvim/snippets"'
+alias ur='uv run'
 alias npm='pnpm'
 alias npx='pnpx'
 alias c='clear'
