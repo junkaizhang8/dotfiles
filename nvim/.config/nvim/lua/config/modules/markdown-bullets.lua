@@ -1,3 +1,6 @@
+-- Module to enhance bullet list handling in markdown files, including
+-- automatic bullet insertion and checkbox toggling.
+
 local M = {}
 
 ---@class BulletType
@@ -18,7 +21,7 @@ local api = vim.api
 -- Default options
 local defaults = {
   mappings = {
-    toggle_checkbox = "<M-x>",
+    toggle_checkbox = "<M-X>",
   },
 }
 
@@ -92,21 +95,16 @@ end
 
 -- Returns a new bullet line based on the current bullet data in the specified mode.
 ---@param bullet_data table The bullet data containing bullet type, bullet, and content
----@param mode string The mode in which the new bullet is being inserted. If not specified, defaults to "insert"
+---@param mode string The mode in which the new bullet is being inserted. If not specified, defaults to "i".
 ---@return string # A new bullet line formatted according to the bullet type
 local function insert_new_bullet(bullet_data, mode)
   if mode ~= Mode.normal and mode ~= Mode.insert then
     mode = Mode.insert
   end
 
-  local clear_line = "cc"
-
-  if mode == Mode.insert then
-    clear_line = "<Esc>" .. clear_line
-  end
-
+  -- If the current bullet content is empty, we remove the bullet
   if bullet_data.content == "" then
-    return clear_line
+    return mode == Mode.insert and "<Cmd>normal! cc<CR>" or "cc"
   end
 
   if bullet_data.type == BulletType.number then
@@ -141,15 +139,9 @@ local function on_insert()
   local line = api.nvim_get_current_line()
   local bullet_data = parse_bullet_line(line)
 
-  local newline = "o"
-
-  if mode == Mode.insert then
-    newline = "<CR>"
-  end
-
   -- If not a bullet line, just fallback to default newline behavior
   if not bullet_data then
-    return newline
+    return mode == Mode.insert and "<CR>" or "o"
   end
 
   return insert_new_bullet(bullet_data, mode)

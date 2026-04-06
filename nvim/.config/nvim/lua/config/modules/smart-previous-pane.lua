@@ -1,4 +1,6 @@
--- This module is currently designed with tmux in mind.
+-- Module to track the last focused pane in both nvim and tmux, allowing for
+-- seamless switching between them.
+-- This module is currently designed with only tmux in mind.
 
 local M = {}
 
