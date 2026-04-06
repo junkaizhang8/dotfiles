@@ -13,11 +13,11 @@ keymap = [
   { on = "<C-z>", run = "suspend", desc = "Suspend the process" },
 
   # Hopping
-  { on = "k", run = "arrow -1", desc = "Previous file" },
-  { on = "j", run = "arrow 1", desc = "Next file" },
+  { on = "k", run = "arrow prev", desc = "Previous file" },
+  { on = "j", run = "arrow next", desc = "Next file" },
 
-  { on = "<Up>", run = "arrow -1", desc = "Previous file" },
-  { on = "<Down>", run = "arrow 1", desc = "Next file" },
+  { on = "<Up>", run = "arrow prev", desc = "Previous file" },
+  { on = "<Down>", run = "arrow next", desc = "Next file" },
 
   { on = "<C-u>", run = "arrow -50%", desc = "Move cursor up half page" },
   { on = "<C-d>", run = "arrow 50%", desc = "Move cursor down half page" },
@@ -48,7 +48,7 @@ keymap = [
   # Toggle
   { on = "<Space>", run = [
     "toggle",
-    "arrow next",
+    "arrow 1",
   ], desc = "Toggle the current selection state" },
   { on = "<C-a>", run = "toggle_all --state=on", desc = "Select all files" },
   { on = "<C-r>", run = "toggle_all", desc = "Invert selection of all files" },
@@ -88,8 +88,8 @@ keymap = [
   { on = "s", run = "search --via=fd", desc = "Search files by name via fd" },
   { on = "S", run = "search --via=rg", desc = "Search files by content via ripgrep" },
   { on = "<C-s>", run = "escape --search", desc = "Cancel the ongoing search" },
-  { on = "z", run = "plugin zoxide", desc = "Jump to a directory via zoxide" },
-  { on = "Z", run = "plugin fzf", desc = "Jump to a file/directory via fzf" },
+  { on = "z", run = "plugin fzf", desc = "Jump to a file/directory via fzf" },
+  { on = "Z", run = "plugin zoxide", desc = "Jump to a directory via zoxide" },
 
   # Linemode
   { on = [
@@ -121,19 +121,19 @@ keymap = [
   { on = [
     "c",
     "c",
-  ], run = "copy path", desc = "Copy the file path" },
+  ], run = "copy path", desc = "Copy file URL" },
   { on = [
     "c",
     "d",
-  ], run = "copy dirname", desc = "Copy the directory path" },
+  ], run = "copy dirname", desc = "Copy directory URL" },
   { on = [
     "c",
     "f",
-  ], run = "copy filename", desc = "Copy the filename" },
+  ], run = "copy filename", desc = "Copy filename" },
   { on = [
     "c",
     "n",
-  ], run = "copy name_without_ext", desc = "Copy the filename without extension" },
+  ], run = "copy name_without_ext", desc = "Copy filename without extension" },
 
   # Filter
   { on = "f", run = "filter --smart", desc = "Filter files" },
@@ -156,7 +156,7 @@ keymap = [
     ",",
     "M",
   ], run = [
-    "sort mtime --reverse",
+    "sort mtime --reverse=yes",
     "linemode mtime",
   ], desc = "Sort by modified time (reverse)" },
   { on = [
@@ -170,7 +170,7 @@ keymap = [
     ",",
     "B",
   ], run = [
-    "sort btime --reverse",
+    "sort btime --reverse=yes",
     "linemode btime",
   ], desc = "Sort by birth time (reverse)" },
   { on = [
@@ -180,7 +180,7 @@ keymap = [
   { on = [
     ",",
     "E",
-  ], run = "sort extension --reverse", desc = "Sort by extension (reverse)" },
+  ], run = "sort extension --reverse=yes", desc = "Sort by extension (reverse)" },
   { on = [
     ",",
     "a",
@@ -188,7 +188,7 @@ keymap = [
   { on = [
     ",",
     "A",
-  ], run = "sort alphabetical --reverse", desc = "Sort alphabetically (reverse)" },
+  ], run = "sort alphabetical --reverse=yes", desc = "Sort alphabetically (reverse)" },
   { on = [
     ",",
     "n",
@@ -196,7 +196,7 @@ keymap = [
   { on = [
     ",",
     "N",
-  ], run = "sort natural --reverse", desc = "Sort naturally (reverse)" },
+  ], run = "sort natural --reverse=yes", desc = "Sort naturally (reverse)" },
   { on = [
     ",",
     "s",
@@ -208,7 +208,7 @@ keymap = [
     ",",
     "S",
   ], run = [
-    "sort size --reverse",
+    "sort size --reverse=yes",
     "linemode size",
   ], desc = "Sort by size (reverse)" },
   { on = [
@@ -239,7 +239,14 @@ keymap = [
   ], run = "follow", desc = "Follow hovered symlink" },
 
   # Tabs
-  { on = "t", run = "tab_create --current", desc = "Create a new tab with CWD" },
+  { on = [
+    "t",
+    "t",
+  ], run = "tab_create --current", desc = "Create a new tab in CWD" },
+  { on = [
+    "t",
+    "r",
+  ], run = "tab_rename --interactive", desc = "Rename current tab" },
 
   { on = "1", run = "tab_switch 0", desc = "Switch to first tab" },
   { on = "2", run = "tab_switch 1", desc = "Switch to second tab" },
@@ -388,6 +395,8 @@ keymap = [
   { on = "E", run = "forward --far --end-of-word", desc = "Move forward to the end of the current or next WORD" },
   { on = "<A-b>", run = "backward", desc = "Move back to the start of the current or previous word" },
   { on = "<A-f>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+  { on = "<C-Left>", run = "backward", desc = "Move back to the start of the current or previous word" },
+  { on = "<C-Right>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
 
   # Line-wise movement
   { on = "0", run = "move bol", desc = "Move to the BOL" },
@@ -410,6 +419,8 @@ keymap = [
   { on = "<C-k>", run = "kill eol", desc = "Kill forwards to the EOL" },
   { on = "<C-w>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
   { on = "<A-d>", run = "kill forward", desc = "Kill forwards to the end of the current word" },
+  { on = "<C-Backspace>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
+  { on = "<C-Delete>", run = "kill forward", desc = "Kill forwards to the end of the current word" },
 
   # Cut/Yank/Paste
   { on = "d", run = "delete --cut", desc = "Cut selected characters" },
@@ -422,6 +433,15 @@ keymap = [
     "delete --cut --insert",
     "move eol",
   ], desc = "Cut until EOL, and enter insert mode" },
+  { on = "s", run = [
+    "delete --cut --insert",
+    "move 1",
+  ], desc = "Cut current character, and enter insert mode" },
+  { on = "S", run = [
+    "move bol",
+    "delete --cut --insert",
+    "move eol",
+  ], desc = "Cut from BOL until EOL, and enter insert mode" },
   { on = "x", run = [
     "delete --cut",
     "move 1 --in-operating",
@@ -430,8 +450,12 @@ keymap = [
   { on = "p", run = "paste", desc = "Paste copied characters after the cursor" },
   { on = "P", run = "paste --before", desc = "Paste copied characters before the cursor" },
 
-  # Undo/Redo
-  { on = "u", run = "undo", desc = "Undo the last operation" },
+  # Undo/Redo/Casefy
+  { on = "u", run = [
+    "undo",
+    "casefy lower",
+  ], desc = "Undo, or lowercase if in visual mode" },
+  { on = "U", run = "casefy upper", desc = "Uppercase" },
   { on = "<C-r>", run = "redo", desc = "Redo the last operation" },
 
   # Help
@@ -502,6 +526,7 @@ keymap = [
   # Filtering
   { on = "f", run = "filter", desc = "Filter help items" },
 ]
+
 
 [[mgr.prepend_keymap]]
 on = ["c", "m"]
