@@ -47,7 +47,9 @@ palette = 14=#36F0FF
 palette = 15=#F0F4FF
 
 # Shaders
-custom-shader = shaders/cursor_smear.glsl
+custom-shader = shaders/cursor_warp.glsl
+
+custom-shader-animation = true
 
 # Keybindings
 keybind = cmd+r=reload_config
