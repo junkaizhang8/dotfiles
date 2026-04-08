@@ -212,18 +212,28 @@ bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 
 # ==============================================================================
-# KEY BINDINGS
+# ZVM
 # ==============================================================================
 
-bindkey -e
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
-bindkey '^P' history-search-backward
-bindkey '^N' history-search-forward
-bindkey '^Y' autosuggest-accept
-bindkey '^I' fzf-completion
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+ZVM_VI_SURROUND_BINDKEY=s-prefix
+# ZVM_CURSOR_STYLE_ENABLED=false
+ZVM_VI_HIGHLIGHT_BACKGROUND=#275378
+ZVM_VI_HIGHLIGHT_FOREGROUND=#CBE0F0
 
-bindkey -r '^[A'
+zvm_after_init() {
+  # Custom key bindings must go in here
+  bindkey -M viins '^[[A' history-search-backward
+  bindkey -M viins '^[[B' history-search-forward
+  bindkey -M viins '^P' history-search-backward
+  bindkey -M viins '^N' history-search-forward
+  bindkey -M viins '^Y' autosuggest-accept
+  bindkey -M viins '^I' fzf-completion
+  bindkey -M viins '^R' fzf-history-widget
+  bindkey -M viins '^T' fzf-file-widget
+
+  bindkey -r '^[A'
+}
 
 # ==============================================================================
 # ALIASES
