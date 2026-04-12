@@ -89,6 +89,7 @@ return {
           exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" },
         },
         recent = { hidden = true },
+        smart = { hidden = true },
         notifications = {
           win = {
             preview = {
