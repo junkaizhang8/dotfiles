@@ -22,6 +22,9 @@ require("config.autocmds")
 require("lazy").setup(plugins, {
   ui = { border = "rounded" },
   change_detection = { notify = false },
+  install = {
+    colorscheme = { "tokyonight" },
+  },
   rocks = {
     enabled = false,
   },
