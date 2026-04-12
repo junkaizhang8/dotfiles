@@ -21,8 +21,12 @@ return {
   end,
   settings = {
     Lua = {
-      completion = { callSnippet = "Replace" },
-      format = { enable = false },
+      completion = {
+        callSnippet = "Replace",
+      },
+      format = {
+        enable = false,
+      },
       hint = {
         enable = true,
         arrayIndex = "Disable",
