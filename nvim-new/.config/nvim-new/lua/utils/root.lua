@@ -5,7 +5,7 @@ local M = {}
 
 M.spec = {
   "lsp",
-  ".git",
+  { ".git", "lua" },
   "cwd",
 }
 
@@ -29,37 +29,26 @@ M.detectors = {}
 function M.detectors.lsp(buf)
   local bufpath = M.bufpath(buf)
   if not bufpath then
-    return {}
+    return nil
   end
 
-  local roots = {}
+  local best = nil
 
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = buf })) do
-    -- Workspace folders (multi-root LSPs)
-    local ws = client.config and client.config.workspace_folders
-    if ws then
-      for _, folder in ipairs(ws) do
-        roots[#roots + 1] = vim.uri_to_fname(folder.uri)
-      end
-    end
+    local root = M.realpath(client.root_dir)
 
-    -- Root_dir (single-root LSPs)
-    if client.root_dir then
-      roots[#roots + 1] = client.root_dir
+    if root and bufpath:find(root, 1, true) == 1 then
+      if not best or #root > #best then
+        best = root
+      end
     end
   end
 
-  -- Filter valid roots for this buffer
-  return vim.tbl_filter(function(path)
-    path = M.realpath(path)
-    if path and bufpath:find(path, 1, true) == 1 then
-      return true
-    end
-    return false
-  end, roots)
+  return best
 end
 
 function M.detectors.pattern(buf, patterns)
+  patterns = type(patterns) == "table" and patterns or { patterns }
   local path = vim.api.nvim_buf_get_name(buf)
   if path == "" then
     path = vim.uv.cwd() or ""
@@ -77,11 +66,11 @@ function M.detectors.pattern(buf, patterns)
     upward = true,
   })[1]
 
-  return found and { vim.fs.dirname(found) } or {}
+  return found and vim.fs.dirname(found) or nil
 end
 
 function M.detectors.cwd()
-  return { vim.uv.cwd() }
+  return vim.uv.cwd()
 end
 
 function M.resolve(spec)
@@ -94,7 +83,7 @@ function M.resolve(spec)
   end
 
   return function(buf)
-    return M.detectors.pattern(buf, { spec })
+    return M.detectors.pattern(buf, spec)
   end
 end
 
@@ -105,26 +94,13 @@ function M.detect(opts)
   local ret = {}
 
   for _, spec in ipairs(M.spec) do
-    local paths = M.resolve(spec)(buf)
-    paths = type(paths) == "table" and paths or { paths }
+    local path = M.resolve(spec)(buf)
+    local rp = M.realpath(path)
 
-    local roots = {}
-
-    for _, p in ipairs(paths) do
-      local rp = M.realpath(p)
-      if rp and not vim.tbl_contains(roots, rp) then
-        roots[#roots + 1] = rp
-      end
-    end
-
-    table.sort(roots, function(a, b)
-      return #a > #b
-    end)
-
-    if #roots > 0 then
+    if rp then
       ret[#ret + 1] = {
         spec = spec,
-        paths = roots,
+        path = rp,
       }
 
       if opts.all == false then
@@ -136,22 +112,49 @@ function M.detect(opts)
   return ret
 end
 
-M.cache = {}
+local cache = {}
 
 function M.get(opts)
   opts = opts or {}
   local buf = opts.buf or vim.api.nvim_get_current_buf()
 
-  if M.cache[buf] then
-    return M.cache[buf]
+  if cache[buf] then
+    return cache[buf]
   end
 
   local roots = M.detect({ buf = buf, all = false })
 
-  local root = roots[1] and roots[1].paths[1] or vim.uv.cwd()
+  local root = roots[1] and roots[1].path or vim.uv.cwd()
 
-  M.cache[buf] = root
+  cache[buf] = root
   return root
+end
+
+M.lspconfig = {}
+
+function M.lspconfig.root_pattern(...)
+  local patterns = vim.iter(...):flatten():totable()
+
+  return function(startpath)
+    startpath = startpath or vim.api.nvim_buf_get_name(0)
+
+    if not startpath or startpath == "" then
+      return nil
+    end
+
+    -- Normalize and strip any subpath (if required by your logic)
+    startpath = M.realpath(startpath) or startpath -- Resolve symlinks, etc.
+
+    for _, pattern in ipairs(patterns) do
+      local match = vim.fs.find(pattern, { path = startpath, upward = true })[1]
+      if match then
+        local real = vim.uv.fs_realpath(match)
+        local real_dir = vim.fs.dirname(real or match)
+        return real_dir or match -- fallback to original if realpath fails
+      end
+    end
+    return nil -- No match found
+  end
 end
 
 function M.setup()
@@ -162,7 +165,7 @@ function M.setup()
     "LspAttach",
   }, {
     callback = function(args)
-      M.cache[args.buf] = nil
+      cache[args.buf] = nil
     end,
   })
 end

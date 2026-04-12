@@ -18,6 +18,9 @@ local plugins = "plugins"
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
+require("config.lsp")
+
+require("utils.root").setup()
 
 require("lazy").setup(plugins, {
   ui = { border = "rounded" },
