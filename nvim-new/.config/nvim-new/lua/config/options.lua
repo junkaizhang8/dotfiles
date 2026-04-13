@@ -3,6 +3,9 @@ local icons = require("config.icons")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Autoformat on save
+vim.g.autoformat = true
+
 -- Indentation
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
@@ -102,6 +105,8 @@ vim.o.confirm = true
 
 -- Format options
 vim.o.formatoptions = "jcroqlnt"
+
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 -- Jump options
 vim.o.jumpoptions = "view"
