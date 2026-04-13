@@ -74,12 +74,10 @@ path-show() {
 # PATH SETUP
 # ==============================================================================
 
-
-# . "$HOME/.local/share/../bin/env"
 path-add \
-  "$FNM_PATH" \
-  "$PNPM_HOME" \
   /opt/homebrew/bin \
+  "$PNPM_HOME" \
+  "$FNM_PATH" \
   "$SCRIPTS" \
   "$SCRIPTS_LOCAL" \
   "$HOME/.local/bin"
@@ -111,6 +109,7 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Powerlevel10k
 [ -f "${ZDOTDIR}/.p10k.zsh" ] && source "${ZDOTDIR}/.p10k.zsh"
