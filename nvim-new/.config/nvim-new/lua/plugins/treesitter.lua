@@ -2,7 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
   event = { "BufReadPost", "BufNewFile" },
-  cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall", "TSHealth" },
+  cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
   build = ":TSUpdate",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-context",
@@ -37,6 +37,7 @@ return {
       "json",
       "lua",
       "luadoc",
+      "luap",
       "markdown",
       "markdown_inline",
       "python",
