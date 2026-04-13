@@ -98,6 +98,10 @@ return {
         },
       },
     },
+    indent = {
+      enabled = true,
+      animate = { enabled = false },
+    },
     notifier = { enabled = true },
     picker = {
       enabled = true,
@@ -122,5 +126,6 @@ return {
       },
     },
     quickfile = { enabled = true },
+    scope = { enabled = true },
   },
 }
