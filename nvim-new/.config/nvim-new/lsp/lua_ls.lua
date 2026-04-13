@@ -16,8 +16,7 @@ return {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
   root_dir = function(bufnr, on_dir)
-    local fname = vim.api.nvim_buf_get_name(bufnr)
-    on_dir(utils.lspconfig.root_pattern(root_markers)(fname))
+    on_dir(utils.lspconfig.root_pattern(bufnr, root_markers))
   end,
   settings = {
     Lua = {

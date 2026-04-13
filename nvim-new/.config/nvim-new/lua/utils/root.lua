@@ -5,7 +5,7 @@ local M = {}
 
 M.spec = {
   "lsp",
-  { ".git", "lua" },
+  { "lua", ".git" },
   "cwd",
 }
 
@@ -48,25 +48,7 @@ function M.detectors.lsp(buf)
 end
 
 function M.detectors.pattern(buf, patterns)
-  patterns = type(patterns) == "table" and patterns or { patterns }
-  local path = vim.api.nvim_buf_get_name(buf)
-  if path == "" then
-    path = vim.uv.cwd() or ""
-  end
-
-  local found = vim.fs.find(function(name)
-    for _, p in ipairs(patterns) do
-      if name == p then
-        return true
-      end
-    end
-    return false
-  end, {
-    path = path,
-    upward = true,
-  })[1]
-
-  return found and vim.fs.dirname(found) or nil
+  return vim.fs.root(buf, patterns)
 end
 
 function M.detectors.cwd()
@@ -132,29 +114,17 @@ end
 
 M.lspconfig = {}
 
-function M.lspconfig.root_pattern(...)
-  local patterns = vim.iter(...):flatten():totable()
-
-  return function(startpath)
-    startpath = startpath or vim.api.nvim_buf_get_name(0)
-
-    if not startpath or startpath == "" then
-      return nil
-    end
-
-    -- Normalize and strip any subpath (if required by your logic)
-    startpath = M.realpath(startpath) or startpath -- Resolve symlinks, etc.
-
-    for _, pattern in ipairs(patterns) do
-      local match = vim.fs.find(pattern, { path = startpath, upward = true })[1]
-      if match then
-        local real = vim.uv.fs_realpath(match)
-        local real_dir = vim.fs.dirname(real or match)
-        return real_dir or match -- fallback to original if realpath fails
-      end
-    end
-    return nil -- No match found
-  end
+---Find the root directory for a buffer with the given markers(s).
+---
+---Intended to be used for configuring the `root_dir` configuration for LSP servers.
+---@param bufnr integer
+---@param marker string|(string|fun(name: string, path: string):boolean|string[])[]|fun(name: string, path: string):boolean
+---@return string?
+function M.lspconfig.root_pattern(bufnr, marker)
+  local fname = vim.api.nvim_buf_get_name(bufnr)
+  return (function(startpath)
+    return vim.fs.root(startpath, marker) or vim.uv.cwd()
+  end)(fname)
 end
 
 function M.setup()
