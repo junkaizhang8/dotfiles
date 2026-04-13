@@ -25,8 +25,8 @@ vim.o.cursorline = true
 -- Enable mouse support
 vim.o.mouse = "a"
 
--- Wrap long lines at word boundaries (wrap must be enabled for linebreak to work)
-vim.o.wrap = true
+-- Disable wrapping long lines at word boundaries (wrap must be enabled for linebreak to work)
+vim.o.wrap = false
 vim.o.linebreak = true
 
 -- Folding
