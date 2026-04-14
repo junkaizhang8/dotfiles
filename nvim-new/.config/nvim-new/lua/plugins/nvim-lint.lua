@@ -9,8 +9,11 @@ return {
       typescriptreact = { "eslint_d" },
     },
   },
-  config = function()
+  config = function(_, opts)
     local lint = require("lint")
+    -- We need to set linters_by_ft here, otherwise it uses the plugin defaults
+    lint.linters_by_ft = opts.linters_by_ft
+
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
       group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
       callback = function()
