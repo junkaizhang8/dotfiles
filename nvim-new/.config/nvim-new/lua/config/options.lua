@@ -83,10 +83,16 @@ vim.o.pumborder = "rounded"
 -- Keep at least 4 lines visible above and below the cursor when scrolling
 vim.o.scrolloff = 4
 
+-- Keep at least 8 columns visible to the left and right of the cursor when scrolling horizontally
+vim.o.sidescrolloff = 8
+
 -- Splits
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.splitkeep = "screen"
+
+-- Status column
+vim.o.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]]
 
 -- Status line
 vim.o.laststatus = 3
