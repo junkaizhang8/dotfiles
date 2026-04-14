@@ -22,6 +22,7 @@ return {
       right_mouse_command = function(bufnr)
         Snacks.bufdelete(bufnr)
       end,
+      always_show_bufferline = false,
       diagnostics = "nvim_lsp",
       diagnostics_indicator = function(_, _, diag)
         local icons = require("config.icons").diagnostics
