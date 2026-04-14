@@ -1,3 +1,5 @@
+local exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" }
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -107,13 +109,22 @@ return {
       enabled = true,
       sources = {
         explorer = { hidden = true },
-        files = { hidden = true },
+        files = {
+          hidden = true,
+          exclude = exclude,
+        },
         grep = {
           hidden = true,
-          exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" },
+          exclude = exclude,
         },
-        recent = { hidden = true },
-        smart = { hidden = true },
+        recent = {
+          hidden = true,
+          exclude = exclude,
+        },
+        smart = {
+          hidden = true,
+          exclude = exclude,
+        },
         notifications = {
           win = {
             preview = {
