@@ -4,7 +4,7 @@ local utils = require("utils.root")
 
 local root_markers = {
   { "tsconfig.json", "jsconfig.json", "package.json", "pnpm-lock.yaml", "yarn.lock", "tsconfig.base.json" },
-  { ".git" },
+  ".git",
 }
 
 ---@type vim.lsp.Config
