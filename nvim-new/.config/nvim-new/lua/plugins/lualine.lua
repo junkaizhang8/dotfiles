@@ -158,9 +158,22 @@ return {
     end
 
     local icons = require("config.icons")
-    -- local statusline = require("arrow.statusline")
 
     vim.o.laststatus = vim.g.lualine_laststatus
+
+    local status_colors = {
+      ok = "Special",
+      error = "DiagnosticError",
+      pending = "DiagnosticWarn",
+    }
+
+    local function copilot_status()
+      local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 }) or {}
+      if #clients > 0 then
+        local status = require("copilot.status").data.status
+        return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
+      end
+    end
 
     local opts = {
       options = {
@@ -187,6 +200,17 @@ return {
         },
         lualine_x = {
           Snacks.profiler.status(),
+          {
+            function()
+              return icons.kinds.Copilot
+            end,
+            cond = function()
+              return copilot_status() ~= nil
+            end,
+            color = function()
+              return { fg = Snacks.util.color(status_colors[copilot_status()]) or colors.ok }
+            end,
+          },
           -- stylua: ignore
           {
             function() return require("noice").api.status.command.get() end,

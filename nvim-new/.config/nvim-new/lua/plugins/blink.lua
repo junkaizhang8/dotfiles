@@ -45,6 +45,7 @@ return {
       "Kaiser-Yang/blink-cmp-dictionary",
       dependencies = { "nvim-lua/plenary.nvim" },
     },
+    "fang2hou/blink-copilot",
   },
   version = "1.*",
   event = { "InsertEnter", "CmdlineEnter" },
@@ -57,7 +58,7 @@ return {
       menu = {
         scrollbar = true,
         draw = {
-          gap = 2,
+          gap = 1,
         },
       },
       documentation = {
@@ -70,7 +71,7 @@ return {
     },
     sources = {
       default = function()
-        local result = { "lazydev", "lsp", "path", "snippets", "buffer" }
+        local result = { "copilot", "lazydev", "lsp", "path", "snippets", "buffer" }
         if
           -- Turn on dictionary in markdown or text file
           vim.tbl_contains({ "markdown", "text" }, vim.bo.filetype)
@@ -85,6 +86,17 @@ return {
         lua = { inherit_defaults = true, "lazydev" },
       },
       providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 100,
+          async = true,
+        },
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100,
+        },
         dictionary = {
           name = "Dict",
           module = "blink-cmp-dictionary",
@@ -97,11 +109,6 @@ return {
             -- have your .txt files
             dictionary_directories = { vim.fn.expand("~/.dotfiles/dictionaries") },
           },
-        },
-        lazydev = {
-          name = "LazyDev",
-          module = "lazydev.integrations.blink",
-          score_offset = 100,
         },
       },
     },

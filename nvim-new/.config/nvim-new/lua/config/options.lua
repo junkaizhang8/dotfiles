@@ -6,6 +6,9 @@ vim.g.maplocalleader = "\\"
 -- Autoformat on save
 vim.g.autoformat = true
 
+-- Enable Copilot
+vim.g.copilot_enabled = false
+
 -- Indentation
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2

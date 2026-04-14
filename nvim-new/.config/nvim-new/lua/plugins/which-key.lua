@@ -5,6 +5,7 @@ return {
     preset = "helix",
     spec = {
       mode = { "n", "x" },
+      { "<leader>a", group = "ai", icon = "" },
       { "<leader>c", group = "code" },
       { "<leader>f", group = "file/find" },
       { "<leader>g", group = "git" },

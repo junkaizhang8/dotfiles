@@ -9,6 +9,10 @@ M.spec = {
   "cwd",
 }
 
+M.root_lsp_ignore = {
+  "copilot",
+}
+
 function M.bufpath(buf)
   local name = vim.api.nvim_buf_get_name(assert(buf))
   if name == "" then
@@ -34,7 +38,11 @@ function M.detectors.lsp(buf)
 
   local best = nil
 
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = buf })) do
+  local clients = vim.tbl_filter(function(client)
+    return not vim.tbl_contains(M.root_lsp_ignore, client.name)
+  end, vim.lsp.get_clients({ bufnr = buf }))
+
+  for _, client in ipairs(clients) do
     local root = M.realpath(client.root_dir)
 
     if root and bufpath:find(root, 1, true) == 1 then
