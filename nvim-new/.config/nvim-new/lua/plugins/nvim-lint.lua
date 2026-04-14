@@ -5,6 +5,7 @@ return {
     linters_by_ft = {
       javascript = { "eslint_d" },
       javascriptreact = { "eslint_d" },
+      markdown = { "markdownlint-cli2" },
       typescript = { "eslint_d" },
       typescriptreact = { "eslint_d" },
     },
