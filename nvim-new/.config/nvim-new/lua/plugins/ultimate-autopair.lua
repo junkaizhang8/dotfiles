@@ -3,102 +3,98 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   branch = "v0.6",
   config = function()
-    local opts = {
-      bs = { delete_from_end = false },
-      extensions = { surround = false },
-      config_internal_pairs = {
-        { "'", "'", nft = { "markdown", "gitcommit" } },
-        { '"', '"', nft = { "vim" } },
-      },
-    }
-
-    -- Plugin does not work for Lua strings, so we manually add pairs with a
-    -- condition to avoid triggering inside Lua strings
-    local pairs = {
-      { "[", "]" },
-      { "{", "}" },
-      { "(", ")" },
-      { '"', '"' },
-      { "'", "'" },
-      { "`", "`" },
-    }
-
-    local function in_lua_string()
-      local node = vim.treesitter.get_node()
-
-      if node then
-        return node:type() == "string" or node:type() == "string_content"
+    local function string_autopair_guard(fn, o, closing_char)
+      local in_string = fn.in_string()
+      if not in_string then
+        return true
       end
-
+      if closing_char == nil then
+        return false
+      end
+      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+      local _, _, er, ec = in_string:range()
+      if er + 1 ~= row then
+        return false
+      end
+      local str_char = o.line:sub(ec, ec)
+      if col + 1 == ec and str_char == closing_char then
+        return true
+      end
       return false
     end
 
-    local function key_of(p)
-      return p[1] .. "\0" .. p[2]
-    end
-
-    local function merge_unique(list, extra)
-      local set = {}
-      local out = {}
-
-      for _, v in ipairs(list or {}) do
-        if not set[v] then
-          set[v] = true
-          table.insert(out, v)
-        end
-      end
-
-      for _, v in ipairs(extra or {}) do
-        if not set[v] then
-          set[v] = true
-          table.insert(out, v)
-        end
-      end
-
-      return out
-    end
-
-    local existing = {}
-    for _, p in ipairs(opts.config_internal_pairs or {}) do
-      existing[key_of(p)] = p
-    end
-
-    local merged_internal = {}
-
-    for _, p in ipairs(pairs) do
-      local k = key_of(p)
-      local entry
-
-      if existing[k] then
-        entry = existing[k]
-
-        entry.nft = merge_unique(entry.nft, { "lua" })
-      else
-        entry = {
-          p[1],
-          p[2],
-          nft = { "lua" },
-        }
-      end
-
-      table.insert(merged_internal, entry)
-    end
-
-    -- Disable the specified internal pairs for Lua, since we will be handling
-    -- them ourselves
-    opts.config_internal_pairs = merged_internal
-
-    -- Insert pairs with a condition to avoid triggering inside Lua strings
-    for _, p in ipairs(pairs) do
-      table.insert(opts, {
-        p[1],
-        p[2],
-        cond = function()
-          return not in_lua_string()
-        end,
-        ft = { "lua" },
-      })
-    end
+    local opts = {
+      bs = { delete_from_end = false },
+      extensions = {
+        surround = false,
+      },
+      config_internal_pairs = {
+        {
+          "[",
+          "]",
+          cond = function(fn, o)
+            return string_autopair_guard(fn, o)
+          end,
+          fly = true,
+          dosuround = true,
+          newline = true,
+          space = true,
+        },
+        {
+          "(",
+          ")",
+          cond = function(fn, o)
+            return string_autopair_guard(fn, o)
+          end,
+          fly = true,
+          dosuround = true,
+          newline = true,
+          space = true,
+        },
+        {
+          "{",
+          "}",
+          cond = function(fn, o)
+            return string_autopair_guard(fn, o)
+          end,
+          fly = true,
+          dosuround = true,
+          newline = true,
+          space = true,
+        },
+        {
+          '"',
+          '"',
+          suround = true,
+          cond = function(fn, o)
+            return (not o.line:sub(1, o.col - 1):match("^%s*$") and o.line:sub(o.col - 1, o.col - 1) ~= "@")
+              and string_autopair_guard(fn, o, '"')
+          end,
+          multiline = false,
+          nft = { "vim" },
+        },
+        {
+          "'",
+          "'",
+          suround = true,
+          cond = function(fn, o)
+            return not fn.in_lisp() and string_autopair_guard(fn, o, "'")
+          end,
+          alpha = true,
+          multiline = false,
+          nft = { "tex", "rust", "markdown", "gitcommit" },
+        },
+        {
+          "`",
+          "`",
+          cond = function(fn, o)
+            return not fn.in_lisp() and string_autopair_guard(fn, o, "`")
+          end,
+          multiline = false,
+          nft = { "tex" },
+        },
+      },
+    }
 
     require("ultimate-autopair").setup(opts)
   end,
