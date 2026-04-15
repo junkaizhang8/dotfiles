@@ -4,7 +4,7 @@ return {
   branch = "v0.6",
   config = function()
     local function string_autopair_guard(fn, o, closing_char)
-      local in_string = fn.in_string()
+      local in_string = fn.in_node({ "string", "raw_string" })
       if not in_string then
         return true
       end
