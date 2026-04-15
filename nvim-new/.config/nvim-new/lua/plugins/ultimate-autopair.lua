@@ -67,8 +67,7 @@ return {
           '"',
           suround = true,
           cond = function(fn, o)
-            return (not o.line:sub(1, o.col - 1):match("^%s*$") and o.line:sub(o.col - 1, o.col - 1) ~= "@")
-              and string_autopair_guard(fn, o, '"')
+            return string_autopair_guard(fn, o, '"')
           end,
           multiline = false,
           nft = { "vim" },
