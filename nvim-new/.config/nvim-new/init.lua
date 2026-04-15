@@ -20,6 +20,8 @@ require("config.keymaps")
 require("config.autocmds")
 require("config.lsp")
 
+require("modules.smart-previous-pane").setup()
+
 require("utils.root").setup()
 
 require("lazy").setup(plugins, {

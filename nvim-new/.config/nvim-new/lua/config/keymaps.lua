@@ -9,6 +9,9 @@ map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr =
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
+-- Smart pane navigation
+map("n", "<C-\\>", require("modules.smart-previous-pane").move_cursor_previous, { desc = "Move to Previous Split" })
+
 -- Splitting windows
 map("n", "<leader>-", "<C-w>s", { desc = "Split Window Below" })
 map("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right" })
