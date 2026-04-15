@@ -20,41 +20,43 @@ return {
       vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#112638" })
     end,
   },
-  config = function(_, opts)
-    require("nvim-treesitter.config").setup(opts)
-
-    local ensure_installed = {
-      "bash",
-      "c",
-      "cpp",
-      "css",
-      "gitcommit",
-      "glsl",
-      "go",
-      "html",
-      "java",
-      "javascript",
-      "json",
-      "lua",
-      "luadoc",
-      "luap",
-      "markdown",
-      "markdown_inline",
-      "python",
-      "regex",
-      "rust",
-      "scss",
-      "toml",
-      "tsx",
-      "typescript",
-      "vim",
-      "vimdoc",
-      "xml",
-      "yaml",
-      "zsh",
+  config = function()
+    local opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "gitcommit",
+        "glsl",
+        "go",
+        "html",
+        "java",
+        "javascript",
+        "json",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "regex",
+        "rust",
+        "scss",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+        "zsh",
+      },
+      -- Install parsers synchronously (only applied to `ensure_installed`)
+      sync_install = false,
     }
 
-    require("nvim-treesitter").install(ensure_installed)
+    require("nvim-treesitter.config").setup(opts)
 
     vim.api.nvim_create_autocmd("FileType", {
       callback = function()
