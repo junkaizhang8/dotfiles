@@ -7,7 +7,7 @@ vim.g.maplocalleader = "\\"
 vim.g.autoformat = true
 
 -- Enable Copilot
-vim.g.copilot_enabled = false
+vim.g.copilot_enabled = true
 
 -- Indentation
 vim.o.shiftwidth = 2
