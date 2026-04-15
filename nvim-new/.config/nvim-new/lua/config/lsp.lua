@@ -9,6 +9,7 @@ local config = {
       [vim.diagnostic.severity.HINT] = icons.diagnostics.hint .. " ",
     },
   },
+  virtual_text = false,
 }
 
 vim.diagnostic.config(config)
