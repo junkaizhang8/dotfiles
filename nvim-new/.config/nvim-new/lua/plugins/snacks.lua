@@ -146,6 +146,22 @@ return {
   config = function(_, opts)
     require("snacks").setup(opts)
 
+    Snacks.toggle({
+      name = "Auto Format",
+      get = function()
+        return vim.g.autoformat
+      end,
+      set = function()
+        vim.g.autoformat = not vim.g.autoformat
+      end,
+    }):map("<leader>uf")
+    Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+    Snacks.toggle.diagnostics():map("<leader>ud")
+
+    if vim.lsp.inlay_hint then
+      Snacks.toggle.inlay_hints():map("<leader>uh")
+    end
+
     Snacks.toggle.zoom():map("<leader>m")
   end,
 }
