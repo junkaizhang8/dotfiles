@@ -254,6 +254,15 @@ return {
               end
             end,
           },
+          {
+            function()
+              return require("arrow.statusline").text_for_statusline_with_icons() or ""
+            end,
+            cond = function()
+              return require("arrow.statusline").is_on_arrow_file() ~= nil
+            end,
+            color = { fg = "#FF9E65" },
+          },
         },
         lualine_y = {
           { "progress", padding = { left = 1, right = 1 } },
