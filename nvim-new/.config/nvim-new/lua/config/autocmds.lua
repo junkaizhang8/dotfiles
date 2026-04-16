@@ -1,6 +1,5 @@
 -- Borrowed from MariaSolOs's dotfiles:
 -- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/lua/autocmds.lua
-
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("junkaizhang8/treesitter_folding", { clear = true }),
   desc = "Enable Treesitter Folding",
