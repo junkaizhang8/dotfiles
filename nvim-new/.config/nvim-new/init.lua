@@ -26,6 +26,10 @@ require("utils.root").setup()
 
 require("lazy").setup(plugins, {
   ui = { border = "rounded" },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
   change_detection = { notify = false },
   install = {
     colorscheme = { "tokyonight" },
