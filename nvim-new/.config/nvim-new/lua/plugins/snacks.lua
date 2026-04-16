@@ -140,6 +140,12 @@ return {
     },
     quickfile = { enabled = true },
     scope = { enabled = true },
+    toggle = { enabled = true },
     words = { enabled = true },
   },
+  config = function(_, opts)
+    require("snacks").setup(opts)
+
+    Snacks.toggle.zoom():map("<leader>m")
+  end,
 }
