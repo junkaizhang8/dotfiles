@@ -36,7 +36,7 @@ end
 
 return {
   "nvim-mini/mini.files",
-  lazy = "VeryLazy",
+  event = "VeryLazy",
   cmd = { "MiniFilesEmptyTrash" },
   keys = {
     {
