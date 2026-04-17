@@ -12,11 +12,12 @@ local root_markers = {
 return {
   cmd = {
     "clangd",
+    "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
-    "--fallback-style=none",
-    "--function-arg-placeholders=false",
+    "--function-arg-placeholders",
+    "--fallback-style=llvm",
   },
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
   root_dir = function(bufnr, on_dir)
