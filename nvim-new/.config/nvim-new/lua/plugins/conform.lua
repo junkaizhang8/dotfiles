@@ -18,6 +18,7 @@ return {
       typescript = { "prettier" },
       typescriptreact = { "prettier" },
       yaml = { "prettier" },
+      zsh = { "shfmt" },
     },
     format_on_save = function()
       -- Don't format when minifiles is open
