@@ -1,8 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
-  event = { "BufReadPost", "BufNewFile" },
-  cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+  lazy = false,
   build = ":TSUpdate",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-context",
@@ -21,49 +20,64 @@ return {
     end,
   },
   config = function()
-    local opts = {
-      ensure_installed = {
-        "bash",
-        "c",
-        "cpp",
-        "css",
-        "gitcommit",
-        "glsl",
-        "go",
-        "html",
-        "java",
-        "javascript",
-        "json",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "regex",
-        "rust",
-        "scss",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "xml",
-        "yaml",
-        "zsh",
-      },
-      -- Install parsers synchronously (only applied to `ensure_installed`)
-      sync_install = false,
+    local ensure_installed = {
+      "bash",
+      "c",
+      "cpp",
+      "css",
+      "gitcommit",
+      "glsl",
+      "go",
+      "html",
+      "java",
+      "javascript",
+      "json",
+      "json5",
+      "lua",
+      "luadoc",
+      "luap",
+      "markdown",
+      "markdown_inline",
+      "python",
+      "regex",
+      "rust",
+      "scss",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "xml",
+      "yaml",
+      "zsh",
     }
 
-    require("nvim-treesitter.config").setup(opts)
+    -- Install the parsers asynchronously
+    -- Call :wait() for synchronous installation (not recommended)
+    require("nvim-treesitter").install(ensure_installed)
 
     vim.api.nvim_create_autocmd("FileType", {
-      callback = function()
-        -- Enable treesitter highlighting
-        pcall(vim.treesitter.start)
+      group = vim.api.nvim_create_augroup("junkaizhang8/treesitter", { clear = true }),
+      callback = function(args)
+        -- Start treesitter highlighting for the buffer
+        local ok = pcall(vim.treesitter.start, args.buf)
+        if not ok then
+          return
+        end
+
         -- Enable treesitter-based indentation
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+        local bufnr = args.buf
+
+        -- Enable treesitter folding when not in huge files
+        if vim.bo[bufnr].filetype ~= "bigfile" then
+          vim.api.nvim_buf_call(bufnr, function()
+            vim.wo[0][0].foldmethod = "expr"
+            vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.cmd.normal("zx")
+          end)
+        end
       end,
     })
   end,
