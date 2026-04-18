@@ -8,8 +8,11 @@ return {
         enabled = true,
       },
       format = function(diag)
-        local source = diag.source and string.gsub(diag.source, "%.+$", "") .. ": " or ""
-        return source .. diag.message .. " [" .. diag.code .. "]"
+        local ret = (diag.source and string.gsub(diag.source, "%.+$", "") .. ": " or "") .. diag.message
+        if diag.code and diag.code ~= vim.NIL then
+          ret = ret .. " [" .. diag.code .. "]"
+        end
+        return ret
       end,
       override_open_float = true,
     },
