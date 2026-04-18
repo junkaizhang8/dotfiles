@@ -56,27 +56,4 @@ return {
       -- stylua: ignore end
     end,
   },
-  -- config = function(_, opts)
-  --   require("gitsigns").setup(opts)
-  --
-  --   local function git_component()
-  --     local head = vim.b.gitsigns_head or ""
-  --     if head == "" then
-  --       return ""
-  --     end
-  --
-  --     return string.format(" %s", head)
-  --   end
-  --
-  --   local statusline = require("config.statusline")
-  --   statusline.sections.b = {
-  --     {
-  --       git_component,
-  --       cond = function()
-  --         return vim.b.gitsigns_status ~= nil
-  --       end,
-  --       color = { fg = "#ebdbb2", bg = "#665c54" },
-  --     },
-  --   }
-  -- end,
 }
