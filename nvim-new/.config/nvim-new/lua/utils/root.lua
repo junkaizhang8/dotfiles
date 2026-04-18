@@ -124,6 +124,8 @@ M.lspconfig = {}
 
 ---Find the root directory for a buffer with the given markers(s).
 ---
+---If no root is found, returns the current working directory.
+---
 ---Intended to be used for configuring the `root_dir` configuration for LSP servers.
 ---@param bufnr integer
 ---@param marker string|(string|fun(name: string, path: string):boolean|string[])[]|fun(name: string, path: string):boolean
@@ -132,6 +134,24 @@ function M.lspconfig.root_pattern(bufnr, marker)
   local fname = vim.api.nvim_buf_get_name(bufnr)
   return (function(startpath)
     return vim.fs.root(startpath, marker) or vim.uv.cwd()
+  end)(fname)
+end
+
+---Find the root directory for a buffer with the given markers(s).
+---
+---This is a stricter version of `root_pattern` that only returns a root if
+---the buffer is actually inside it. If the buffer is not inside the root, it
+---returns nil instead of falling back to the current working directory.
+---
+---Intended to be used for configuring the `root_dir` configuration for LSP servers
+---that should only attach to buffers inside their root directory.
+---@param bufnr integer
+---@param marker string|(string|fun(name: string, path: string):boolean|string[])[]|fun(name: string, path: string):boolean
+---@return string?
+function M.lspconfig.root_pattern_strict(bufnr, marker)
+  local fname = vim.api.nvim_buf_get_name(bufnr)
+  return (function(startpath)
+    return vim.fs.root(startpath, marker)
   end)(fname)
 end
 
