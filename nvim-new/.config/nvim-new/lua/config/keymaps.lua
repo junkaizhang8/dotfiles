@@ -50,6 +50,7 @@ map({ "i", "s", "n" }, "<Esc>", function()
   return "<Esc>"
 end, { desc = "Escape, Clear hlsearch, and Stop Snippet Session", expr = true })
 
+-- Rename file
 map("n", "<leader>cR", function()
   require("modules.rename-file").rename_file()
 end, { desc = "Rename File" })
