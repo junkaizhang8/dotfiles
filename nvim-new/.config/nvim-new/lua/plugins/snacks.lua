@@ -154,6 +154,15 @@ return {
         vim.g.autoformat = not vim.g.autoformat
       end,
     }):map("<leader>uf")
+    Snacks.toggle({
+      name = "Auto Format (Buffer)",
+      get = function()
+        return not vim.b.disable_autoformat
+      end,
+      set = function()
+        vim.b.disable_autoformat = not vim.b.disable_autoformat
+      end,
+    }):map("<leader>uF")
     Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
     Snacks.toggle.diagnostics():map("<leader>ud")
 

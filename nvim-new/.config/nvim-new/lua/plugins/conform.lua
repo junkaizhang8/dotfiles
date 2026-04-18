@@ -6,7 +6,7 @@ return {
     {
       "<leader>cf",
       function()
-        require("conform").format({ timeout_ms = 500, lsp_format = "fallback" })
+        require("conform").format()
       end,
       desc = "Format File",
     },
@@ -29,21 +29,23 @@ return {
       yaml = { "prettierd" },
       zsh = { "shfmt" },
     },
-    format_on_save = function()
+    default_format_opts = {
+      timeout_ms = 500,
+      lsp_format = "fallback",
+      stop_after_first = true,
+    },
+    format_on_save = function(bufnr)
       -- Don't format when minifiles is open
       if vim.g.minifiles_active then
         return nil
       end
 
       -- If auto-formatting is diabled
-      if not vim.g.autoformat then
+      if not vim.g.autoformat or vim.b[bufnr].disable_autoformat then
         return nil
       end
 
-      return {
-        timeout_ms = 500,
-        lsp_format = "fallback",
-      }
+      return {}
     end,
     formatters = {
       injected = { options = { ignore_errors = true } },
