@@ -101,6 +101,15 @@ return {
         },
       },
     },
+    image = {
+      enabled = true,
+      doc = {
+        inline = false,
+        float = true,
+        max_width = 60,
+        max_height = 30,
+      },
+    },
     indent = {
       enabled = true,
       animate = { enabled = false },
