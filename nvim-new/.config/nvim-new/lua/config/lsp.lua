@@ -46,6 +46,27 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
     map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
     map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+
+    local bufnr = args.buf
+    vim.bo[bufnr].formatexpr = "v:lua.require('conform').formatexpr()"
+
+    if client.name == "eslint" then
+      map("n", "<leader>cF", function()
+        if not client then
+          return
+        end
+
+        client:request("workspace/executeCommand", {
+          command = "eslint.applyAllFixes",
+          arguments = {
+            {
+              uri = vim.uri_from_bufnr(bufnr),
+              version = vim.lsp.util.buf_versions[bufnr],
+            },
+          },
+        }, nil, bufnr)
+      end, { desc = "Fix All ESLint Errors", buffer = bufnr })
+    end
   end,
 })
 
