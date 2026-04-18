@@ -3,7 +3,7 @@
 local utils = require("utils.root")
 
 local root_markers = {
-  { "tsconfig.json", "jsconfig.json", "package.json", "pnpm-lock.yaml", "yarn.lock", "tsconfig.base.json" },
+  { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" },
   ".git",
 }
 
@@ -21,4 +21,19 @@ return {
   root_dir = function(bufnr, on_dir)
     on_dir(utils.lspconfig.root_pattern(bufnr, root_markers))
   end,
+  settings = {
+    typescript = {
+      inlayHints = {
+        parameterNames = {
+          enabled = "literals",
+          suppressWhenArgumentMatchesName = true,
+        },
+        parameterTypes = { enabled = true },
+        variableTypes = { enabled = true },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+      },
+    },
+  },
 }
