@@ -2,6 +2,15 @@ return {
   "stevearc/conform.nvim",
   event = "BufWritePre",
   cmd = "ConformInfo",
+  keys = {
+    {
+      "<leader>cf",
+      function()
+        require("conform").format({ timeout_ms = 500, lsp_format = "fallback" })
+      end,
+      desc = "Format File",
+    },
+  },
   opts = {
     formatters_by_ft = {
       angular = { "prettier" },
