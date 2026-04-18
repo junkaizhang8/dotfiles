@@ -114,7 +114,40 @@ return {
       enabled = true,
       animate = { enabled = false },
     },
-    notifier = { enabled = true },
+    notifier = {
+      enabled = true,
+      filter = function(notif)
+        local msg = notif.msg
+
+        local ignore_exact = {
+          -- LSP notification when no definition found
+          ["No information available"] = true,
+          -- img-clip notification when pasting non-image content
+          ["Content is not an image."] = true,
+          -- LuaSnip notification when no active snippet
+          ["No active Snippet"] = true,
+        }
+
+        if ignore_exact[msg] then
+          return false
+        end
+
+        local ignore_patterns = {
+          -- blink.cmp ghost text bugged notifications
+          "ghost_text/utils.lua:%d+: Invalid buffer id",
+          "ghost_text/init.lua:%d+: Invalid 'col': out of range",
+          "lib/text_edits.lua:%d+: attempt to get length of local",
+        }
+
+        for _, pattern in ipairs(ignore_patterns) do
+          if msg:match(pattern) then
+            return false
+          end
+        end
+
+        return true
+      end,
+    },
     picker = {
       enabled = true,
       sources = {
@@ -150,6 +183,12 @@ return {
     scope = { enabled = true },
     toggle = { enabled = true },
     words = { enabled = true },
+    styles = {
+      snacks_image = {
+        relative = "editor",
+        col = -1,
+      },
+    },
   },
   config = function(_, opts)
     require("snacks").setup(opts)
