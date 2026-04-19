@@ -50,7 +50,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- view to ensure the cursor doesn't move after restarting the LSP clients
       vim.cmd("edit")
 
-      vim.fn.winrestview(view)
+      vim.schedule(function()
+        vim.fn.winrestview(view)
+
+        vim.notify("LSP Restarted", vim.log.levels.INFO, { title = "LSP" })
+      end)
     end, { desc = "Restart LSP" })
     map("n", "<leader>cr", function()
       local inc_rename = require("inc_rename")
