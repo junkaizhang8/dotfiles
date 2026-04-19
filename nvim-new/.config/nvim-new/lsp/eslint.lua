@@ -27,6 +27,19 @@ return {
       on_dir(root)
     end
   end,
+  on_attach = function(client, bufnr)
+    vim.keymap.set("n", "<leader>cF", function()
+      client:request("workspace/executeCommand", {
+        command = "eslint.applyAllFixes",
+        arguments = {
+          {
+            uri = vim.uri_from_bufnr(bufnr),
+            version = vim.lsp.util.buf_versions[bufnr],
+          },
+        },
+      }, nil, bufnr)
+    end, { desc = "Fix All ESLint Errors", buffer = bufnr })
+  end,
   settings = {
     validate = "on",
     packageManager = vim.NIL,
