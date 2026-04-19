@@ -18,31 +18,29 @@ return {
 
     local is_set_up = false
 
+    local function ensure_setup()
+      if not is_set_up then
+        copilot.setup(opts)
+        is_set_up = true
+      end
+    end
+
     if vim.g.copilot_enabled then
-      copilot.setup(opts)
-      is_set_up = true
+      ensure_setup()
     end
 
     Snacks.toggle({
       name = "Copilot Completion",
       get = function()
-        if not vim.g.copilot_enabled then
-          return false
-        end
         return not require("copilot.client").is_disabled()
       end,
       set = function(state)
         if state then
-          -- Setting up for the first time
-          if not is_set_up then
-            copilot.setup(opts)
-            is_set_up = true
-          end
+          ensure_setup()
+
           require("copilot.command").enable()
-          vim.g.copilot_enabled = true
         else
           require("copilot.command").disable()
-          vim.g.copilot_enabled = false
         end
       end,
     }):map("<leader>uc")

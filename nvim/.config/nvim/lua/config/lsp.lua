@@ -17,6 +17,8 @@ vim.diagnostic.config(config)
 vim.api.nvim_create_autocmd("LspAttach", {
   desc = "Configure LSP keymaps",
   callback = function(args)
+    local bufnr = args.buf
+
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     if not client then
@@ -35,6 +37,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
+    map("n", "<leader>cL", function()
+      local view = vim.fn.winsaveview()
+
+      for _, c in ipairs(vim.lsp.get_clients({ filter = bufnr })) do
+        if c.name ~= "copilot" then
+          c:stop()
+        end
+      end
+
+      -- Calling edit centers the cursor, so we need to save and restore the
+      -- view to ensure the cursor doesn't move after restarting the LSP clients
+      vim.cmd("edit")
+
+      vim.fn.winrestview(view)
+    end, { desc = "Restart LSP" })
     map("n", "<leader>cr", function()
       local inc_rename = require("inc_rename")
       return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
@@ -47,7 +64,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
     map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
-    vim.bo[args.buf].formatexpr = "v:lua.require('conform').formatexpr()"
+    vim.bo[bufnr].formatexpr = "v:lua.require('conform').formatexpr()"
   end,
 })
 
