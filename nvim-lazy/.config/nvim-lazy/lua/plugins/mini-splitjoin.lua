@@ -6,7 +6,7 @@ return {
       function()
         require("mini.splitjoin").toggle()
       end,
-      desc = "Split/Join Code Block",
+      desc = "Split/join code block",
     },
   },
   opts = {

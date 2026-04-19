@@ -1,18 +1,5 @@
 return {
   "zbirenbaum/copilot.lua",
-  cmd = "Copilot",
-  event = "BufReadPost",
-  opts = {
-    suggestion = {
-      -- We disable inline suggestions since we have blink.cmp handling that
-      enabled = false,
-    },
-    panel = { enabled = false },
-    filetypes = {
-      markdown = true,
-      help = true,
-    },
-  },
   config = function(_, opts)
     local copilot = require("copilot")
 
@@ -45,6 +32,6 @@ return {
           vim.g.copilot_enabled = false
         end
       end,
-    }):map("<leader>uc")
+    }):map("<leader>aT")
   end,
 }

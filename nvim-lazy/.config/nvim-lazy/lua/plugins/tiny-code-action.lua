@@ -1,6 +1,8 @@
 return {
   "rachartier/tiny-code-action.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = {
+    { "nvim-lua/plenary.nvim" },
+  },
   event = "LspAttach",
   keys = {
     {
@@ -9,7 +11,7 @@ return {
         require("tiny-code-action").code_action({})
       end,
       silent = true,
-      desc = "Code Action",
+      desc = "Code Action (Tiny)",
     },
   },
   opts = {
@@ -17,7 +19,7 @@ return {
       "buffer",
       opts = {
         hotkeys = true,
-        -- Use numeric labels
+        -- Use numeric labels.
         hotkeys_mode = function(titles)
           return vim
             .iter(ipairs(titles))

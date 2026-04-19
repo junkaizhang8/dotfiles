@@ -1,78 +1,71 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-local keymap = vim.keymap
+local map = vim.keymap.set
 
--- Disable global keymaps
-local disabledKeys = {
-  { "n", "<leader>|" },
-  { "n", "<C-h>" },
-  { "n", "<C-j>" },
-  { "n", "<C-k>" },
-  { "n", "<C-l>" },
-}
+-- Lazy
+map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 
-for _, mapping in ipairs(disabledKeys) do
-  local modes, key = mapping[1], mapping[2]
-  keymap.del(modes, key)
-end
+-- Remap j and k to move by visual lines when no count is provided
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
--- Disable Meta-a which is the prefix key for tmux
-keymap.set({ "i", "n", "v" }, "<M-a>", "<Nop>", { silent = true })
+-- Delete without yanking
+map({ "n", "x" }, "x", '"_x', { desc = "Delete Characters Under Cursor Without Yanking" })
+map({ "n", "x" }, "X", '"_X', { desc = "Delete Characters Before Cursor Without Yanking" })
 
--- Disable middle click
-for _, mode in ipairs({ "n", "i" }) do
-  for i = 1, 4 do
-    local click = (i == 1) and "<MiddleMouse>" or ("<" .. i .. "-MiddleMouse>")
-    keymap.set(mode, click, "<Nop>", { silent = true })
+-- Smart pane navigation
+map("n", "<C-\\>", require("modules.smart-previous-pane").move_cursor_previous, { desc = "Move to Previous Split" })
+
+-- Splitting windows
+map("n", "<leader>-", "<C-w>s", { desc = "Split Window Below" })
+map("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right" })
+map("n", "<leader>wd", "<C-w>c", { desc = "Close Current Window" })
+
+-- Buffer navigation
+map("n", "<S-h>", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
+map("n", "<S-l>", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
+map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
+map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
+map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
+
+-- Keep the cursor centered
+map("n", "<C-d>", "<C-d>zz", { desc = "Scroll Downwards" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Scroll Upwards" })
+
+-- Make n always search forward and N always search backward, regardless of the search direction.
+-- Also ensure that the view is centered on the search result
+map("n", "n", "'Nn'[v:searchforward].'zzzv'", { expr = true, desc = "Next Search Result" })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("n", "N", "'nN'[v:searchforward].'zzzv'", { expr = true, desc = "Prev Search Result" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+
+-- Indent while remaining in visual mode.
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+-- Enhance escape to clear search highlights and stop snippet sessions
+map({ "i", "s", "n" }, "<Esc>", function()
+  if require("luasnip").expand_or_jumpable() then
+    require("luasnip").unlink_current()
   end
-end
+  vim.cmd("noh")
+  return "<Esc>"
+end, { desc = "Escape, Clear hlsearch, and Stop Snippet Session", expr = true })
 
--- Delete character without yanking
-keymap.set("n", "x", '"_x', { desc = "Delete Character Under Cursor Without Yanking" })
-keymap.set("n", "X", '"_X', { desc = "Delete Character Before Cursor Without Yanking" })
-
--- Clear line (preserves any white space at the start of the line)
-keymap.set("n", "dc", "^D", { desc = "Clear Line" })
+-- Rename file
+map("n", "<leader>cR", function()
+  require("modules.rename-file").rename_file()
+end, { desc = "Rename File" })
 
 -- Go to the start of the line while in insert mode
-keymap.set({ "i", "c" }, "<C-h>", "<C-o>I", { desc = "Go to Start of Line" })
+map({ "i", "c" }, "<C-h>", "<C-o>I", { desc = "Go to Start of Line" })
 
 -- Go to the end of the line while in insert mode
-keymap.set({ "i", "c" }, "<C-l>", "<C-o>A", { desc = "Go to End of Line" })
+map({ "i", "c" }, "<C-l>", "<C-o>A", { desc = "Go to End of Line" })
 
--- Windows
-keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below", remap = true })
-keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
-
-local smart_splits = require("smart-splits")
-
--- Resizing splits
-keymap.set("n", "<C-M-h>", smart_splits.resize_left, { desc = "Resize Split Left" })
-keymap.set("n", "<C-M-j>", smart_splits.resize_down, { desc = "Resize Split Down" })
-keymap.set("n", "<C-M-k>", smart_splits.resize_up, { desc = "Resize Split Up" })
-keymap.set("n", "<C-M-l>", smart_splits.resize_right, { desc = "Resize Split Right" })
-
--- Moving between splits
-keymap.set("n", "<C-h>", smart_splits.move_cursor_left, { desc = "Move to Split Left" })
-keymap.set("n", "<C-j>", smart_splits.move_cursor_down, { desc = "Move to Split Down" })
-keymap.set("n", "<C-k>", smart_splits.move_cursor_up, { desc = "Move to Split Up" })
-keymap.set("n", "<C-l>", smart_splits.move_cursor_right, { desc = "Move to Split Right" })
-keymap.set(
-  "n",
-  "<C-\\>",
-  require("config.modules.smart-previous-pane").move_cursor_previous,
-  { desc = "Move to Previous Split" }
-)
-
--- Swapping buffers between windows
-keymap.set("n", "<leader><C-h>", smart_splits.swap_buf_left, { desc = "Swap Buffer Left" })
-keymap.set("n", "<leader><C-j>", smart_splits.swap_buf_down, { desc = "Swap Buffer Down" })
-keymap.set("n", "<leader><C-k>", smart_splits.swap_buf_up, { desc = "Swap Buffer Up" })
-keymap.set("n", "<leader><C-l>", smart_splits.swap_buf_right, { desc = "Swap Buffer Right" })
-
-local wk = require("which-key")
-
-wk.add({
-  { "<leader>a", group = "+ai", icon = "", mode = { "n", "v" } },
-})
+-- Add undo breakpoints
+map("i", ",", ",<C-g>u")
+map("i", ".", ".<C-g>u")
+map("i", ";", ";<C-g>u")

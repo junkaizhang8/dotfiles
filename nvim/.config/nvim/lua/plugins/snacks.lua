@@ -1,139 +1,107 @@
+local exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" }
+
 return {
   "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  -- stylua: ignore
   keys = {
-    -- Disable some default keymaps
-    { "<leader><space>", false },
-    { "<leader>/", false },
-    { "<leader>fe", false },
-    { "<leader>fE", false },
-    { "<leader>ff", false },
-    { "<leader>fF", false },
-    { "<leader>fr", false },
-    { "<leader>fR", false },
-    { "<leader>sg", false },
-    { "<leader>sG", false },
-    { "<leader>sw", false },
-    { "<leader>sW", false },
-    { "<leader>e", false },
-    { "<leader>E", false },
-    { "<leader>gd", false },
-    { "<leader>gf", false },
-    -- New keymaps
-    {
-      "<leader><space>",
-      LazyVim.pick("files", { root = false }),
-      desc = "Find Files (cwd)",
-    },
-    {
-      "<leader>/",
-      LazyVim.pick("grep", { root = false }),
-      desc = "Grep (cwd)",
-    },
-    {
-      "<leader>fe",
-      function()
-        Snacks.explorer()
-      end,
-      desc = "Explorer Snacks (cwd)",
-    },
-    {
-      "<leader>fE",
-      function()
-        Snacks.explorer({ cwd = LazyVim.root() })
-      end,
-      desc = "Explorer Snacks (root dir)",
-    },
-    {
-      "<leader>ff",
-      LazyVim.pick("files", { root = false }),
-      desc = "Find Files (cwd)",
-    },
-    {
-      "<leader>fF",
-      LazyVim.pick("files"),
-      desc = "Find Files (root dir)",
-    },
-    {
-      "<leader>fr",
-      function()
-        Snacks.picker.recent({ filter = { cwd = true } })
-      end,
-      desc = "Recent (cwd)",
-    },
-    {
-      "<leader>fR",
-      LazyVim.pick("oldfiles"),
-      desc = "Recent",
-    },
-    {
-      "<leader>sg",
-      LazyVim.pick("live_grep", { root = false }),
-      desc = "Grep (cwd)",
-    },
-    {
-      "<leader>sG",
-      LazyVim.pick("live_grep"),
-      desc = "Grep (root dir)",
-    },
-    {
-      "<leader>sw",
-      LazyVim.pick("grep_word", { root = false }),
-      desc = "Visual selection or word (cwd)",
-      mode = { "n", "x" },
-    },
-    {
-      "<leader>sW",
-      LazyVim.pick("grep_word"),
-      desc = "Visual selection or word (root dir)",
-      mode = { "n", "x" },
-    },
-    {
-      "<leader>gD",
-      function()
-        Snacks.picker.git_diff()
-      end,
-      desc = "Git Diff (hunks)",
-    },
-    {
-      "<leader>gF",
-      function()
-        Snacks.picker.git_log_file()
-      end,
-      desc = "Git Current File History",
-    },
+    -- Top Pickers & Explorer
+    { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+    { "<leader>fe", function() Snacks.explorer() end,desc = "Explorer Snacks" },
+    -- Find
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+    { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+    -- Grep
+    { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+    { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual Selection or Word", mode = { "n", "x" } },
+    -- Search
+    { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+    { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
+    { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+    { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+    { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+    { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+    { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+    { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+    { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+    { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
+    { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
+    { "<leader>sp", function() Snacks.picker.lazy() end, desc = "Search for Plugin Spec" },
+    { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+    { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
+    { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    -- Git
+    { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+    { "<leader>gD", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+    { "<leader>gF", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+    -- LSP
+    { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+    { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+    { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+    { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+    { "gai", function() Snacks.picker.lsp_incoming_calls() end, desc = "C[a]lls Incoming" },
+    { "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+    { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+    { "<leader>cl", function() Snacks.picker.lsp_config() end, desc = "Lsp Info" },
+    -- Other
+    { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+    { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+    { "<leader>n",  function() Snacks.picker.notifications() end, desc = "Notification History" },
+    { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+    { "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" },
+    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+    { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+    { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+    { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+    { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
   },
-  opts = function(_, opts)
-    opts.scroll = {
+  opts = {
+    bigfile = { enabled = true },
+    dashboard = {
       enabled = true,
-      animate = {
-        duration = { step = 10, total = 80 },
-        easing = "linear",
-      },
-      animate_repeat = {
-        delay = 50,
-        duration = { step = 3, total = 20 },
-        easing = "linear",
-      },
-    }
-    opts.styles = {
-      snacks_image = {
-        relative = "editor",
-        col = -1,
-      },
-      news = {
-        width = 0.6,
-        height = 0.6,
-        border = "rounded",
-        wo = {
-          spell = false,
-          wrap = false,
-          signcolumn = "yes",
-          statuscolumn = " ",
-          conceallevel = 3,
+      preset = {
+        keys = {
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          {
+            icon = " ",
+            key = "c",
+            desc = "Config",
+            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+          },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
       },
-    }
-    opts.image = {
+    },
+    image = {
       enabled = true,
       doc = {
         inline = false,
@@ -141,8 +109,12 @@ return {
         max_width = 60,
         max_height = 30,
       },
-    }
-    opts.notifier = {
+    },
+    indent = {
+      enabled = true,
+      animate = { enabled = false },
+    },
+    notifier = {
       enabled = true,
       filter = function(notif)
         local msg = notif.msg
@@ -175,22 +147,26 @@ return {
 
         return true
       end,
-    }
-    opts.picker = {
+    },
+    picker = {
       enabled = true,
       sources = {
-        explorer = {
+        explorer = { hidden = true },
+        files = {
           hidden = true,
+          exclude = exclude,
         },
         grep = {
           hidden = true,
-        },
-        files = {
-          hidden = true,
-          exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" },
+          exclude = exclude,
         },
         recent = {
           hidden = true,
+          exclude = exclude,
+        },
+        smart = {
+          hidden = true,
+          exclude = exclude,
         },
         notifications = {
           win = {
@@ -202,24 +178,46 @@ return {
           },
         },
       },
-    }
-    -- Override some dashboard keys to use the cwd instead of root dir
-    local keys = {
-      [1] = {
-        icon = " ",
-        key = "f",
-        desc = "Find File",
-        action = ":lua Snacks.dashboard.pick('files', { root = false })",
+    },
+    quickfile = { enabled = true },
+    scope = { enabled = true },
+    toggle = { enabled = true },
+    words = { enabled = true },
+    styles = {
+      snacks_image = {
+        relative = "editor",
+        col = -1,
       },
-      [4] = {
-        icon = " ",
-        key = "g",
-        desc = "Find Text",
-        action = ":lua Snacks.dashboard.pick('live_grep', { root = false })",
-      },
-    }
-    for i, key in pairs(keys) do
-      opts.dashboard.preset.keys[i] = key
+    },
+  },
+  config = function(_, opts)
+    require("snacks").setup(opts)
+
+    Snacks.toggle({
+      name = "Auto Format",
+      get = function()
+        return vim.g.autoformat
+      end,
+      set = function()
+        vim.g.autoformat = not vim.g.autoformat
+      end,
+    }):map("<leader>uf")
+    Snacks.toggle({
+      name = "Auto Format (Buffer)",
+      get = function()
+        return not vim.b.disable_autoformat
+      end,
+      set = function()
+        vim.b.disable_autoformat = not vim.b.disable_autoformat
+      end,
+    }):map("<leader>uF")
+    Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+    Snacks.toggle.diagnostics():map("<leader>ud")
+
+    if vim.lsp.inlay_hint then
+      Snacks.toggle.inlay_hints():map("<leader>uh")
     end
+
+    Snacks.toggle.zoom():map("<leader>m")
   end,
 }

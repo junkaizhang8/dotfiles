@@ -1,5 +1,4 @@
 return {
-  -- TODO: abc
   "stevearc/quicker.nvim",
   event = "VeryLazy",
   keys = {

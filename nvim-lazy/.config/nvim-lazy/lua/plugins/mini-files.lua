@@ -36,7 +36,7 @@ end
 
 return {
   "nvim-mini/mini.files",
-  event = "VeryLazy",
+  lazy = "VeryLazy",
   cmd = { "MiniFilesEmptyTrash" },
   keys = {
     {
@@ -157,9 +157,10 @@ return {
 
     local trash_dir = vim.fn.stdpath("data") .. "/mini.files/trash"
 
-    -- Create the mini.files trash directory if it doesn't exist
+    -- Check if trash exists
     if vim.fn.isdirectory(trash_dir) == 0 then
-      vim.fn.mkdir(trash_dir, "p")
+      vim.notify("mini.files trash does not exist", vim.log.levels.INFO)
+      return
     end
 
     -- Custom user command for emptying the mini.files trash

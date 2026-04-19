@@ -1,43 +1,15 @@
 return {
   "folke/noice.nvim",
+  event = "VeryLazy",
   opts = {
     lsp = {
       override = {
-        -- override the default lsp markdown formatter with Noice
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-        -- override the lsp markdown formatter with Noice
-        ["vim.lsp.util.stylize_markdown"] = false,
-        -- override cmp documentation with Noice (needs the other options to work)
-        ["cmp.entry.get_documentation"] = false,
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ["vim.lsp.util.stylize_markdown"] = true,
+        ["cmp.entry.get_documentation"] = true,
       },
-      documentation = {
-        opts = {
-          lang = "markdown",
-          replace = true,
-          render = "plaintext",
-          format = { "{message}" },
-          win_options = { concealcursor = "n", conceallevel = 3 },
-          size = { max_height = 15 },
-        },
-      },
-      signature = {
-        opts = { size = { max_height = 15 } },
-      },
-    },
-    presets = {
-      lsp_doc_border = true,
     },
     routes = {
-      {
-        filter = {
-          event = "msg_show",
-          kind = {
-            "shell_out",
-            "shell_err",
-          },
-        },
-        view = "notify",
-      },
       {
         filter = {
           event = "msg_show",
@@ -50,5 +22,21 @@ return {
         view = "mini",
       },
     },
+    presets = {
+      bottom_search = true,
+      command_palette = true,
+      long_message_to_split = true,
+      lsp_doc_border = true,
+      inc_rename = true,
+    },
   },
+  config = function(_, opts)
+    -- HACK: noice shows messages from before it was enabled,
+    -- but this is not ideal when Lazy is installing plugins,
+    -- so clear the messages in this case.
+    if vim.o.filetype == "lazy" then
+      vim.cmd([[messages clear]])
+    end
+    require("noice").setup(opts)
+  end,
 }
