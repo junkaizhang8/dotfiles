@@ -21,6 +21,7 @@ require("config.autocmds")
 require("config.lsp")
 
 require("modules.smart-previous-pane").setup()
+require("modules.markdown-bullets").setup()
 
 require("utils.root").setup()
 
