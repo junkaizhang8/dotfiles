@@ -12,7 +12,6 @@ return {
       mode = { "n", "v" },
     },
     {
-      -- Open in the current working directory
       "<leader>yc",
       "<Cmd>Yazi cwd<CR>",
       desc = "Open Yazi in Current Working Directory",
