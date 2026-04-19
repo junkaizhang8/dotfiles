@@ -180,9 +180,9 @@ return {
       end)
 
       if ok then
-        vim.notify("Emptied mini.files trash", vim.log.levels.INFO)
+        vim.notify("Emptied mini.files trash", vim.log.levels.INFO, { title = "MiniFiles" })
       else
-        vim.notify("Error emptying mini.files trash: " .. err, vim.log.levels.ERROR)
+        vim.notify("Error emptying mini.files trash: " .. err, vim.log.levels.ERROR, { title = "MiniFiles" })
       end
     end, { desc = "Empty mini.files trash" })
 

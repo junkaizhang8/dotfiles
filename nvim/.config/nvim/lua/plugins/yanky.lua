@@ -16,7 +16,7 @@ local function make_picker_config(type, is_visual)
   local yanky = require("yanky")
 
   if not vim.tbl_contains(vim.tbl_values(yanky.type), type) then
-    vim.notify("Invalid type " .. type, vim.log.levels.ERROR)
+    vim.notify("Invalid type " .. type, vim.log.levels.ERROR, { title = "Yanky" })
     return
   end
 

@@ -38,7 +38,11 @@ return {
   config = function(_, opts)
     vim.g.rustaceanvim = opts or {}
     if vim.fn.executable("rust-analyzer") == 0 then
-      vim.notify("rust-analyzer is not installed. Please install it to use rustaceanvim.", vim.log.levels.ERROR)
+      vim.notify(
+        "rust-analyzer is not installed. Please install it to use rustaceanvim.",
+        vim.log.levels.ERROR,
+        { title = "rustaceanvim" }
+      )
     end
   end,
 }
