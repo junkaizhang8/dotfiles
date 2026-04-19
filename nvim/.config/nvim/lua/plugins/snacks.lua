@@ -1,3 +1,5 @@
+local root = require("utils.root")
+
 local exclude = { ".git", "node_modules", "__pycache__", ".venv", ".DS_Store" }
 
 return {
@@ -12,19 +14,24 @@ return {
     { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
     { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-    { "<leader>fe", function() Snacks.explorer() end,desc = "Explorer Snacks" },
+    { "<leader>fe", function() Snacks.explorer() end, desc = "Explorer Snacks" },
+    { "<leader>fE", function() Snacks.explorer({ cwd = root.get() }) end, desc = "Explorer Snacks (root)" },
     -- Find
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>fF", function() Snacks.picker.files({ cwd = root.get() }) end, desc = "Find Files (root)" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+    { "<leader>fr", function() Snacks.picker.recent({ filter = { cwd = true } }) end, desc = "Recent" },
+    { "<leader>fR", function() Snacks.picker.recent() end, desc = "Recent (global)" },
     -- Grep
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
     { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>sG", function() Snacks.picker.grep({ cwd = root.get() }) end, desc = "Grep (root)" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual Selection or Word", mode = { "n", "x" } },
+    { "<leader>sW", function() Snacks.picker.grep_word({ cwd = root.get() }) end, desc = "Visual Selection or Word (root)", mode = { "n", "x" } },
     -- Search
     { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
     { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
