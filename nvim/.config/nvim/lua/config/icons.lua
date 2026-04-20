@@ -1,11 +1,11 @@
 local M = {}
 
 M.dap = {
-  stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
-  breakpoint = "",
-  breakpoint_condition = "",
-  breakpoint_rejected = { "", "DiagnosticError" },
-  log_point = ".>",
+  Stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
+  Breakpoint = "",
+  BreakpointCondition = "",
+  BreakpointRejected = { "", "DiagnosticError" },
+  LogPoint = "",
 }
 
 M.folding = {
