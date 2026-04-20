@@ -33,6 +33,13 @@ return {
         -- When jumping through the call stack, try to switch to the buffer if already open in
         -- a window, else use the last window to open the buffer
         switchbuf = "usetab,uselast",
+        virtual_text = {
+          enabled = true,
+          format = function(var, _, _)
+            -- Strip out excessive whitespace
+            return " " .. var.value:gsub("%s+", " ")
+          end,
+        },
       },
     },
     {
