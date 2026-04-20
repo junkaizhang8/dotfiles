@@ -41,3 +41,13 @@ vim.api.nvim_create_autocmd("VimResized", {
     vim.cmd("tabnext " .. current_tab)
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("wrap_spell"),
+  pattern = { "text", "markdown", "gitcommit" },
+  desc = "Enable wrapping and spell checking for text files",
+  callback = function()
+    vim.wo.wrap = true
+    vim.wo.spell = true
+  end,
+})
