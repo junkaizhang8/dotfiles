@@ -80,9 +80,14 @@ return {
         end
 
         local bufnr = args.buf
+        local bo = vim.bo[bufnr]
 
-        -- Enable treesitter folding when not in huge files
-        if vim.bo[bufnr].filetype ~= "bigfile" then
+        if not bo.modifiable or bo.buftype ~= "" or bo.filetype == "bigfile" then
+          return
+        end
+
+        -- Enable treesitter folding
+        if bo.filetype ~= "bigfile" then
           vim.api.nvim_buf_call(bufnr, function()
             vim.wo[0][0].foldmethod = "expr"
             vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
