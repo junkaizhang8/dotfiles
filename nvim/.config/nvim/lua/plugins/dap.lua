@@ -148,16 +148,10 @@ return {
       },
     }
 
+    local codelldb = require("utils.codelldb")
+
     -- C/C++ adapter configurations
-    dap.adapters.codelldb = {
-      type = "server",
-      host = "localhost",
-      port = "${port}",
-      executable = {
-        command = "codelldb",
-        args = { "--port", "${port}" },
-      },
-    }
+    dap.adapters.codelldb = codelldb.get_adapter()
     for _, lang in ipairs({ "c", "cpp" }) do
       dap.configurations[lang] = {
         {

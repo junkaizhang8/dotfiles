@@ -36,11 +36,9 @@ return {
     },
   },
   config = function(_, opts)
-    local codelldb = vim.fn.exepath("codelldb")
-    local codelldb_lib_ext = io.popen("uname"):read("*l") == "Linux" and ".so" or ".dylib"
-    local library_path = vim.fn.expand("$MASON/opt/lldb/lib/liblldb" .. codelldb_lib_ext)
+    local codelldb = require("utils.codelldb")
     opts.dap = {
-      adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb, library_path),
+      adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb.codelldb, codelldb.liblldb),
     }
 
     vim.g.rustaceanvim = opts or {}
