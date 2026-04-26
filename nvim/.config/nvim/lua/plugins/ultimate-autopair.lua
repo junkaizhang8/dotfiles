@@ -3,7 +3,7 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   branch = "v0.6",
   config = function()
-    local function string_autopair_guard(fn, o, closing_char)
+    local function string_autopair_guard(fn, _, closing_char)
       local in_string = fn.in_node({ "string", "raw_string" })
       if not in_string then
         return true
@@ -11,16 +11,13 @@ return {
       if closing_char == nil then
         return false
       end
-      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-      local _, _, er, ec = in_string:range()
-      if er + 1 ~= row then
-        return false
-      end
-      local str_char = o.line:sub(ec, ec)
-      if col + 1 == ec and str_char == closing_char then
-        return true
-      end
-      return false
+      local line = vim.api.nvim_get_current_line()
+      -- The character may be a multibyte character, so we need to use
+      -- strcharpart to get the correct character.
+      -- Likewise, we need to use charcol to get the correct character
+      -- index.
+      local char = vim.fn.strcharpart(line, vim.fn.charcol(".") - 1, 1)
+      return char == closing_char
     end
 
     local opts = {
