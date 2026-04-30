@@ -1,12 +1,46 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
+  keys = {
+    {
+      "<C-f>",
+      function()
+        if not require("noice.lsp").scroll(4) then
+          return "<C-f>"
+        end
+      end,
+      silent = true,
+      expr = true,
+      desc = "Scroll Forward",
+      mode = { "i", "n", "s" },
+    },
+    {
+      "<C-b>",
+      function()
+        if not require("noice.lsp").scroll(-4) then
+          return "<C-b>"
+        end
+      end,
+      silent = true,
+      expr = true,
+      desc = "Scroll Backward",
+      mode = { "i", "n", "s" },
+    },
+  },
   opts = {
     lsp = {
       override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+        ["vim.lsp.util.stylize_markdown"] = false,
+      },
+      documentation = {
+        opts = {
+          lang = "markdown",
+          replace = true,
+          render = "plaintext",
+          format = { "{message}" },
+          win_options = { concealcursor = "n", conceallevel = 3 },
+        },
       },
     },
     routes = {
