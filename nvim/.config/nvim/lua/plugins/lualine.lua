@@ -280,52 +280,17 @@ return {
     local lualine = require("lualine")
     lualine.setup(opts)
 
-    vim.api.nvim_set_hl(0, "LualineFilename", { fg = "#CBE0F0", bold = true })
-    vim.api.nvim_set_hl(0, "LualineFilenameModified", { fg = "#FF9E65", bold = true })
+    local function get_lualine_colors()
+      local theme = lualine.get_config().options.theme
+      if type(theme) == "string" then
+        theme = require("lualine.themes." .. theme)
+      end
+      return theme.normal.c
+    end
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermLeave", "BufWinEnter", "ColorScheme" }, {
-      callback = function()
-        local dashboard_filetypes = {
-          alpha = true,
-          dashboard = true,
-          snacks_dashboard = true,
-        }
+    local colors = get_lualine_colors()
 
-        local function is_dashboard()
-          return dashboard_filetypes[vim.bo.filetype] ~= nil
-        end
-
-        local function get_lualine_colors()
-          local theme = lualine.get_config().options.theme
-
-          if type(theme) == "string" then
-            theme = require("lualine.themes." .. theme)
-          end
-
-          return theme.normal.c
-        end
-
-        local function set_statusline_highlight()
-          local colors = get_lualine_colors()
-          vim.api.nvim_set_hl(0, "StatusLine", { bg = colors.bg, fg = colors.fg })
-        end
-
-        local function hide_statusline_highlight()
-          vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE", fg = "NONE" })
-        end
-
-        local function update_lualine_statusline()
-          if is_dashboard() then
-            -- Hide lualine when entering dashboard
-            hide_statusline_highlight()
-          else
-            -- Call this to fix weird coloring artifacts in the status line
-            set_statusline_highlight()
-          end
-        end
-
-        vim.schedule(update_lualine_statusline)
-      end,
-    })
+    vim.api.nvim_set_hl(0, "LualineFilename", { bg = colors.bg, fg = "#CBE0F0", bold = true })
+    vim.api.nvim_set_hl(0, "LualineFilenameModified", { bg = colors.bg, fg = "#FF9E65", bold = true })
   end,
 }
