@@ -14,13 +14,23 @@ local config = {
 
 vim.diagnostic.config(config)
 
+local function lsp_code_action(action_name)
+  return function()
+    vim.lsp.buf.code_action({
+      apply = true,
+      context = {
+        only = { action_name },
+        diagnostics = {},
+      },
+    })
+  end
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
   desc = "Configure LSP keymaps",
   callback = function(args)
     local bufnr = args.buf
-
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-
     if not client then
       return
     end
@@ -36,6 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
+    -- Restart LSP
     map("n", "<leader>cL", function()
       local view = vim.fn.winsaveview()
 
@@ -55,10 +66,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.notify("LSP Restarted", vim.log.levels.INFO, { title = "LSP" })
       end)
     end, { desc = "Restart LSP" })
+
+    -- Rename with inc_rename
     map("n", "<leader>cr", function()
       local inc_rename = require("inc_rename")
       return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
     end, { desc = "LSP Rename", expr = true })
+
+    -- Organize imports if available
+    if client:supports_method("textDocument/codeAction") then
+      map("n", "<leader>co", lsp_code_action("source.organizeImports"), {
+        desc = "Organize Imports",
+      })
+    end
+
+    -- Diagnostics
     map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
     map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
     map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
