@@ -151,7 +151,11 @@ return {
           end
           parts[#parts] = filename
 
-          return table.concat(parts, "/")
+          -- Pad with a space if filetype is empty since there is no file icon,
+          -- causing the path to be flush against the previous section
+          local padding = vim.bo.filetype == "" and " " or ""
+
+          return padding .. table.concat(parts, "/")
         end,
         padding = { left = 0, right = 1 },
       }
