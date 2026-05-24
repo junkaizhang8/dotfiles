@@ -108,7 +108,7 @@ return {
           return get() ~= nil
         end,
         color = function()
-          return "Special"
+          return "LualineRootDir"
         end,
       }
     end
@@ -147,7 +147,7 @@ return {
             filename = apply_hl("LualineFilename", filename)
           end
           if vim.bo.readonly then
-            filename = filename .. " "
+            filename = filename .. apply_hl("LualineReadonly", " 󰌾")
           end
           parts[#parts] = filename
 
@@ -294,7 +294,9 @@ return {
 
     local colors = get_lualine_colors()
 
+    vim.api.nvim_set_hl(0, "LualineRootDir", { bg = colors.bg, fg = "#2AC3DE" })
     vim.api.nvim_set_hl(0, "LualineFilename", { bg = colors.bg, fg = "#CBE0F0", bold = true })
     vim.api.nvim_set_hl(0, "LualineFilenameModified", { bg = colors.bg, fg = "#FF9E65", bold = true })
+    vim.api.nvim_set_hl(0, "LualineReadonly", { bg = colors.bg, fg = "#FF9E65", bold = true })
   end,
 }
