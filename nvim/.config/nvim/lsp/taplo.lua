@@ -3,7 +3,7 @@
 
 local utils = require("utils.root")
 
-local root_markers = { ".git" }
+local root_markers = { ".taplo.toml", "taplo.toml", ".git" }
 
 ---@type vim.lsp.Config
 return {
