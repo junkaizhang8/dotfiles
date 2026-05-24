@@ -12,7 +12,7 @@ return {
     lint.linters_by_ft = opts.linters_by_ft
 
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
-      group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
+      group = vim.api.nvim_create_augroup("junkaizhang8/nvim-lint", { clear = true }),
       callback = function()
         lint.try_lint()
       end,
