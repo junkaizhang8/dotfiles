@@ -21,7 +21,7 @@ local api = vim.api
 -- Default options
 local defaults = {
   mappings = {
-    toggle_checkbox = "<M-X>",
+    toggle_checkbox = "<M-x>",
   },
 }
 
@@ -29,7 +29,7 @@ local defaults = {
 ---@param opts table|nil User-provided options
 ---@return table # Merged options
 local function merge_opts(opts)
-  return vim.tbl_deep_extend("force", {}, defaults, opts or {})
+  return vim.tbl_deep_extend("force", defaults, opts or {})
 end
 
 -- Parses a bullet line and returns a table containing the parsed contents.
