@@ -128,8 +128,10 @@ return {
 
     minifiles.setup(opts)
 
-    -- Keep track of when the explorer is open to disable format on save
     local minifiles_explorer_group = api.nvim_create_augroup("junkaizhang8/minifiles_explorer", { clear = true })
+    local minifiles_buffer_group = api.nvim_create_augroup("junkaizhang8/minifiles_buffer", { clear = true })
+
+    -- Keep track of when the explorer is open to disable format on save
     api.nvim_create_autocmd("User", {
       group = minifiles_explorer_group,
       pattern = "MiniFilesExplorerOpen",
@@ -146,8 +148,9 @@ return {
     })
 
     api.nvim_create_autocmd("User", {
-      desc = "Add minifiles split keymaps",
+      group = minifiles_buffer_group,
       pattern = "MiniFilesBufferCreate",
+      desc = "Add minifiles split keymaps",
       callback = function(args)
         local buf_id = args.data.buf_id
         map_split(buf_id, "-", "belowright horizontal")
@@ -192,7 +195,9 @@ return {
 
     -- Add default bookmarks when opening the explorer
     api.nvim_create_autocmd("User", {
+      group = minifiles_explorer_group,
       pattern = "MiniFilesExplorerOpen",
+      desc = "Add default minifiles bookmarks",
       callback = function()
         set_mark("c", vim.fn.getcwd, "Current Working Directory")
         set_mark("t", trash_dir, "Mini.files Trash")

@@ -27,6 +27,7 @@ local function lsp_code_action(action_name)
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("junkaizhang8/lsp_attach", { clear = true }),
   desc = "Configure LSP keymaps",
   callback = function(args)
     local bufnr = args.buf
@@ -94,6 +95,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+  group = vim.api.nvim_create_augroup("junkaizhang8/lsp_setup", { clear = true }),
   once = true,
   callback = function()
     -- Extend Neovim's client capabilities with the completion ones

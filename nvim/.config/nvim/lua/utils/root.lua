@@ -162,6 +162,7 @@ function M.setup()
     "DirChanged",
     "LspAttach",
   }, {
+    group = vim.api.nvim_create_augroup("junkaizhang8/root", { clear = true }),
     callback = function(args)
       cache[args.buf] = nil
     end,

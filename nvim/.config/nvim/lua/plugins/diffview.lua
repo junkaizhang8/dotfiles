@@ -123,6 +123,7 @@ return {
     require("diffview").setup(opts)
 
     vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("junkaizhang8/diffview", { clear = true }),
       pattern = { "DiffviewFiles", "DiffviewFileHistory" },
       callback = function(args)
         local bufnr = args.buf

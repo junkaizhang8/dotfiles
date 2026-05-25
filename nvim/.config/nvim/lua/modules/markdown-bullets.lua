@@ -185,6 +185,7 @@ function M.setup(opts)
   end, { range = true, desc = "Toggle Checkbox" })
 
   api.nvim_create_autocmd("FileType", {
+    group = api.nvim_create_augroup("junkaizhang8/markdown_bullets", { clear = true }),
     pattern = { "markdown" },
     callback = function()
       vim.keymap.set("i", "<CR>", on_insert, { expr = true, buffer = true })
