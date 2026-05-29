@@ -39,6 +39,10 @@ local function apply_tokyonight()
 
     on_highlights = function(hl, c)
       hl.QuickFixLineNr = { fg = c.fg }
+      hl.Folded = {
+        bg = c.bg_visual,
+        fg = c.blue,
+      }
     end,
   })
 
