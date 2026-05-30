@@ -10,6 +10,7 @@ local function apply_tokyonight()
   local fg_dark = "#B4D0E9"
   local fg_gutter = "#3E5870"
   local border = "#547998"
+  local bg_fold = "#2E2245"
 
   require("tokyonight").setup({
     style = "night",
@@ -39,10 +40,7 @@ local function apply_tokyonight()
 
     on_highlights = function(hl, c)
       hl.QuickFixLineNr = { fg = c.fg }
-      hl.Folded = {
-        bg = c.bg_visual,
-        fg = c.blue,
-      }
+      hl.Folded = { fg = c.blue, bg = bg_fold }
     end,
   })
 
