@@ -1,5 +1,11 @@
 local map = vim.keymap.set
 
+-- Disable middle-click
+for i = 1, 4 do
+  local click = (i == 1) and "<MiddleMouse>" or ("<" .. i .. "-MiddleMouse>")
+  map({ "n", "i", "v", "c" }, click, "<Nop>", { silent = true })
+end
+
 -- Lazy
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 
