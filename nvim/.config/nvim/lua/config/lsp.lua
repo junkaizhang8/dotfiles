@@ -72,7 +72,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "<leader>cr", function()
       local inc_rename = require("inc_rename")
       return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-    end, { desc = "LSP Rename", expr = true })
+    end, { expr = true, desc = "LSP Rename" })
 
     -- Organize imports if available
     if client:supports_method("textDocument/codeAction") then

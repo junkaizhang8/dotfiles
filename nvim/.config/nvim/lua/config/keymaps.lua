@@ -10,10 +10,10 @@ end
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 
 -- Remap j and k to move by visual lines when no count is provided
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Down" })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Down" })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Up" })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Up" })
 
 -- Delete without yanking
 map({ "n", "x" }, "x", '"_x', { desc = "Delete Characters Under Cursor Without Yanking" })
@@ -58,7 +58,7 @@ map({ "i", "s", "n" }, "<Esc>", function()
   end
   vim.cmd("noh")
   return "<Esc>"
-end, { desc = "Escape, Clear hlsearch, and Stop Snippet Session", expr = true })
+end, { expr = true, desc = "Escape, Clear hlsearch, and Stop Snippet Session" })
 
 -- Rename file
 map("n", "<leader>cR", function()
