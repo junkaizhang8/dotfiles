@@ -25,6 +25,7 @@ return {
       "c",
       "cpp",
       "css",
+      "dockerfile",
       "gitcommit",
       "glsl",
       "go",
