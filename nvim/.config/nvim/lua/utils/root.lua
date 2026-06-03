@@ -104,6 +104,11 @@ end
 
 local cache = {}
 
+---Get the root directory for the current buffer.
+---
+---If no root is found, return the current working directory.
+---@param opts? { buf?: integer }
+---@return string?
 function M.get(opts)
   opts = opts or {}
   local buf = opts.buf or vim.api.nvim_get_current_buf()
@@ -124,7 +129,7 @@ M.lspconfig = {}
 
 ---Find the root directory for a buffer with the given markers(s).
 ---
----If no root is found, returns the current working directory.
+---If no root is found, return the current working directory.
 ---
 ---Intended to be used for configuring the `root_dir` configuration for LSP servers.
 ---@param bufnr integer
