@@ -9,8 +9,6 @@ return {
   -- stylua: ignore
   keys = {
     -- Top Pickers & Explorer
-    { "<leader><space>", function() Snacks.picker.files() end, desc = "Find Files" },
-    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
     { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
@@ -18,9 +16,6 @@ return {
     { "<leader>fE", function() Snacks.explorer({ cwd = root.get() }) end, desc = "Explorer Snacks (root)" },
     -- Find
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-    { "<leader>fF", function() Snacks.picker.files({ cwd = root.get() }) end, desc = "Find Files (root)" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>fr", function() Snacks.picker.recent({ filter = { cwd = true } }) end, desc = "Recent" },
@@ -28,10 +23,6 @@ return {
     -- Grep
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
     { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-    { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
-    { "<leader>sG", function() Snacks.picker.grep({ cwd = root.get() }) end, desc = "Grep (root)" },
-    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual Selection or Word", mode = { "n", "x" } },
-    { "<leader>sW", function() Snacks.picker.grep_word({ cwd = root.get() }) end, desc = "Visual Selection or Word (root)", mode = { "n", "x" } },
     -- Search
     { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
     { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
@@ -91,10 +82,10 @@ return {
       enabled = true,
       preset = {
         keys = {
-          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
           { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
           { icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
-          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()" },
           { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
           {
             icon = " ",
