@@ -91,7 +91,18 @@ return {
             icon = " ",
             key = "c",
             desc = "Config",
-            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            action = function()
+              local raw_path = "~/.dotfiles"
+
+              local config_path = vim.fn.expand(raw_path)
+
+              if vim.fn.isdirectory(config_path) == 0 then
+                vim.notify("Could not determine config directory", vim.log.levels.WARN, { title = "FFF" })
+                return
+              end
+
+              require("fff").find_files_in_dir(config_path)
+            end,
           },
           { icon = " ", key = "s", desc = "Restore Session", section = "session" },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },

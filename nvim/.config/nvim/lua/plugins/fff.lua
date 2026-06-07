@@ -78,9 +78,7 @@ return {
     {
       "<leader>fc",
       function()
-        local xdg = vim.env.XDG_CONFIG_HOME
-
-        local raw_path = (xdg and xdg ~= "") and xdg or "~/.config"
+        local raw_path = "~/.dotfiles"
 
         local config_path = vim.fn.expand(raw_path)
 
