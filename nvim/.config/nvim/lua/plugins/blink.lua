@@ -37,6 +37,14 @@ local function inside_comment_block()
   return false
 end
 
+local min_width = 15
+local max_height = 10
+
+if vim.o.winborder ~= "none" and vim.o.winborder ~= "" then
+  min_width = min_width + 2
+  max_height = max_height + 2
+end
+
 return {
   "saghen/blink.cmp",
   dependencies = {
@@ -46,6 +54,7 @@ return {
       dependencies = { "nvim-lua/plenary.nvim" },
     },
     "fang2hou/blink-copilot",
+    "xzbdmw/colorful-menu.nvim",
   },
   version = "1.*",
   event = { "InsertEnter", "CmdlineEnter" },
@@ -56,9 +65,24 @@ return {
         selection = { preselect = true, auto_insert = true },
       },
       menu = {
+        min_width = min_width,
+        max_height = max_height,
         scrollbar = true,
         draw = {
-          gap = 1,
+          -- We don't need label_description now because label and
+          -- label_description are already combined together in label by
+          -- colorful-menu.nvim
+          columns = { { "kind_icon" }, { "label", gap = 1 } },
+          components = {
+            label = {
+              text = function(ctx)
+                return require("colorful-menu").blink_components_text(ctx)
+              end,
+              highlight = function(ctx)
+                return require("colorful-menu").blink_components_highlight(ctx)
+              end,
+            },
+          },
         },
       },
       documentation = {
