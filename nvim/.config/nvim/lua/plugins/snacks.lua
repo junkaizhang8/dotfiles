@@ -66,7 +66,7 @@ return {
     { "<leader>cl", function() Snacks.picker.lsp_config() end, desc = "Lsp Info" },
     -- Other
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-    { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+    { "<leader>s.",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
     { "<leader>n",  function() Snacks.picker.notifications() end, desc = "Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" },

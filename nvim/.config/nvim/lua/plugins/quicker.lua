@@ -4,14 +4,14 @@ return {
   event = "VeryLazy",
   keys = {
     {
-      "<leader>xq",
+      "<leader>qq",
       function()
         require("quicker").toggle()
       end,
       desc = "Quickfix List",
     },
     {
-      "<leader>xl",
+      "<leader>ql",
       function()
         require("quicker").toggle({ loclist = true })
       end,
