@@ -107,8 +107,6 @@ source ${ZIM_HOME}/init.zsh
 # Shell tools
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-eval "$(thefuck --alias)"
-eval "$(thefuck --alias fk)"
 eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Powerlevel10k
@@ -165,10 +163,10 @@ _fzf_comprun() {
   shift
 
   case "$command" in
-    cd)           fzf --preview 'eza --tree --icons=always --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo $'{}" "$@" ;;
-    ssh)          fzf --preview 'dig {}' "$@" ;;
-    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+  cd) fzf --preview 'eza --tree --icons=always --color=always {} | head -200' "$@" ;;
+  export | unset) fzf --preview "eval 'echo $'{}" "$@" ;;
+  ssh) fzf --preview 'dig {}' "$@" ;;
+  *) fzf --preview "$show_file_or_dir_preview" "$@" ;;
   esac
 }
 
@@ -199,13 +197,13 @@ function sesh-sessions() {
     exec <&1
     local session
     session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
-    zle reset-prompt > /dev/null 2>&1 || true
+    zle reset-prompt >/dev/null 2>&1 || true
     [[ -z "$session" ]] && return
     sesh connect $session
   }
 }
 
-zle     -N             sesh-sessions
+zle -N sesh-sessions
 bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
@@ -294,18 +292,17 @@ timezsh() {
 }
 
 y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
 vf() {
   fd -t f -0 | fzf -m --read0 --print0 --bind 'tab:toggle' | xargs -0 nvim
 }
-
 
 # ==============================================================================
 # LOCAL CONFIG (ignored by git)
