@@ -1,3 +1,9 @@
+local picker_filetypes = {
+  "TelescopePrompt",
+  "snacks_picker_input",
+  "fff_input",
+}
+
 return {
   "altermo/ultimate-autopair.nvim",
   event = { "InsertEnter", "CmdlineEnter" },
@@ -21,8 +27,14 @@ return {
     end
 
     local opts = {
+      pair_cmap = false,
       bs = { delete_from_end = false },
       extensions = {
+        filetype = {
+          p = 90,
+          nft = picker_filetypes,
+          tree = true,
+        },
         surround = false,
       },
       config_internal_pairs = {
