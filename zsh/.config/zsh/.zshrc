@@ -136,13 +136,13 @@ fg="#CBE0F0"
 bg="-1"
 bg_highlight="#143652"
 purple="#B388FF"
-blue="#06BCE4"
-cyan="#2CF9ED"
+blue="#0FC5ED"
+cyan="#24EAF7"
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --icons=always --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 show_file_or_dir_preview_zstyle='if [ -d $realpath ]; then eza --tree --icons=always --color=always $realpath | head -200; else bat -n --color=always --line-range :500 $realpath; fi'
 
-export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},border:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan} --reverse --border --bind tab:accept"
+export FZF_DEFAULT_OPTS="--prompt=' ' --reverse --border=rounded --bind 'tab:accept' --color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},border:${cyan},prompt:${blue},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${blue}"
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
