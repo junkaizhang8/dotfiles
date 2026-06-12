@@ -127,7 +127,7 @@ end
 
 M.lspconfig = {}
 
----Find the root directory for a buffer with the given markers(s).
+---Find the root directory for a buffer with the given marker(s).
 ---
 ---If no root is found, return the current working directory.
 ---
@@ -142,7 +142,7 @@ function M.lspconfig.root_pattern(bufnr, marker)
   end)(fname)
 end
 
----Find the root directory for a buffer with the given markers(s).
+---Find the root directory for a buffer with the given marker(s).
 ---
 ---This is a stricter version of `root_pattern` that only returns a root if
 ---the buffer is actually inside it. If the buffer is not inside the root, it
