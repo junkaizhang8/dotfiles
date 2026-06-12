@@ -1,5 +1,5 @@
 -- Configuration is from MariaSolOs's dotfiles:
--- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/lua/plugins/minifiles.lua
+-- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/plugin/minifiles.lua
 
 local api = vim.api
 

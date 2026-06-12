@@ -23,7 +23,7 @@ return {
       -- stylua: ignore start
       keymaps = {
         -- Borrowed from MariaSolOs's dotfiles:
-        -- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/lua/plugins/diffview.lua
+        -- https://github.com/MariaSolOs/dotfiles/blob/main/.config/nvim/plugin/diffview.lua
         disable_defaults = true,
         view = {
             { "n", "<leader>e", "<Cmd>DiffviewToggleFiles<CR>",         { desc = "Toggle File Panel" } },
