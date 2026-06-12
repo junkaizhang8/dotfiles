@@ -19,6 +19,11 @@
 /vim/.config/vim/.netrwhist
 /vim/.config/vim/viminfo
 
+# kitty (kitty source code used for completions and hover definitions
+# when developing custom kittens)
+/kitty/.config/kitty/kitty
+/kitty/.config/kitty/kittens
+
 # Karabiner Elements
 /karabiner/.config/karabiner/automatic_backups
 

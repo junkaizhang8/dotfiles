@@ -9,6 +9,10 @@ vim.g.autoformat = true
 -- Enable Copilot
 vim.g.copilot_enabled = true
 
+-- Kitty scrollback mode
+local scrollback_mode = vim.env.SCROLLBACK_MODE
+vim.g.scrollback_mode = scrollback_mode ~= nil and scrollback_mode ~= "0" and scrollback_mode ~= "false"
+
 -- Indentation
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
@@ -16,14 +20,14 @@ vim.o.expandtab = true
 vim.o.shiftround = true
 vim.o.smartindent = true
 
+-- Show line numbers
+vim.o.number = true
+
 -- Relative line numbers
 vim.o.relativenumber = true
 
 -- Show whitespace
 vim.o.list = true
-
--- Show line numbers
-vim.o.number = true
 
 -- Highlight the current line
 vim.o.cursorline = true

@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  cond = not vim.g.scrollback_mode,
   branch = "main",
   lazy = false,
   build = ":TSUpdate",

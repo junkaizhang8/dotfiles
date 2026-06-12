@@ -1,28 +1,93 @@
 return {
   "mrjones2014/smart-splits.nvim",
-  opts = {},
-  config = function(_, opts)
-    require("smart-splits").setup(opts)
-    local smart_splits = require("smart-splits")
-
-    local map = vim.keymap.set
-
+  lazy = false,
+  keys = {
     -- Moving between windows
-    map("n", "<C-h>", smart_splits.move_cursor_left, { desc = "Go to Left Window" })
-    map("n", "<C-j>", smart_splits.move_cursor_down, { desc = "Go to Lower Window" })
-    map("n", "<C-k>", smart_splits.move_cursor_up, { desc = "Go to Upper Window" })
-    map("n", "<C-l>", smart_splits.move_cursor_right, { desc = "Go to Right Window" })
-
+    {
+      "<C-h>",
+      function()
+        require("smart-splits").move_cursor_left()
+      end,
+      desc = "Go to Left Window",
+    },
+    {
+      "<C-j>",
+      function()
+        require("smart-splits").move_cursor_down()
+      end,
+      desc = "Go to Lower Window",
+    },
+    {
+      "<C-k>",
+      function()
+        require("smart-splits").move_cursor_up()
+      end,
+      desc = "Go to Upper Window",
+    },
+    {
+      "<C-l>",
+      function()
+        require("smart-splits").move_cursor_right()
+      end,
+      desc = "Go to Right Window",
+    },
     -- Resizing splits
-    map("n", "<M-h>", smart_splits.resize_left, { desc = "Resize Split Left" })
-    map("n", "<M-j>", smart_splits.resize_down, { desc = "Resize Split Down" })
-    map("n", "<M-k>", smart_splits.resize_up, { desc = "Resize Split Up" })
-    map("n", "<M-l>", smart_splits.resize_right, { desc = "Resize Split Right" })
-
+    {
+      "<M-h>",
+      function()
+        require("smart-splits").resize_left()
+      end,
+      desc = "Resize Split Left",
+    },
+    {
+      "<M-j>",
+      function()
+        require("smart-splits").resize_down()
+      end,
+      desc = "Resize Split Down",
+    },
+    {
+      "<M-k>",
+      function()
+        require("smart-splits").resize_up()
+      end,
+      desc = "Resize Split Up",
+    },
+    {
+      "<M-l>",
+      function()
+        require("smart-splits").resize_right()
+      end,
+      desc = "Resize Split Right",
+    },
     -- Swapping buffers between windows
-    map("n", "<C-M-h>", smart_splits.swap_buf_left, { desc = "Swap Buffer Left" })
-    map("n", "<C-M-j>", smart_splits.swap_buf_down, { desc = "Swap Buffer Down" })
-    map("n", "<C-M-k>", smart_splits.swap_buf_up, { desc = "Swap Buffer Up" })
-    map("n", "<C-M-l>", smart_splits.swap_buf_right, { desc = "Swap Buffer Right" })
-  end,
+    {
+      "<C-M-h>",
+      function()
+        require("smart-splits").swap_buf_left()
+      end,
+      desc = "Swap Buffer Left",
+    },
+    {
+      "<C-M-j>",
+      function()
+        require("smart-splits").swap_buf_down()
+      end,
+      desc = "Swap Buffer Down",
+    },
+    {
+      "<C-M-k>",
+      function()
+        require("smart-splits").swap_buf_up()
+      end,
+      desc = "Swap Buffer Up",
+    },
+    {
+      "<C-M-l>",
+      function()
+        require("smart-splits").swap_buf_right()
+      end,
+      desc = "Swap Buffer Right",
+    },
+  },
 }

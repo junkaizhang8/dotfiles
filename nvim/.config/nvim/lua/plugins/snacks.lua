@@ -79,7 +79,7 @@ return {
   opts = {
     bigfile = { enabled = true },
     dashboard = {
-      enabled = true,
+      enabled = not vim.g.scrollback_mode,
       preset = {
         keys = {
           { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
@@ -129,8 +129,6 @@ return {
         local msg = notif.msg
 
         local ignore_exact = {
-          -- LSP notification when no definition found
-          ["No information available"] = true,
           -- img-clip notification when pasting non-image content
           ["Content is not an image."] = true,
           -- LuaSnip notification when no active snippet

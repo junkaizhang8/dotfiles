@@ -1,5 +1,6 @@
 return {
   "otavioschwanck/arrow.nvim",
+  cond = not vim.g.scrollback_mode,
   event = "VeryLazy",
   dependencies = { "nvim-mini/mini.icons" },
   opts = {

@@ -1,0 +1,4 @@
+cd $HOME
+launch
+focus
+focus_os_window

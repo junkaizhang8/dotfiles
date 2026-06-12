@@ -36,6 +36,7 @@ end
 
 return {
   "nvim-mini/mini.files",
+  cond = not vim.g.scrollback_mode,
   event = "VeryLazy",
   cmd = { "MiniFilesEmptyTrash" },
   keys = {

@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter-textobjects",
+  cond = not vim.g.scrollback_mode,
   event = "VeryLazy",
   branch = "main",
   opts = {

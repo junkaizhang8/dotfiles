@@ -37,6 +37,7 @@ end
 
 return {
   "dmtrKovalenko/fff.nvim",
+  cond = not vim.g.scrollback_mode,
   lazy = false,
   build = function()
     require("fff.download").download_or_build_binary()

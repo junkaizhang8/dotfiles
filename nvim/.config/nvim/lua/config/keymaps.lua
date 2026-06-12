@@ -75,3 +75,5 @@ map({ "i", "c" }, "<C-l>", "<C-o>A", { desc = "Go to End of Line" })
 map("i", ",", ",<C-g>u")
 map("i", ".", ".<C-g>u")
 map("i", ";", ";<C-g>u")
+
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit Terminal Mode" })
