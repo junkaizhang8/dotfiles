@@ -360,6 +360,7 @@ return {
     if type(opts.tailwind) == "table" and opts.tailwind.enabled then
       -- Reset hl groups when colorscheme changes
       vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("junkaizhang8/mini_hipatterns_tailwind", { clear = true }),
         callback = function()
           hls = {}
         end,
