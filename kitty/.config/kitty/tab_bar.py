@@ -390,7 +390,9 @@ def get_session_cell() -> InfoCell:
         if session_name == "":
             return None
 
-        content = f" {session_name}"
+        # Truncate if too long
+        label = f"…{session_name[-20:]}" if len(session_name) > 20 else session_name
+        content = f" {label}"
 
         active_window = boss.active_window
 
@@ -415,7 +417,10 @@ def get_application_cell() -> InfoCell:
 
         active_tab = TabAccessor(boss.active_tab.id)
         title = active_tab.active_oldest_exe.lstrip("-")
-        content = f" {title}"
+
+        # Truncate if too long
+        label = f"…{title[-20:]}" if len(title) > 20 else title
+        content = f" {label}"
         return CellData(content=content, fg=colors.green, bg=background, bold=True)
 
     return InfoCell(update_fn=get_application)
@@ -447,7 +452,9 @@ def get_cwd_cell() -> InfoCell:
                 else:
                     wd = Path("~") / wd
 
-        content = f" {wd.name}"
+        # Truncate if too long
+        label = f"…{wd.name[-20:]}" if len(wd.name) > 20 else wd.name
+        content = f" {label}"
         return CellData(content=content, fg=colors.blue, bg=background, bold=True)
 
     return InfoCell(update_fn=get_cwd)
