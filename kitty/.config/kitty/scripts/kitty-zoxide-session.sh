@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This is copied (and modified) from Linkarzu's dotfiles:
-# https://github.com/linkarzu/dotfiles-latest/tree/main/kitty/scripts/kitty-zoxide-session.sh
+# https://github.com/linkarzu/dotfiles-latest/blob/main/kitty/scripts/kitty-zoxide-session.sh
 #
 # Select a zoxide entry and switch to an existing kitty session,
 # or create it if it doesn't exist.

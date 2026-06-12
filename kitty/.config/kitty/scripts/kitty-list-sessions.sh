@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This is copied (and modified) from Linkarzu's dotfiles:
-# https://github.com/linkarzu/dotfiles-latest/tree/main/kitty/scripts/kitty-list-sessions.sh
+# https://github.com/linkarzu/dotfiles-latest/blob/main/kitty/scripts/kitty-list-sessions.sh
 #
 # Shows open kitty sessions in fzf and switches using goto_session
 # Adds a vim-like "mode":
