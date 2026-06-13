@@ -47,7 +47,8 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "text", "markdown", "gitcommit" },
   desc = "Enable wrapping and spell checking for text files",
   callback = function()
-    vim.wo.wrap = true
-    vim.wo.spell = true
+    local winid = vim.api.nvim_get_current_win()
+    vim.wo[winid][0].wrap = true
+    vim.wo[winid][0].spell = true
   end,
 })
