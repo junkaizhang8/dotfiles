@@ -33,6 +33,13 @@ return {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
         ["vim.lsp.util.stylize_markdown"] = false,
       },
+      hover = {
+        enabled = true,
+        silent = true,
+      },
+      signature = {
+        enabled = true,
+      },
       documentation = {
         opts = {
           lang = "markdown",
@@ -54,6 +61,14 @@ return {
           },
         },
         view = "mini",
+      },
+      {
+        filter = {
+          event = "lsp",
+          kind = "progress",
+          find = "jdtls",
+        },
+        opts = { skip = true },
       },
     },
     presets = {
