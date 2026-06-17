@@ -61,6 +61,12 @@ return {
         vim.env.HOMEBREW_PREFIX .. "/opt/jdtls/libexec/config_mac_arm",
       }
 
+      -- Add lombok support if the jar is available in the expected location
+      local lombok_jar = vim.fn.expand("$XDG_DATA_HOME/java/lombok.jar")
+      if vim.fn.filereadable(lombok_jar) == 1 then
+        table.insert(cmd, 2, "-javaagent:" .. lombok_jar)
+      end
+
       -- Configure the data directory for the project
       local root_dir = vim.fs.root(0, root_markers)
       local project_name = root_dir and vim.fs.basename(root_dir)
