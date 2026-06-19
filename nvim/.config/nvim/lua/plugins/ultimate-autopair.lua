@@ -10,7 +10,27 @@ return {
   branch = "v0.6",
   config = function()
     local function string_autopair_guard(fn, _, closing_char)
-      local in_string = fn.in_node({ "string", "raw_string" })
+      local in_string = fn.in_node({
+        "string",
+        "char",
+        "character",
+        "raw_string", --fish/bash/sh
+        "char_literal",
+        "string_literal", --c/cpp
+        "string_value", --css
+        "str_lit",
+        "char_lit", --clojure/commonlisp
+        "interpreted_string_literal",
+        "raw_string_literal",
+        "rune_literal", --go
+        "quoted_attribute_value", --html
+        "template_string", --javascript
+        "LINESTRING",
+        "STRINGLITERALSINGLE",
+        "CHAR_LITERAL", --zig
+        "string_literals",
+        "character_literal",
+      })
       if not in_string then
         return true
       end
