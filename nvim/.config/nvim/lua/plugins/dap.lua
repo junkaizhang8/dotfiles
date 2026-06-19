@@ -26,8 +26,8 @@ return {
       version = "1.*",
       opts = {
         winbar = {
-          sections = { "scopes", "breakpoints", "threads", "exceptions", "repl", "console" },
-          default_section = "scopes",
+          sections = { "console", "scopes", "breakpoints", "threads", "exceptions", "repl" },
+          default_section = "console",
         },
         windows = { size = 18 },
         -- When jumping through the call stack, try to switch to the buffer if already open in
@@ -86,6 +86,7 @@ return {
     { "<leader>dc", function() require("dap").continue() end, desc = "Run/Continue" },
     { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
     { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
+    { "<leader>dd", function() require("dap-view").toggle() end, desc = "Toggle Dap View" },
     { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
     { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
     { "<leader>dj", function() require("dap").down() end, desc = "Down" },
@@ -129,12 +130,6 @@ return {
     end
     dap.listeners.before.launch["dap-view-config"] = function()
       dv.open()
-    end
-    dap.listeners.before.event_terminated["dap-view-config"] = function()
-      dv.close()
-    end
-    dap.listeners.before.event_exited["dap-view-config"] = function()
-      dv.close()
     end
 
     -- Lua adapter configurations
