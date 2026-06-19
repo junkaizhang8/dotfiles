@@ -88,6 +88,7 @@ return {
             inlayHints = {
               parameterNames = { enabled = "all" },
             },
+            signatureHelp = { enabled = true },
             import = {
               exclusions = {
                 "**/build/**",
