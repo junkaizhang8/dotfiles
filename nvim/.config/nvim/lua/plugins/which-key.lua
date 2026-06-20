@@ -12,6 +12,7 @@ return {
       { "<leader>g", group = "git" },
       { "<leader>G", group = "diffview", icon = "" },
       { "<leader>h", group = "hunks", icon = { icon = "󰊢", color = "orange" } },
+      { "<leader>j", group = "java", icon = { icon = "", color = "orange" } },
       { "<leader>q", group = "quickfix" },
       { "<leader>s", group = "search" },
       { "<leader>S", group = "session" },
