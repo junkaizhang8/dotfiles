@@ -6,7 +6,7 @@ local root_markers = { ".git" }
 
 ---@type vim.lsp.Config
 return {
-  cmd = { "vscode-html-language-server", "--stdio" },
+  cmd = { "vscode-json-language-server", "--stdio" },
   filetypes = { "json", "jsonc" },
   root_dir = function(bufnr, on_dir)
     on_dir(utils.lspconfig.root_pattern(bufnr, root_markers))
