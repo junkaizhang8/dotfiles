@@ -21,7 +21,7 @@ return {
       json = { "prettierd" },
       jsonc = { "prettierd" },
       lua = { "stylua" },
-      markdown = { "prettierd", "markdown-cli2", "markdown-toc" },
+      markdown = { "prettierd", "markdownlint-cli2", "markdown-toc" },
       scss = { "prettierd" },
       sh = { "shfmt" },
       typescript = { "prettierd" },
