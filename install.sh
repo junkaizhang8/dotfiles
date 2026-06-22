@@ -1,90 +1,102 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-CWD=$(dirname "$(realpath "$0")")
+set -euo pipefail
+
+CWD="$(dirname "$(realpath "$0")")"
 IGNORE_FILE="$CWD/.stow-ignore"
 
 dry_run=0
+flags=()
+
+ignore_list=()
 
 usage() {
-  echo "Usage: $0 [-h|--help] [-n|--dry-run]"
-  echo "Options:"
-  echo "  -h, --help      Show this help message"
-  echo "  -n, --dry-run   Perform a dry run without modifying your file system"
+  cat <<EOF
+Usage: $0 [-h|--help] [-n|--dry-run] [-v|--verbose]
+
+Options:
+  -h, --help      Show this help message
+  -n, --dry-run   Perform a dry run (no filesystem changes)
+  -v, --verbose   Show detailed stow output
+EOF
   exit 1
 }
 
-for arg in "$@"; do
-  case $arg in
-  -h | --help)
-    usage
-    ;;
-  -n | --dry-run)
-    dry_run=1
-    ;;
-  *)
-    echo "Unknown option: $arg"
-    usage
-    ;;
-  esac
-done
+parse_args() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -h | --help)
+      usage
+      ;;
+    -n | --dry-run)
+      flags+=(-n)
+      dry_run=1
+      ;;
+    -v | --verbose)
+      flags+=(-v2)
+      ;;
+    *)
+      echo "Unknown option: $1"
+      usage
+      ;;
+    esac
+    shift
+  done
+}
 
-# Check if stow is installed
-if ! command -v stow &>/dev/null; then
-  echo "stow could not be found. Please install it first."
-  exit 1
-fi
+# Populate the ignore list from the .stow-ignore file
+populate_ignore_list() {
+  if [[ -f "$IGNORE_FILE" ]]; then
+    while IFS= read -r line; do
+      # Skip empty lines and comments
+      [[ -z "$line" || "$line" =~ ^# ]] && continue
+      # Store the directory name without trailing slash
+      ignore_list+=("${line%/}")
+    done <"$IGNORE_FILE"
+  fi
+}
 
-IGNORE_LIST=()
-
-# Read ignore file into array
-if [[ -f "$IGNORE_FILE" ]]; then
-  while IFS= read -r line; do
-    # Skip empty lines and comments
-    if [[ -n "$line" && ! "$line" =~ ^# ]]; then
-      # Remove the trailing slash if it exists
-      line="${line%/}"
-      IGNORE_LIST+=("$line")
-    fi
-  done <"$IGNORE_FILE"
-fi
-
-# Check if a directory should be ignored
+# Helper function to check if a package should be ignored
 should_ignore() {
-  local dir_name="$1"
-  for ignore in "${IGNORE_LIST[@]}"; do
-    if [[ "$dir_name" == "$ignore" ]]; then
-      return 0 # Ignore this directory
+  local dir="$1"
+  for ignore in "${ignore_list[@]}"; do
+    [[ "$dir" == "$ignore" ]] && return 0
+  done
+  return 1
+}
+
+main() {
+  local packages=()
+
+  command -v stow >/dev/null || {
+    echo "Error: GNU stow is not installed."
+    exit 1
+  }
+
+  parse_args "$@"
+
+  populate_ignore_list
+
+  readarray -t packages < <(find "$CWD" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -exec basename {} \;)
+  echo "Found ${#packages[@]} package(s)."
+
+  for pkg in "${packages[@]}"; do
+    should_ignore "$pkg" && continue
+
+    printf "\n→ Stowing ${pkg}\n"
+
+    if ! stow "${flags[@]}" "$pkg"; then
+      echo "⚠ Failed to stow $pkg"
     fi
   done
-  return 1 # Do not ignore this directory
+
+  echo
+
+  if [[ "$dry_run" -eq 1 ]]; then
+    echo "Dry run complete. No changes were made."
+  else
+    echo "All packages processed."
+  fi
 }
 
-# Read every directory in the current folder
-for dir in "$CWD"/*/ "$CWD"/.*/; do
-  # Remove the trailing slash from the directory name
-  dir="${dir%/}"
-  # Directory name without the path
-  base_dir="$(basename "$dir")"
-
-  # Skip if not a directory
-  [[ -d "$dir" ]] || continue
-
-  # Skip "." and ".."
-  [[ "$base_dir" == "." || "$base_dir" == ".." ]] && continue
-
-  # Skip if in ignore list
-  should_ignore "$base_dir" && continue
-
-  # Check if the directory is not empty
-  echo "Stowing $base_dir..."
-  if [[ "$dry_run" -eq 0 ]]; then
-    stow "$base_dir"
-  fi
-done
-
-echo
-if [[ "$dry_run" -eq 1 ]]; then
-  echo "Dry run complete. No directories were actually stowed."
-else
-  echo "All applicable directories have been stowed."
-fi
+main "$@"
