@@ -90,6 +90,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
     map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
+    -- Code lens
+    map({ "n", "x" }, "<leader>cc", vim.lsp.codelens.run, { desc = "Run Code Lens" })
+    map("n", "<leader>cC", function()
+      vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
+    end, { desc = "Toggle Code Lens" })
+
     vim.bo[bufnr].formatexpr = "v:lua.require('conform').formatexpr()"
   end,
 })
