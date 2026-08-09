@@ -34,6 +34,12 @@ map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
 map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 
+-- Tabs
+map("n", "[<tab>", "<Cmd>tabprevious<CR>", { desc = "Prev Tab" })
+map("n", "]<tab>", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
+map("n", "<leader><tab>d", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
+map("n", "<leader><tab>o", "<Cmd>tabonly<CR>", { desc = "Close Other Tabs" })
+
 -- Keep the cursor centered
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll Downwards" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll Upwards" })
@@ -47,7 +53,7 @@ map("n", "N", "'nN'[v:searchforward].'zzzv'", { expr = true, desc = "Prev Search
 map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 
--- Indent while remaining in visual mode.
+-- Indent while remaining in visual mode
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
