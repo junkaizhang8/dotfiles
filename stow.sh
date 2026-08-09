@@ -77,7 +77,10 @@ main() {
 
   populate_ignore_list
 
-  readarray -t packages < <(find "$CWD" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -exec basename {} \;)
+  while IFS= read -r dir; do
+    packages+=("$dir")
+  done < <(find "$CWD" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -exec basename {} \;)
+
   echo "Found ${#packages[@]} package(s)."
 
   for pkg in "${packages[@]}"; do
