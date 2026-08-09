@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   keys = {
     {
-      "<M-p>",
+      "<M-S-p>",
       "<Cmd>PasteImage<CR>",
       desc = "Paste Image from System Clipboard",
     },

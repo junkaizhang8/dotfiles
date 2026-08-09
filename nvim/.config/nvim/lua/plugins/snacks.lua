@@ -71,8 +71,10 @@ return {
     { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-    { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-    { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+    { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev Reference" },
+    { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next Reference" },
+    { "<M-p>", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev Reference" },
+    { "<M-n>", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next Reference" },
   },
   opts = {
     bigfile = { enabled = true },
