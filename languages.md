@@ -142,6 +142,12 @@ npm i -g vscode-langservers-extracted
 brew install lua-language-server
 ```
 
+### stylua
+
+```bash
+brew install stylua
+```
+
 ## Markdown
 
 ### markdownlint-cli2
