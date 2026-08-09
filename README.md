@@ -18,20 +18,13 @@ Otherwise, install [Homebrew](https://brew.sh/) with the command:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-After you have Homebrew installed, you can install the necessary packages with:
+After that is done, install `git` and `stow` with Homebrew:
 
 ```bash
-brew bundle
+brew install git stow
 ```
 
-This will read the `Brewfile` in the current directory and install all the
-listed packages.
-
-Some packages may not be available on Homebrew or use their own installation
-method. For these packages, follow the instructions in `deps.md` to install them.
-
-After installing all the packages, run the following script to symlink the
-configuration files to your home directory:
+Then, run the following script to symlink the configuration files to your home directory:
 
 ```bash
 ./stow.sh
@@ -39,6 +32,19 @@ configuration files to your home directory:
 # For more information on the script and its options
 ./stow.sh --help
 ```
+
+This is done so that when we install packages later, the configuration files
+will already be in place, so you won't have to deal with deleting any
+auto-generated configuration files.
+
+Finally, install the packages listed in the `Brewfile` with the command:
+
+```bash
+brew bundle
+```
+
+Some packages may not be available on Homebrew or use their own installation
+method. For these packages, follow the instructions in `deps.md` to install them.
 
 ## Language Servers, Formatters, Linters, and More
 
