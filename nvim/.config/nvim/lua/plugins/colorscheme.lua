@@ -41,6 +41,17 @@ local function apply_tokyonight()
     on_highlights = function(hl, c)
       hl.QuickFixLineNr = { fg = c.fg }
       hl.Folded = { fg = c.blue, bg = bg_fold }
+      hl.GitGraphHash = { fg = c.red }
+      hl.GitGraphTimestamp = { fg = c.blue1 }
+      hl.GitGraphAuthor = { fg = c.orange }
+      hl.GitGraphBranchName = { fg = c.blue, bold = true }
+      hl.GitGraphBranchTag = { fg = c.yellow }
+      hl.GitGraphBranchMsg = { fg = c.fg }
+      hl.GitGraphBranch1 = { fg = c.blue }
+      hl.GitGraphBranch2 = { fg = c.green }
+      hl.GitGraphBranch3 = { fg = c.magenta }
+      hl.GitGraphBranch4 = { fg = c.orange }
+      hl.GitGraphBranch5 = { fg = c.cyan }
     end,
   })
 
