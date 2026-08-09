@@ -54,6 +54,16 @@ return {
       {
         filter = {
           event = "msg_show",
+          kind = {
+            "shell_out",
+            "shell_err",
+          },
+        },
+        view = "notify",
+      },
+      {
+        filter = {
+          event = "msg_show",
           any = {
             { find = "%d+L, %d+B" },
             { find = "; after #%d+" },
@@ -80,7 +90,7 @@ return {
     },
   },
   config = function(_, opts)
-    -- HACK: noice shows messages from before it was enabled,
+    -- HACK: Noice shows messages from before it was enabled,
     -- but this is not ideal when Lazy is installing plugins,
     -- so clear the messages in this case.
     if vim.o.filetype == "lazy" then
