@@ -44,7 +44,7 @@ return {
   end,
   keys = {
     {
-      "<leader><space>",
+      "<leader><Space>",
       function()
         require("fff").find_files()
       end,

@@ -35,10 +35,10 @@ map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 
 -- Tabs
-map("n", "[<tab>", "<Cmd>tabprevious<CR>", { desc = "Prev Tab" })
-map("n", "]<tab>", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
-map("n", "<leader><tab>o", "<Cmd>tabonly<CR>", { desc = "Close Other Tabs" })
+map("n", "[<Tab>", "<Cmd>tabprevious<CR>", { desc = "Prev Tab" })
+map("n", "]<Tab>", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
+map("n", "<leader><Tab>d", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
+map("n", "<leader><Tab>o", "<Cmd>tabonly<CR>", { desc = "Close Other Tabs" })
 
 -- Keep the cursor centered
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll Downwards" })
