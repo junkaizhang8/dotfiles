@@ -39,14 +39,30 @@ return {
       true
     )
 
-    local function start_jdtls()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local ok_blink, blink = pcall(require, "blink.cmp")
+    if ok_blink then
+      capabilities = blink.get_lsp_capabilities(capabilities)
+    end
+
+    local function start_jdtls(bufnr)
+      bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+      -- Only attach to real, file-backed buffers. This prevents jdtls from being
+      -- started from some plugins like fff.nvim's file preview
+      if not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].buftype ~= "" then
+        return
+      end
+
       local cmd = {
         "java",
         "-Declipse.application=org.eclipse.jdt.ls.core.id1",
         "-Dosgi.bundles.defaultStartLevel=4",
         "-Declipse.product=org.eclipse.jdt.ls.core.product",
-        "-Dlog.protocol=true",
-        "-Dlog.level=ALL",
+        "-Dosgi.checkConfiguration=true",
+        "-Dosgi.sharedConfiguration.area=" .. vim.env.HOMEBREW_PREFIX .. "/opt/jdtls/libexec/config_mac_arm",
+        "-Dosgi.sharedConfiguration.area.readOnly=true",
+        "-Xms1g",
         "-Xmx4g",
         "-XX:+UseG1GC",
         "-XX:+UseStringDeduplication",
@@ -57,8 +73,6 @@ return {
         "java.base/java.lang=ALL-UNNAMED",
         "-jar",
         vim.fn.glob(vim.env.HOMEBREW_PREFIX .. "/opt/jdtls/libexec/plugins/org.eclipse.equinox.launcher_*.jar"),
-        "-configuration",
-        vim.env.HOMEBREW_PREFIX .. "/opt/jdtls/libexec/config_mac_arm",
       }
 
       -- Add lombok support if the jar is available in the expected location
@@ -72,6 +86,8 @@ return {
       local project_name = root_dir and vim.fs.basename(root_dir)
       if project_name then
         vim.list_extend(cmd, {
+          "-configuration",
+          vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/config",
           "-data",
           vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/workspace",
         })
@@ -80,9 +96,12 @@ return {
       require("jdtls").start_or_attach({
         cmd = cmd,
         root_dir = root_dir,
+        capabilities = capabilities,
         init_options = {
           bundles = bundles,
         },
+        dap = { hotcodereplace = "auto", config_overrides = {} },
+        dap_main = false,
         settings = {
           java = {
             inlayHints = {
@@ -107,7 +126,9 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       group = vim.api.nvim_create_augroup("junkaizhang8/jdtls_setup", { clear = true }),
       pattern = "java",
-      callback = start_jdtls,
+      callback = function(args)
+        start_jdtls(args.buf)
+      end,
     })
 
     -- Attach to the buffer that triggered this load (the FileType autocmd
