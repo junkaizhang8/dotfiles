@@ -76,6 +76,8 @@ return {
     require("diffview.ui.panel").Panel.default_config_float.border = "rounded"
 
     return {
+      enhanced_diff_hl = true,
+      diffopt = { algorithm = "histogram" },
       clean_up_buffers = true,
       view = {
         merge_tool = {
