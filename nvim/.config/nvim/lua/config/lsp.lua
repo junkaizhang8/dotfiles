@@ -100,6 +100,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+---@type table<string, boolean>
+local ignored_servers = {}
+
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
   group = vim.api.nvim_create_augroup("junkaizhang8/lsp_setup", { clear = true }),
   once = true,
@@ -111,6 +114,9 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
       .iter(vim.api.nvim_get_runtime_file("lsp/*.lua", true))
       :map(function(file)
         return vim.fn.fnamemodify(file, ":t:r")
+      end)
+      :filter(function(server)
+        return not ignored_servers[server]
       end)
       :totable()
     vim.lsp.enable(servers)
