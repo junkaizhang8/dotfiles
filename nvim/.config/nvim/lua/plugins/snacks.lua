@@ -156,8 +156,27 @@ return {
     },
     picker = {
       enabled = true,
+      win = {
+        input = {
+          keys = {
+            ["<a-h>"] = false,
+            ["<a-.>"] = { "toggle_hidden", mode = { "i", "n" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<a-h>"] = false,
+            ["<a-.>"] = "toggle_hidden",
+          },
+        },
+      },
       sources = {
-        explorer = { hidden = true },
+        explorer = {
+          hidden = true,
+          exclude = exclude,
+          git_untracked = false,
+          diagnostics = false,
+        },
         files = {
           hidden = true,
           exclude = exclude,
