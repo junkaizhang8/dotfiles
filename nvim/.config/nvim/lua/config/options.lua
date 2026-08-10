@@ -50,7 +50,7 @@ vim.opt.fillchars = {
   foldclose = icons.folding.close,
   fold = " ",
   foldsep = " ",
-  diff = "-",
+  diff = "╱",
   eob = " ",
 }
 
