@@ -88,7 +88,7 @@ main() {
 
     printf "\n→ Stowing ${pkg}\n"
 
-    if ! stow "${flags[@]}" "$pkg"; then
+    if ! stow "${flags[@]:-}" "$pkg"; then
       echo "⚠ Failed to stow $pkg"
     fi
   done
