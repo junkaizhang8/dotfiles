@@ -41,6 +41,8 @@ local function apply_tokyonight()
     on_highlights = function(hl, c)
       hl.QuickFixLineNr = { fg = c.fg }
       hl.Folded = { fg = c.blue, bg = bg_fold }
+      hl.DiffviewDiffDeleteDim = { fg = bg_highlight }
+      hl.DiffDelete = { fg = bg_highlight }
       hl.GitGraphHash = { fg = c.red }
       hl.GitGraphTimestamp = { fg = c.blue1 }
       hl.GitGraphAuthor = { fg = c.orange }
