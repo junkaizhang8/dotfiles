@@ -17,6 +17,9 @@ return {
       topdelete = { text = "" },
       changedelete = { text = "▎" },
     },
+    current_line_blame_opts = {
+      delay = 0,
+    },
     preview_config = { border = "rounded" },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
@@ -26,6 +29,7 @@ return {
       end
 
       -- stylua: ignore start
+      map("n", "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", "Toggle Current Line Blame")
       map("n", "]h", function()
         if vim.wo.diff then
           vim.cmd.normal({ "]c", bang = true })
