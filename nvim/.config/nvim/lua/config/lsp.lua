@@ -12,7 +12,28 @@ local config = {
   virtual_text = true,
 }
 
+local map = vim.keymap.set
+
 vim.diagnostic.config(config)
+
+local function diagnostic_goto(next, severity)
+  return function()
+    vim.diagnostic.jump({
+      count = (next and 1 or -1) * vim.v.count1,
+      severity = severity and vim.diagnostic.severity[severity] or nil,
+    })
+  end
+end
+
+-- Diagnotics keymaps are global, not LSP-gated: diagnostics can come from
+-- non-LSP sources (e.g., nvim-lint), whose buffers never trigger LspAttach
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
+map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 
 local function lsp_code_action(action_name)
   return function()
@@ -34,17 +55,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if not client then
       return
-    end
-
-    local map = vim.keymap.set
-
-    local function diagnostic_goto(next, severity)
-      return function()
-        vim.diagnostic.jump({
-          count = (next and 1 or -1) * vim.v.count1,
-          severity = severity and vim.diagnostic.severity[severity] or nil,
-        })
-      end
     end
 
     -- Restart LSP
@@ -80,15 +90,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         desc = "Organize Imports",
       })
     end
-
-    -- Diagnostics
-    map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-    map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-    map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-    map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-    map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-    map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
-    map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 
     -- Code lens
     map({ "n", "x" }, "<leader>cc", vim.lsp.codelens.run, { desc = "Run Code Lens" })
