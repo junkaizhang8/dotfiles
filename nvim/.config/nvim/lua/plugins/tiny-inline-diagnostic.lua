@@ -4,6 +4,7 @@ return {
   priority = 1000,
   opts = {
     options = {
+      overwrite_events = { "LspAttach", "DiagnosticChanged" },
       multilines = {
         enabled = true,
         always_show = false,
