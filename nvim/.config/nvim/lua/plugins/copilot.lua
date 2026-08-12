@@ -43,6 +43,6 @@ return {
           require("copilot.command").disable()
         end
       end,
-    }):map("<leader>uc")
+    }):map("<leader>ua")
   end,
 }
