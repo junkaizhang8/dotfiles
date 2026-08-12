@@ -83,12 +83,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Diagnostics
     map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-    map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
     map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-    map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+    map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
     map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-    map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
+    map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
     map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+    map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 
     -- Code lens
     map({ "n", "x" }, "<leader>cc", vim.lsp.codelens.run, { desc = "Run Code Lens" })

@@ -17,8 +17,8 @@ return {
       open_horizontal = "-",
       quit = "q",
       remove = "x", -- only used if separate_save_and_remove is true
-      next_item = "]",
       prev_item = "[",
+      next_item = "]",
     },
   },
 }
