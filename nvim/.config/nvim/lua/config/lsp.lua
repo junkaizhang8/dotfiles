@@ -92,10 +92,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- Code lens
+    Snacks.toggle({
+      name = "Code Lens",
+      get = function()
+        return vim.lsp.codelens.is_enabled()
+      end,
+      set = function(state)
+        vim.lsp.codelens.enable(state)
+      end,
+    }):map("<leader>uc")
+
     map({ "n", "x" }, "<leader>cc", vim.lsp.codelens.run, { desc = "Run Code Lens" })
-    map("n", "<leader>cC", function()
-      vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
-    end, { desc = "Toggle Code Lens" })
 
     vim.bo[bufnr].formatexpr = "v:lua.require('conform').formatexpr()"
   end,
