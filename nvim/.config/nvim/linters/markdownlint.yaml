@@ -1,0 +1,2 @@
+# MD013/line-length: most markdown don't wrap at a fixed column; disable globally
+MD013: false
