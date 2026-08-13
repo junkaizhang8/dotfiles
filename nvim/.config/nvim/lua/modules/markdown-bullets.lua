@@ -168,7 +168,7 @@ local function toggle_checkbox(start_line, end_line)
   for i = start_line, end_line - 1 do
     local content = api.nvim_buf_get_lines(0, i, i + 1, false)[1]
     if has_unchecked then
-      content = content:gsub("^(%s*[*+%-]) %[ %] ", "%1 [x] ", 1)
+      content = content:gsub("^(%s*[*+%-]) %[ %] ", "%1 [X] ", 1)
     else
       content = content:gsub("^(%s*[*+%-]) %[[xX]%] ", "%1 [ ] ", 1)
     end
