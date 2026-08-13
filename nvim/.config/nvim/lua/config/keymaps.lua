@@ -6,6 +6,9 @@ for i = 1, 4 do
   map({ "n", "i", "v", "c" }, click, "<Nop>", { silent = true })
 end
 
+-- Disable M
+map("n", "M", "<Nop>", { silent = true })
+
 -- Lazy
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 

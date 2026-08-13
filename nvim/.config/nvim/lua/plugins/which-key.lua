@@ -3,6 +3,10 @@ return {
   event = "VeryLazy",
   opts = {
     preset = "helix",
+    triggers = {
+      { "<auto>", mode = "nixs" },
+      { "M", mode = "n" },
+    },
     spec = {
       mode = { "n", "x" },
       { "<leader>a", group = "ai", icon = "" },
@@ -22,6 +26,7 @@ return {
       { "]", group = "next" },
       { "g", group = "goto" },
       { "gs", group = "surround" },
+      { "M", group = "markdown" },
       { "z", group = "fold" },
       {
         "<leader>b",
