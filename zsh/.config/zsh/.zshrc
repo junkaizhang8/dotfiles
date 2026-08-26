@@ -77,7 +77,7 @@ path-show() {
 path-add \
   /opt/homebrew/bin \
   /opt/homebrew/opt/llvm/bin \
-  "$PNPM_HOME/bin" \
+  "$PNPM_HOME" \
   "$FNM_PATH" \
   "$SCRIPTS" \
   "$SCRIPTS_LOCAL" \
