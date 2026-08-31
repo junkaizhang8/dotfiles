@@ -59,7 +59,13 @@ return {
   version = "1.*",
   event = { "InsertEnter", "CmdlineEnter" },
   opts = {
-    keymap = { preset = "default" },
+    keymap = {
+      preset = "default",
+      ["<C-space>"] = { "show", "hide", "show_documentation", "hide_documentation" },
+      ["<C-p>"] = { "select_prev", "fallback" },
+      ["<C-n>"] = { "select_next", "fallback" },
+      ["<C-e>"] = { "select_and_accept", "fallback" },
+    },
     completion = {
       list = {
         selection = { preselect = true, auto_insert = true },
