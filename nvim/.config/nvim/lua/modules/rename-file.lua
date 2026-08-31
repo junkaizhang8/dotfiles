@@ -1,5 +1,6 @@
 -- Rewrite of `Snacks.rename.rename_file`:
 -- https://github.com/folke/snacks.nvim/blob/main/lua/snacks/rename.lua
+
 local M = {}
 
 -- Rename the provided file, or the current buffer's file.

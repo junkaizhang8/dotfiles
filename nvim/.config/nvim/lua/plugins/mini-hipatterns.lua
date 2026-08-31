@@ -316,6 +316,7 @@ return {
   event = { "BufReadPost", "BufNewFile" },
   opts = function()
     local hi = require("mini.hipatterns")
+
     return {
       -- Custom option copied from LazyVim to enable the tailwind integration
       tailwind = {
