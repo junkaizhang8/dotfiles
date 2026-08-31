@@ -60,6 +60,12 @@ npm i -g dockerfile-language-server-nodejs
 brew install hadolint
 ```
 
+## Emmet
+
+```bash
+npm i -g @olrtg/emmet-language-server
+```
+
 ## ESLint
 
 ### vscode-eslint-language-server
