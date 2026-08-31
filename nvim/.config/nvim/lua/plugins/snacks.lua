@@ -236,6 +236,7 @@ return {
         vim.b.disable_autoformat = not vim.b.disable_autoformat
       end,
     }):map("<leader>uF")
+    Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
     Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
     Snacks.toggle.diagnostics():map("<leader>ud")
 
