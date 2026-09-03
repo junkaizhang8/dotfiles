@@ -22,6 +22,10 @@ map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = t
 map({ "n", "x" }, "x", '"_x', { desc = "Delete Characters Under Cursor Without Yanking" })
 map({ "n", "x" }, "X", '"_X', { desc = "Delete Characters Before Cursor Without Yanking" })
 
+-- Swap ` and ' to make it easier to jump to marks
+map("n", "'", "`", { desc = "Jump to Mark (Linewise)" })
+map("n", "`", "'", { desc = "Jump to Mark (Exact Position)" })
+
 -- Smart pane navigation
 map("n", "<C-\\>", require("modules.smart-previous-pane").move_cursor_previous, { desc = "Move to Previous Split" })
 
